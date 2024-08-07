@@ -1,1 +1,1 @@
-This repository is for learning via The Odin Project, an online, free course on webdev 
+This repository contains all the projects I have created for The Odin Project
