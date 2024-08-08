@@ -1,0 +1,42 @@
+body {
+    background-color: grey;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 20px;
+}
+
+h1 {
+
+    color: green;
+    font-size: 64px;
+}
+
+h2 {
+    color:green;
+    font-size: 48px;
+}
+
+div.list {
+    font-size: 32px;
+}
+
+
+ul {
+    display: inline-block;
+    margin-top: 0px;
+}
+
+li {
+    margin-top: 10px;
+}
+
+li::marker{
+    color: blue;
+    font-size: 32px;
+}
+
+div.footnote {
+    font-size: 12px;
+    color: white;
+    margin-top: 100px;
+}
