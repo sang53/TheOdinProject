@@ -1,42 +1,83 @@
-body {
-    background-color: grey;
-    font-family: Arial, Helvetica, sans-serif;
+* {
     text-align: center;
-    font-size: 20px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: white
+    color: rgba(22, 22, 22, 0.747);
+}
+
+h1, h2 {
+    margin: 1rem;
+    color: black;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 h1 {
-
-    color: green;
-    font-size: 64px;
-}
-
-h2 {
-    color:green;
     font-size: 48px;
 }
 
-div.list {
+h2 {
     font-size: 32px;
 }
 
+img {
+    margin: 1rem;
+    width: 33vw;
+    height: auto;
+    display: block;
+    align-self: center;
+}
 
-ul {
+ul, ol {
     display: inline-block;
-    margin-top: 0px;
+}
+
+ul.index li{
+    display: inline;
 }
 
 li {
-    margin-top: 10px;
+    padding: 1ch;
 }
 
-li::marker{
-    color: blue;
-    font-size: 32px;
+div.main {
+    width: 50vw;
+    margin: 0 auto;
+    height: 100%;
+}
+
+div.column {
+    width: 50vw;
+    margin: 2ch auto;
+}
+
+div.left-column, div.right-column {
+    display: inline-block;
+    width: 40ch;
+    margin: 1rem 3rem;
+    vertical-align: top;
+}
+
+div.description {
+    margin: 2ch auto;
+    width: 40vw;
 }
 
 div.footnote {
-    font-size: 12px;
-    color: white;
-    margin-top: 100px;
+    margin-top: 5ch;
+}
+
+div.recipe-image img{
+    max-width: 50vw;
+    margin: 0 auto;
+}
+
+a {
+    font-size: 2ch;
+    color: rgb(87, 50, 253);
 }
