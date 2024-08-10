@@ -27,3 +27,69 @@ body {
   box-shadow: 2px 4px 16px rgba(0,0,0,.06);
   border-radius: 4px;
 }
+
+/* changes for answer */
+
+div.main {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+div.header {
+  padding-left: 0.75rem;
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 900;
+  flex: initial;
+}
+
+div.middle {
+  flex: auto;
+  display: flex;
+}
+
+div.sidebar {
+  width: 24ch;
+  flex: none;
+  font-size: 1.5rem;
+}
+
+div.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4ch 4ch;
+  padding: 5ch;
+  align-items: stretch;
+}
+
+div.card {
+  width: 35ch;
+  flex: none;
+  font-size: 0.8rem;
+  padding: 1ch;
+}
+
+div.footer {
+  flex: initial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+li {
+  list-style-type: none;
+  margin: 0.5em;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
