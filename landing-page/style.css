@@ -24,14 +24,15 @@ div.header {
 }
 
 div.margin-space {
-    width: 15vw;
-    flex: 0 1 auto;
+    max-width: 15vw;
+    flex: 1 1 auto;
 }
 
 div.header-links {
     display: flex;
     gap: 3ch;
     margin-left: auto;
+    color: #e5e7eb;
 }
 
 div.section-1 {
@@ -40,6 +41,7 @@ div.section-1 {
     align-items: center;
     color: #f9faf8;
     background-color: #1f2937;
+    flex: 1 0 0;
 }
 
 div.section-1-left {
@@ -64,6 +66,7 @@ button.section-1-button {
     margin-top: 1em;
     color: inherit;
     background-color: #3882f6;
+    border-radius: 8px;
 }
 
 div.section-1-right {
@@ -73,4 +76,43 @@ div.section-1-right {
 
 div.section-1-right img {
     width: 100%;
+}
+
+div.section-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 0 0;
+}
+
+div.section-2-title {
+    font-size: 36px;
+    font-weight: 900;
+    color: #1f2937;
+    margin: 1em;
+}
+
+div.section-2-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5ch;
+    flex-wrap: wrap;
+}
+
+div.section-2-content-tile {
+    text-align: center;
+}
+
+div.section-2-content-tile-img {
+    height: 20ch;
+    width: 20ch;
+    border: 2px solid #3882f6;
+    border-radius: 8px;
+}
+
+div.section-2-content-tile-text {
+    margin-top: 0.5rem;
+    width: 20ch;
+    color: #1f2937;
 }
