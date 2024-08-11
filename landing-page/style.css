@@ -21,6 +21,8 @@ div.header {
     align-items: center;
     color: #f9faf8;
     background-color: #1f2937;
+    padding-left: 10vw;
+    padding-right: 10vw;
 }
 
 div.margin-space {
@@ -42,12 +44,14 @@ div.section-1 {
     color: #f9faf8;
     background-color: #1f2937;
     flex: 1 0 0;
+    padding-left: 10vw;
+    padding-right: 10vw;
 }
 
 div.section-1-left {
     display: flex;
     flex-direction: column;
-    flex: 1 0 0;
+    flex: 1 1 0;
     margin-right: 5ch;
 }
 
@@ -70,12 +74,13 @@ button.section-1-button {
 }
 
 div.section-1-right {
-    flex: 1 0 0;
+    flex: 1 1 0;
     margin: 5vh 0;
 }
 
 div.section-1-right img {
     width: 100%;
+    border: 1px solid black;
 }
 
 div.section-2 {
