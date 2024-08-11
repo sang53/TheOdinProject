@@ -1,0 +1,90 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+div.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    max-height: 100vh;
+    row-gap: 1rem;
+}
+
+div.header {
+    height: 5vh;
+    display: flex;
+    background-color: #3462a17e;
+    align-self: stretch;
+    align-items: stretch;
+}
+
+div.header-link {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    border-right: 2px solid #3461a1a4;
+}
+
+div.header-link a{
+    margin-left: 1ch;
+    margin-right: 1ch;
+}
+
+div.header a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+
+div.list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: 1rem;
+    align-items: center;
+    max-width: 60vw;
+}
+
+div.columns {
+    display: flex;
+    max-width: 60vw;
+    justify-content: space-evenly;
+    gap: 2ch 2ch;
+    flex-wrap: wrap;
+}
+
+div.reflection {
+    text-align: center;
+}
+
+img {
+    width: 100%;
+    border: 2px solid black;
+}
+
+li {
+    list-style-position: inside;
+    margin: 1ch;
+}
+
+a.exercise {
+    font-size: 1.75rem;
+    text-decoration: none;
+    color: blue;
+}
+
+a.image {
+    width: 70%;
+    flex: 0 1 auto;
+}
+
+p {
+    text-align: center;
+    max-width: 50vw;
+}
+
