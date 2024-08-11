@@ -51,7 +51,7 @@ div.list {
 
 div.columns {
     display: flex;
-    max-width: 60vw;
+    width: 60vw;
     justify-content: space-evenly;
     gap: 2ch 2ch;
     flex-wrap: wrap;
