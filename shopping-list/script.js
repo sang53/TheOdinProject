@@ -22,6 +22,6 @@ function deleteList(e) {
 }
 
 inputBtn.addEventListener("click", addItem);
-inputBox.addEventListener("keydown", function (e) {
+inputBox.addEventListener("keydown", (e) => {
     if (e.key == "Enter") addItem();
 });
