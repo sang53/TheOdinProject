@@ -1,97 +1,84 @@
-var cells = [];
-var rows = [];
-var resolution = 16;
+let resolution = 16;
+let clicking = false;
+
 const contentDiv = document.querySelector("#content");
 const buttonDiv = document.querySelector("div.center");
 
-var clicking = false;
-
 contentDiv.addEventListener("mousedown", toggleClick);
 contentDiv.addEventListener("mouseup", toggleClick);
-buttonDiv.addEventListener("click", buttonpress);
+buttonDiv.addEventListener("click", buttonPress);
 contentDiv.addEventListener("mouseover", addColor);
 
 function toggleClick(e) {
     e.preventDefault();
     clicking = !clicking;
-    e.stopPropagation();
 }
 
-function makeCell() {
+function createCell() {
     const cell = document.createElement("div");
     cell.classList.add("cell");
     cell.style.backgroundColor = generateColor();
-    cells.push(cell);
+    cell.style.opacity = 0;
     return cell;
 }
 
-function makeRow() {
-    const div = document.createElement("div");
-    div.classList.add("row");
-    rows.push(div);
-    return div;
+function createRow() {
+    const row = document.createElement("div");
+    row.classList.add("row");
+    return row;
 }
 
-function makeGrid() {
+// create resolution x resolution grid
+function createGrid() {
     for (let i = 0; i < resolution; i++) {
-        const row = makeRow();
+        const row = createRow();
         contentDiv.appendChild(row);
         for (let j = 0; j < resolution; j++) {
-            const cell = makeCell();
+            const cell = createCell();
             row.appendChild(cell);
         }
     }
-    makeSquare();
+    adjustGridToSquare();
 }
 
-function makeSquare() {
+// render square cells by squaring container div
+function adjustGridToSquare() {
     let difference = (contentDiv.offsetWidth - contentDiv.offsetHeight) / 2;
-    if (difference > 0) contentDiv.style.padding = "0px " + difference + "px";
-    else contentDiv.style.padding = difference + "px 0px";
+    contentDiv.style.padding = difference > 0 ? `0px ${difference}px` : `${-difference}px 0px`;
 }
 
+// decrease opacity on mouseover, by a higher value if currently holding mouse button
 function addColor(event){
     if (event.target === contentDiv) return;
     (clicking) ? changeOpacity(event.target, 0.3) : changeOpacity(event.target, 0.1);
 }
 
+// randomise colour of each cell
 function generateColor() {
-    color = "rgba("
-    for (let i = 0; i < 3; i++) color += Math.floor(Math.random() * 256) + ",";
-    color += "0)"
-    return color;
+    const randomColor = Array.from({ length: 3 }, () => Math.floor(Math.random() * 256)).join(',');
+    return `rgb(${randomColor})`;
 }
 
 function changeOpacity(element, amount) {
-    color = element.style.backgroundColor;
-    if (color.slice(0, 4) === "rgba") {
-        temp = color.split(",");
-        opacity = temp.pop().slice(0, -1);
-        opacity = +opacity + amount + ")";
-        temp.push(opacity);
-        element.style.backgroundColor = temp.join(",");
-    }
+    element.style.opacity = parseFloat(element.style.opacity) + amount;
 }
 
-function buttonpress(event) {
+function buttonPress(event) {
     if (event.target.id === "change-num") {
         let input;
         do {
             input = parseInt(prompt("Please enter a new resolution from 1 to 100", resolution));
-            console.log(input);
-        } while (input === NaN || !(input <= 100 && input >= 1));
+        } while (isNaN(input) || input < 1 || input > 100); // validate user input
         resolution = input;
-        reset();
+        resetGrid();
     }
-    else if (event.target.id === "reset") reset();
+    else if (event.target.id === "reset") resetGrid();
 }
 
-function reset() {
-    cells.forEach((element) => element.remove());
-    cells = [];
-    rows.forEach((element) => element.remove());
-    rows = [];
-    makeGrid();
+function resetGrid() {
+    contentDiv.innerHTML = "";
+    createGrid();
 }
 
-makeGrid();
+// initialise webpage with 16x16 grid
+createGrid();
