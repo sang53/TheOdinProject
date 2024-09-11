@@ -49,7 +49,7 @@ function adjustGridToSquare() {
 
 // decrease opacity on mouseover, by a higher value if currently holding mouse button
 function addColor(event){
-    if (event.target === contentDiv) return;
+    if (event.target === contentDiv) return; // ignore parent container
     (clicking) ? changeOpacity(event.target, 0.3) : changeOpacity(event.target, 0.1);
 }
 
@@ -60,7 +60,7 @@ function generateColor() {
 }
 
 function changeOpacity(element, amount) {
-    element.style.opacity = parseFloat(element.style.opacity) + amount;
+    element.style.opacity = Math.min(parseFloat(element.style.opacity) + amount, 100);
 }
 
 function buttonPress(event) {
