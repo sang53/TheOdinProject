@@ -1,0 +1,57 @@
+stages to control behaviour:
+    stage 0 - input first number
+    stage 1 - input second number
+    stage 2 - valid equals was pressed
+
+main functions - ended up grouping by stage --> button instead for better clarity
+
+handleOperators:
+    clear (stage - any):
+        reset stored values
+        update prevdiv to empty string
+        update outputdiv to 0
+    backspace (stage - 0, 1):
+        remove 1 character from outputdiv
+        if outputdiv is empty, replace with 0
+    equals (stage - 1):
+        if both numbers & operator is inputted:
+            store outputdiv
+            calculate answer
+            update prevdiv to both numbers and operator
+            update outputdiv to answer
+            store answer
+
+    others (stages - any):
+        store outputdiv
+        reset outputdiv
+        update prevdiv to old outputdiv + operator
+
+
+handleNumbers:
+    +/- (stage - any):
+        if outputdiv starts with -:
+            remove - from outputdiv
+        else:
+            add - to outputdiv
+    period - (stages 0, 1):
+        add . to outputdiv
+        disallow .
+    others - (stages 0, 1):
+        add number to outputdiv
+        
+        stage 2:
+            clear
+            add number to outputdiv
+
+helper functions:
+
+clear() - reset stored memory, remove opacity of all elements
+
+updateOutput(num=0) - update outputdiv to num
+
+updateprev(str) - update prevdiv to str
+
+toggleOpacity(element, num=1) - toggle opacity of element to show valid/invalid buttons at different stages. default to removing opacity.
+
+calculate() - return calculated value according to stored values & operator
+
