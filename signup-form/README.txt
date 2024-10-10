@@ -1,4 +1,5 @@
 Project link: https://www.theodinproject.com/lessons/node-path-intermediate-html-and-css-sign-up-form
+
 Project Specifications:
 
 Step 1: Set up and planning
@@ -21,4 +22,4 @@ Do not worry about making your project look nice on mobile. Responsive design is
 Validating that the password fields match each other requires JavaScript. Using JavaScript to validate forms is covered in a future lesson. For now, just validate each field separately.
 
 Background by: Hans Ott
-background link: https://unsplash.com/photos/a-small-stream-running-through-a-rocky-valley-JQ52WeUEpwM
+Background link: https://unsplash.com/photos/a-small-stream-running-through-a-rocky-valley-JQ52WeUEpwM
