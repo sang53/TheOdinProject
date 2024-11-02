@@ -1,0 +1,15 @@
+@font-face {
+    font-family: Roboto-med;
+    src: url(../resources/fonts/Roboto/Roboto-Medium.ttf);
+}
+
+*, button {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Roboto-med, 'Segoe UI', sans-serif;
+}
+
