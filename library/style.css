@@ -9,7 +9,6 @@
     padding: 0;
 }
 
-body {
+body, form {
     font-family: Roboto-med, 'Segoe UI', sans-serif;
 }
-
