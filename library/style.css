@@ -11,17 +11,14 @@
 }
 
 :root {
-    --font-color: rgb(233, 231, 224);
+    --font-color-header: #fafafa;
+    --font-color-book: #171717;
 
-    --header-bg1: #3f6212;
-    --header-bg2: #365314;
-    --shadow: #1a2e05;
+    --header-bg1: #2563eb;
+    --header-bg2: #1d4ed8;
+    --shadow: #172554;
 
-    --main-bg: #d4d4d4;
-
-    --book-bg1: #4d7c0f;
-    --book-bg2: #65a30d;
-
+    --main-bg: #cbd5e1;
 
     background-color: var(--main-bg);
 }
@@ -29,7 +26,7 @@
 body, input, button {
     font-family: 'Roboto', 'Segoe UI', sans-serif;
     white-space: nowrap;
-    color: var(--font-color);
+    color: var(--font-color-header);
 }
 
 @media (max-width: 1000px) {
@@ -44,13 +41,6 @@ body, input, button {
     }
 }
 
-
-button {
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: inherit;
-}
-
 .flex {
     display: flex;
 }
@@ -59,11 +49,21 @@ button {
     display: grid;
 }
 
-svg {
-    fill: var(--font-color);
-    vertical-align: bottom;
+.hidden {
+    display: none;
+}
 
-        &.button {
+svg {
+    fill: var(--font-color-header);
+    vertical-align: bottom;
+}
+
+button {
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: inherit;
+
+        & > svg {
             width: 100%;
         }
 }
@@ -114,10 +114,16 @@ svg {
 
 .book-template {
     position: relative;
-    border-radius: 15px;
-    padding: 2rem;
-    background: linear-gradient(to top, var(--book-bg1), var(--book-bg2));
-    box-shadow: 3px 5px 5px 0 var(--shadow);
+    padding: 2rem 6rem;
+    background-image: url(./book-161117_1280.png);
+    background-size: 100% 100%;
+    border-top-right-radius: 50px 15px;
+    border-top-left-radius: 8px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 50px 10px;
+    box-shadow: inset 1px 2px 3px 0 var(--shadow),
+                2px 3px 3px 0 var(--shadow);
+    color: var(--font-color-book);
 
     &:hover {
         transform: scale(1.05);
@@ -139,7 +145,7 @@ svg {
 
     .year {
         position: absolute;
-        top: 2.5rem;
+        top: 25%;
         right: 2.5rem;
         font-size: 1.1rem;
         font-weight: 600;
@@ -150,6 +156,10 @@ svg {
         right: 2rem;
         bottom: 2rem;
         width: 3rem;
+    }
+
+    svg {
+        fill: var(--font-color-book);
     }
 }
 
@@ -179,27 +189,26 @@ svg {
     .checkbox {
         display: inline-block;
         position: relative;
-        border: 2px solid var(--font-color);
+        border: 2px solid var(--font-color-book);
+        border-radius: 3px;
         height: 1.25rem;
         width: 1.25rem;
     }
 
     &:hover > .checkbox {
-        background-color: rgba(169, 169, 169, 0.521);
+        background-color: var(--main-bg);
     }
-
-
 }
 
 input:checked + .checkbox {
-    background-color: var(--book-bg1);
+    background-color: #60a5fa;
 
         &:after {
             content: "";
             display: block;
             width: 0.3rem;
             height: 0.6rem;
-            border: solid var(--font-color);
+            border: solid var(--font-color-book);
             border-width: 0 3px 3px 0;
             margin-inline: auto;
             transform: rotate(45deg);

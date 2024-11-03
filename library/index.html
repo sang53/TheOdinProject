@@ -6,7 +6,7 @@
         <meta name="description" content="Library Project to hold a collection of books">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="./style.css">
-        <script src="./script.js" async defer></script>
+        <script src="./script.js" defer></script>
     </head>
     <body>
         <div class="main">
@@ -19,30 +19,31 @@
                     </div>
                 </div>
                 <button class="add-book">
-                    <svg class="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.09 20C13.21 20.72 13.46 21.39 13.81 22H6C4.89 22 4 21.11 4 20V4C4 2.9 4.89 2 6 2H18C19.11 2 20 2.9 20 4V13.09C19.67 13.04 19.34 13 19 13C18.66 13 18.33 13.04 18 13.09V4H13V12L10.5 9.75L8 12V4H6V20H13.09M20 18V15H18V18H15V20H18V23H20V20H23V18H20Z" /></svg>
+                    <svg class="add-book" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path class="add-book" d="M13.09 20C13.21 20.72 13.46 21.39 13.81 22H6C4.89 22 4 21.11 4 20V4C4 2.9 4.89 2 6 2H18C19.11 2 20 2.9 20 4V13.09C19.67 13.04 19.34 13 19 13C18.66 13 18.33 13.04 18 13.09V4H13V12L10.5 9.75L8 12V4H6V20H13.09M20 18V15H18V18H15V20H18V23H20V20H23V18H20Z" /></svg>
                     <div>Add book!</div>
                 </button>
             </div>
             <div class="content grid">
-                <div class="book-template">
-                    <div class="title">Example Title</div>
-                    <div class="author">Example Author</div>
-                    <div class="year">2024</div>
+                <div class="book-template hidden">
+                    <div class="title"></div>
+                    <div class="author"></div>
+                    <div class="year"></div>
                     <div class="data flex">
-                        <div>Non-Fiction</div>
-                        <div>Genre: Fantasy</div>
-                        <div>Series: Standalone</div>
-                        <div>Number of Pages: 403</div>
-                        <div>Score: 0/10</div>
-                        <div>Price: $20</div>
+                        <div class="fiction"></div>
+                        <div class="genre">Genre: </div>
+                        <div class="series">Series: </div>
+                        <div class="pages">Pages: </div>
+                        <div class="score">Score: </div>
+                        <div class="price">Price: </div>
+                        <div class="index hidden"></div>
                     </div>
                     <label class="read flex">
                         Read: 
-                        <input type="checkbox">
+                        <input type="checkbox" class="checkbox_hidden">
                         <span class="checkbox"></span>
                     </label>
                     <button class="remove-book">
-                        <svg class="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.09 20C13.21 20.72 13.46 21.39 13.81 22H6C4.89 22 4 21.11 4 20V4C4 2.9 4.89 2 6 2H18C19.11 2 20 2.9 20 4V13.09C19.67 13.04 19.34 13 19 13C18.66 13 18.33 13.04 18 13.09V4H13V12L10.5 9.75L8 12V4H6V20H13.09M15 18V20H23V18H15Z" /></svg>
+                        <svg class="remove-book" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path class="remove-book" d="M13.09 20C13.21 20.72 13.46 21.39 13.81 22H6C4.89 22 4 21.11 4 20V4C4 2.9 4.89 2 6 2H18C19.11 2 20 2.9 20 4V13.09C19.67 13.04 19.34 13 19 13C18.66 13 18.33 13.04 18 13.09V4H13V12L10.5 9.75L8 12V4H6V20H13.09M15 18V20H23V18H15Z" /></svg>
                     </button>
                 </div>
             </div>
