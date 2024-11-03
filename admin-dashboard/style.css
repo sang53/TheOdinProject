@@ -1,6 +1,6 @@
 @font-face {
-    font-family: Roboto;
-    src: url(../resources/fonts/Roboto/Roboto-Medium.ttf);
+    font-family: 'Roboto';
+    src: url('../resources/fonts/Roboto/Roboto-Medium.ttf') format('truetype');
 }
 
 * {
@@ -10,7 +10,7 @@
 }
 
 body {
-    font-family: Roboto, 'Segoe UI', sans-serif;
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
 }
 
 .main {
