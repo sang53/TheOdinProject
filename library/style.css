@@ -1,14 +1,208 @@
 @font-face {
-    font-family: Roboto-med;
-    src: url(../resources/fonts/Roboto/Roboto-Medium.ttf);
+    font-family: Roboto;
+    src: local(../resources/fonts/Roboto/Roboto-Reg.ttf);
 }
 
 *, button {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    border: none;
 }
 
-body, form {
-    font-family: Roboto-med, 'Segoe UI', sans-serif;
+:root {
+    --font-color: rgb(233, 231, 224);
+
+    --header-bg1: #3f6212;
+    --header-bg2: #365314;
+    --shadow: #1a2e05;
+
+    --main-bg: #d4d4d4;
+
+    --book-bg1: #4d7c0f;
+    --book-bg2: #65a30d;
+
+
+    background-color: var(--main-bg);
+}
+
+body, input, button {
+    font-family: Roboto, 'Segoe UI', sans-serif;
+    white-space: nowrap;
+    color: var(--font-color);
+}
+
+@media (max-width: 1000px) {
+    :root {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        font-size: 10px;
+    }
+}
+
+
+button {
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: inherit;
+}
+
+.flex {
+    display: flex;
+}
+
+.grid {
+    display: grid;
+}
+
+svg {
+    fill: var(--font-color);
+    vertical-align: bottom;
+
+        &.button {
+            width: 100%;
+        }
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    min-height: 10vh;
+    align-items: center;
+    z-index: 3;
+    box-shadow: 0px 5px 7px 0px var(--shadow);
+    padding: 0.5rem clamp(5px, 5%, 2rem) 1rem clamp(5px, 5%, 20px);
+    background: linear-gradient(to bottom, var(--header-bg2), var(--header-bg1));
+    gap: 10px;
+
+    svg.logo {
+        width: 6rem;
+        min-width: 4rem;
+    }
+
+    button.add-book {
+        width: 5rem;
+    }
+}
+
+.heading {
+    margin-inline: auto;
+
+    > div {
+        font-style: italic;
+        font-size: 1.75rem;
+    }
+    
+    > div:first-child {
+        width: fit-content;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 3rem;
+        margin-inline: auto;
+    }
+}
+
+.content {
+    grid: auto / repeat(auto-fill, minmax(max(375px, 20%), 1fr));
+    padding: 2rem;
+    gap: 2rem;
+    background-color: var(--main-bg);
+}
+
+.book-template {
+    position: relative;
+    border-radius: 15px;
+    padding: 2rem;
+    background: linear-gradient(to top, var(--book-bg1), var(--book-bg2));
+    box-shadow: 3px 5px 5px 0 var(--shadow);
+
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    .title, .author {
+        width: fit-content;
+        margin-inline: auto;
+    }
+
+    .title {
+        font-weight: 600;
+        font-size: 1.5rem;
+    }
+
+    .author {
+        font-style: italic;
+    }
+
+    .year {
+        position: absolute;
+        top: 2.5rem;
+        right: 2.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    button.remove-book {
+        position: absolute;
+        right: 2rem;
+        bottom: 2rem;
+        width: 3rem;
+    }
+}
+
+.data {
+    flex-direction: column;
+    width: fit-content;
+    margin: 3rem auto;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.read {
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+    align-items: center;
+    gap: 5px;
+    width: fit-content;
+
+    input {
+        position: absolute;
+        left: 0;
+        cursor: pointer;
+        opacity: 0;
+    }
+
+    .checkbox {
+        display: inline-block;
+        position: relative;
+        border: 2px solid var(--font-color);
+        height: 1.25rem;
+        width: 1.25rem;
+    }
+
+    &:hover > .checkbox {
+        background-color: rgba(169, 169, 169, 0.521);
+    }
+
+
+}
+
+input:checked + .checkbox {
+    background-color: var(--book-bg1);
+
+        &:after {
+            content: "";
+            display: block;
+            width: 0.3rem;
+            height: 0.6rem;
+            border: solid var(--font-color);
+            border-width: 0 3px 3px 0;
+            margin-inline: auto;
+            transform: rotate(45deg);
+        }
 }
