@@ -243,7 +243,6 @@ label.checkbox {
 
 dialog {
     margin: auto;
-    min-height: 60%;
     width: clamp(350px, 75%, 1080px);
     color: var(--font-color-book);
     padding: 3rem 0;
