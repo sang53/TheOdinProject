@@ -20,9 +20,61 @@
                 </div>
                 <button class="add-book">
                     <svg class="add-book" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path class="add-book" d="M13.09 20C13.21 20.72 13.46 21.39 13.81 22H6C4.89 22 4 21.11 4 20V4C4 2.9 4.89 2 6 2H18C19.11 2 20 2.9 20 4V13.09C19.67 13.04 19.34 13 19 13C18.66 13 18.33 13.04 18 13.09V4H13V12L10.5 9.75L8 12V4H6V20H13.09M20 18V15H18V18H15V20H18V23H20V20H23V18H20Z" /></svg>
-                    <div>Add book!</div>
+                    <div class="add-book">Add book!</div>
                 </button>
             </div>
+            <dialog class="modal-form">
+                <div class="modal-heading flex">Add a Book!</div>
+                <form class="form grid">
+                    <div>
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" required>
+                    </div>
+                    <div>
+                        <label for="author">Author:</label>
+                        <input type="text" id="author" required>
+                    </div>
+                    <div>
+                        <label for="year">Year:</label>
+                        <input type="number" min="0" max="2024" id="year">
+                    </div>
+                    <div class="flex">
+                        <label for="non-fiction">Non-Fiction: </label>
+                        <input type="radio" id="non-fiction" name="fiction" checked>
+                        <label for="fiction">Fiction: </label>
+                        <input type="radio" id="fiction" name="fiction">
+                    </div>
+                    <div>
+                        <label for="genre">Genre:</label>
+                        <input type="text" id="genre">
+                    </div>
+                    <div>
+                        <label for="series">Series:</label>
+                        <input type="text" id="series">
+                    </div>
+                    <div>
+                        <label for="pages">Pages:</label>
+                        <input type="number" min="0" id="pages">
+                    </div>
+                    <div>
+                        <label for="score">Score (/10):</label>
+                        <input type="number" min="0" max="10" id="score">
+                    </div>
+                    <div>
+                        <label for="price">Price ($):</label>
+                        <input type="text" id="price">
+                    </div>
+                    <div class="dialog-read">
+                        <label for="dialog-read" class="checkbox">Read: <input type="checkbox" id="dialog-read" checked>
+                        <span class="checkbox"></span>
+                        </label>
+                    </div>
+                </form>
+                <div class="modal-buttons flex">
+                    <button class="dialog-confirm">Confirm</button>
+                    <button class="dialog-close">Close</button>
+                </div>
+            </dialog>
             <div class="content grid">
                 <div class="book-template hidden">
                     <div class="title"></div>
@@ -34,12 +86,11 @@
                         <div class="series">Series: </div>
                         <div class="pages">Pages: </div>
                         <div class="score">Score: </div>
-                        <div class="price">Price: </div>
-                        <div class="index hidden"></div>
+                        <div class="price">Price ($): </div>
                     </div>
-                    <label class="read flex">
+                    <label class="read flex checkbox">
                         Read: 
-                        <input type="checkbox" class="checkbox_hidden">
+                        <input type="checkbox" class="book-read-checkbox">
                         <span class="checkbox"></span>
                     </label>
                     <button class="remove-book">
