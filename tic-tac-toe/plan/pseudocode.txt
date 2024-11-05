@@ -1,0 +1,37 @@
+IIFEs:
+Board {
+    private:
+        gameBoardState = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+        moveHistory = [];
+        playerTurn = 1
+        updateBoard(x, y)
+        updateHistory(x, y)
+        checkForWin()
+
+
+    public:
+        addSquare(x, y) => updateBoard(x, y), updateHistory(x, y) updatePlayerTurn() checkForWin() => return playerTurn
+        reset()
+        undoMove() 
+        getPlayerTurn()
+}
+
+DisplayController {
+    private:
+        boardNode
+        clickEventHandler()
+    public:
+        toggleSquare(x, y)
+        updateScore(player, score)
+        updateTurn(player)
+        reset()
+}
+
+Constructor:
+Player {
+    public:
+        name
+        score
+        number
+        symbol
+}
