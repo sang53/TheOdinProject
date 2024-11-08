@@ -38,3 +38,67 @@ p {
 h1, h2, h3, h4, h5, h6 {
 text-wrap: balance;
 }
+
+:root {
+    --header-bg: black;
+    --back-bg: grey;
+}
+
+
+.flex {
+    display: flex;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 3rem;
+}
+
+body {
+    background-color: var(--back-bg);
+}
+
+nav {
+    padding: 1rem;
+    background-color: var(--header-bg);
+    display: flex;
+    gap: 1rem;
+
+    > button {
+        flex: auto;
+        min-height: 3rem;
+    }
+}
+
+#content {
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    min-height: calc(100vh - 3rem);
+    padding: 3rem;
+    background-color: white;
+    width: 75%;
+    margin-inline: auto;
+
+}
+
+.main-content {
+    flex: auto;
+}
+
+ul {
+    list-style-type: square;
+}
+
+p {
+    margin: 3rem;
+}
+
+.contact-div {
+    margin: 3rem;
+}
