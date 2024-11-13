@@ -1,0 +1,49 @@
+Modules:
+    Default-info - some default information to load during development (load if no local information so it doesn't look empty) - perhaps list of features as todo list in "Getting Started" project
+    Local storage interface - to save & load local information
+
+    index - handle on-load, clicks
+    Date interface - handle date calculations & conversions
+    DOM interface - Add & remove DOM elements
+    Element/node creator - create & return nodes with attributes & text
+    InputHandler - Convert input into proper format & return
+    To Do interface - Convert JSON --> {todo} --> JSON
+
+Stored information:
+    projectNames : list of saved projectNames
+    project name : project information
+
+Local Storage Interface:
+    check browser support --> boolean -- only on very old browsers, can skip
+    save information (projectname:information) --> null
+    load information () --> JSON objects
+
+Date Interface:
+    Calculate time left (date, units) --> time in units
+    Convert input date (date) --> time
+
+Node Creator: 
+    create element (tag, attributes, text) --> element
+
+DOM Interface:
+    append project to sidebar (project) --> null
+    append task to project (project) --> null
+    append project to main (project) --> null
+
+    remove project from main (project) --> null
+    remove project from sidebar --> null
+    remove task from project --> null
+
+    change deadline on main (string) --> null
+
+Input Handler:
+    reset input fields () --> null
+    convert input to JSON () --> JSON
+
+Project interface:
+    convert JSON to project (JSON) --> project object
+    convert project to JSON (project) --> JSON
+
+Index:
+    clickhandler (event) --> click button(), click link()
+    loadHandler (event) --> load information --> add to DOM
