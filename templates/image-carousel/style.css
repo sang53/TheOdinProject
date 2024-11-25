@@ -1,0 +1,99 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --carousel-height: 30vh;
+  --carousel-width: 100vw;
+  --carousel-num: 3;
+  --carousel-gap: 5px;
+
+  --carousel-border-width: 2px;
+  --carousel-border-color: black;
+
+  --carousel-shadow: 2px 2px 5px grey;
+
+  --carousel-frame-width: 5px;
+  --carousel-frame-color: black;
+
+  --carousel-arrow-size: 3rem;
+
+  --carousel-nav-top-margin: 10px;
+  --carousel-nav-button-border: 4px solid red;
+  --carousel-nav-hover-scale: 1.25;
+  --carousel-nav-current-scale: 1.5;
+}
+
+.grid {
+  display: grid;
+}
+
+.flex {
+  display: flex;
+}
+
+.image-carousel {
+  width: var(--carousel-width);
+  height: var(--carousel-height);
+  grid-template-columns: repeat(var(--carousel-num), 1fr);
+  gap: var(--carousel-gap);
+  box-shadow: var(--carousel-shadow);
+  border: var(--carousel-border-width) solid var(--carousel-border-color);
+  user-select: none;
+
+  > img {
+    max-height: calc(var(--carousel-height) - 2 * var(--carousel-border-width));
+    max-width: calc(
+      (var(--carousel-width) / var(--carousel-num)) -
+        (2 * var(--carousel-frame-width)) -
+        ((var(--carousel-num) - 1) * var(--carousel-gap))
+    );
+    margin-inline: auto;
+  }
+}
+
+.image-carousel-frame {
+  height: calc(var(--carousel-height) - (2 * var(--carousel-border-width)));
+  border: var(--carousel-frame-width) solid var(--carousel-frame-color);
+  position: relative;
+  justify-content: center;
+
+  svg {
+    width: var(--carousel-arrow-size);
+  }
+
+  > svg:first-of-type {
+    position: absolute;
+    left: 0;
+    bottom: 50%;
+  }
+
+  > svg:last-of-type {
+    position: absolute;
+    right: 0;
+    bottom: 50%;
+  }
+}
+
+.carousel-nav {
+  align-items: center;
+  gap: var(--carousel-gap);
+  width: fit-content;
+  margin-inline: auto;
+  margin-top: var(--carousel-nav-top-margin);
+
+  > div {
+    border-radius: 100%;
+    border: var(--carousel-nav-button-border);
+  }
+
+  > div:hover {
+    transform: scale(var(--carousel-nav-hover-scale));
+  }
+
+  div.current {
+    transform: scale(var(--carousel-nav-current-scale));
+  }
+}

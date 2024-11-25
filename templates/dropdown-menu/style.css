@@ -1,0 +1,36 @@
+:root {
+  --dropdown-shadow: 5px 5px 5px black;
+  --dropdown-bg: green;
+  --dropdown-padding: 2rem;
+
+  --dropdown-hover-bg: white;
+}
+
+.hidden {
+  display: none;
+}
+
+.drop-down-hover,
+.drop-down-click {
+  position: relative;
+}
+
+.drop-down-hover-content,
+.drop-down-click-content {
+  position: absolute;
+  box-shadow: var(--dropdown-shadow);
+  z-index: 1;
+  background-color: var(--dropdown-bg);
+  padding: var(--dropdown-padding);
+}
+
+.drop-down-hover-button:hover {
+  background-color: var(--dropdown-hover-bg);
+  + .drop-down-hover-content {
+    display: block;
+  }
+}
+
+.drop-down-hover-content:hover {
+  display: block;
+}
