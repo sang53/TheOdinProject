@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Form Validation</title>
+  </head>
+  <body>
+    <div class="main">
+      <h1>Form Validation</h1>
+      <div class="content">
+        <form action="." class="grid" novalidate>
+          <label for="email">Email: </label>
+          <input type="email" name="email" id="email" autofocus required />
+          <label for="zip">Zip Code: </label>
+          <input
+            type="number"
+            name="zip"
+            id="zip"
+            min="1111"
+            max="9999"
+            required
+          />
+          <label for="country">Country: </label>
+          <input type="text" name="country" id="country" required />
+          <label for="password">Password: </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            required
+            minlength="6"
+          />
+          <label for="password-confirm">Password Confirm: </label>
+          <input
+            type="password"
+            name="password-confirm"
+            id="password-confirm"
+            required
+          />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

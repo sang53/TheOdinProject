@@ -1,0 +1,108 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  line-height: 1.15;
+  -webkit-font-smoothing: antialiased;
+  font-family: system-ui, "Segoe UI", Roboto, Arial;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+svg {
+  vertical-align: baseline;
+}
+
+input,
+button,
+textarea,
+select,
+optgroup {
+  font: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  button {
+    grid-column: 1 / -1;
+    justify-self: center;
+    min-width: 50%;
+    font-size: 1.5rem;
+  }
+}
+
+.main {
+  width: fit-content;
+  margin-inline: auto;
+}
+
+h1 {
+  margin: 3rem auto;
+  width: fit-content;
+}
+
+label {
+  font-size: 1.5rem;
+}
+
+input {
+  height: 100%;
+  width: 250px;
+  padding-left: 1ch;
+  box-shadow: 2px 2px 5px black;
+
+  &:valid {
+    border: 2px solid blue;
+  }
+
+  &:invalid {
+    border: 2px solid red;
+  }
+
+  &:focus {
+    border-radius: 5px;
+    outline: none;
+  }
+}
