@@ -1,83 +1,86 @@
 * {
-    text-align: center;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding: 0px;
-    margin: 0px;
-    box-sizing: border-box;
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: white
-    color: rgba(22, 22, 22, 0.747);
+  background-color: white;
+  color: rgba(22, 22, 22, 0.747);
 }
 
-h1, h2 {
-    margin: 1rem;
-    color: black;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+h1,
+h2 {
+  margin: 1rem;
+  color: black;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 h1 {
-    font-size: 48px;
+  font-size: 48px;
 }
 
 h2 {
-    font-size: 32px;
+  font-size: 32px;
 }
 
 img {
-    margin: 1rem;
-    width: 33vw;
-    height: auto;
-    display: block;
-    align-self: center;
+  margin: 1rem;
+  width: 33vw;
+  height: auto;
+  display: block;
+  align-self: center;
 }
 
-ul, ol {
-    display: inline-block;
+ul,
+ol {
+  display: inline-block;
 }
 
-ul.index li{
-    display: inline;
+ul.index li {
+  display: inline;
 }
 
 li {
-    padding: 1ch;
+  padding: 1ch;
 }
 
 div.main {
-    width: 50vw;
-    margin: 0 auto;
-    height: 100%;
+  width: 50vw;
+  margin: 0 auto;
+  height: 100%;
 }
 
 div.column {
-    width: 50vw;
-    margin: 2ch auto;
+  width: 50vw;
+  margin: 2ch auto;
 }
 
-div.left-column, div.right-column {
-    display: inline-block;
-    width: 40ch;
-    margin: 1rem 3rem;
-    vertical-align: top;
+div.left-column,
+div.right-column {
+  display: inline-block;
+  width: 40ch;
+  margin: 1rem 3rem;
+  vertical-align: top;
 }
 
 div.description {
-    margin: 2ch auto;
-    width: 40vw;
+  margin: 2ch auto;
+  width: 40vw;
 }
 
 div.footnote {
-    margin-top: 5ch;
+  margin-top: 5ch;
 }
 
-div.recipe-image img{
-    max-width: 50vw;
-    margin: 0 auto;
+div.recipe-image img {
+  max-width: 50vw;
+  margin: 0 auto;
 }
 
 a {
-    font-size: 2ch;
-    color: rgb(87, 50, 253);
+  font-size: 2ch;
+  color: rgb(87, 50, 253);
 }

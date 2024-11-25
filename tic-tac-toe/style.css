@@ -1,160 +1,184 @@
 @font-face {
-    font-family: Roboto;
-    src: url("../resources/fonts/Roboto/Roboto-Regular.ttf") ;
+  font-family: Roboto;
+  src: url("../resources/fonts/Roboto/Roboto-Regular.ttf");
 }
 
-*, ::before, ::after {
-    box-sizing: border-box;
+*,
+::before,
+::after {
+  box-sizing: border-box;
 }
 
 * {
-    margin: 0;
+  margin: 0;
 }
 
 body {
-    line-height: 1.15;
-    -webkit-font-smoothing: antialiased;
-    font-family: Roboto, system-ui, 'Segoe UI', Arial;
+  line-height: 1.15;
+  -webkit-font-smoothing: antialiased;
+  font-family: Roboto, system-ui, "Segoe UI", Arial;
 }
 
-img, picture, video, canvas, svg {
-    display: block;
-    max-width: 100%;
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
 }
 
-input, button, textarea, select, optgroup {
-    font: inherit;
-    font-size: 100%;
-    line-height: 1.15;
+input,
+button,
+textarea,
+select,
+optgroup {
+  font: inherit;
+  font-size: 100%;
+  line-height: 1.15;
 }
 
-p, h1, h2, h3, h4, h5, h6 {
-    overflow-wrap: break-word;
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
 }
 
 p {
-    text-wrap: pretty;
+  text-wrap: pretty;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    text-wrap: balance;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
 }
 
 :root {
-    --empty-bg-color: #71717a;
-    --main-bg-color: white;
+  --empty-bg-color: #71717a;
+  --main-bg-color: white;
 
-    --grid-border-color: black;
+  --grid-border-color: black;
 }
 
 @media (max-width: 600px) {
-    :root {
-        font-size: 12px;
-    }
+  :root {
+    font-size: 12px;
+  }
 }
 
 body {
-    background-color: var(--empty-bg-color);
-    height: 100vh;
+  background-color: var(--empty-bg-color);
+  height: 100vh;
 }
 
 .grid {
-    display: grid;
+  display: grid;
 }
 
 .flex {
-    display: flex;
+  display: flex;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 dialog {
+  margin: auto;
+  border: 1px solid var(--empty-bg-color);
+
+  > div {
+    gap: 0.5rem;
+    padding: 2rem;
+  }
+
+  h1 {
     margin: auto;
-    border: 1px solid var(--empty-bg-color);
-    
-    > div {
-        gap: 0.5rem;
-        padding: 2rem;
-    }
+  }
 
-    h1 {
-        margin: auto;
-    }
-
-    button {
-        place-self: center;
-    }
+  button {
+    place-self: center;
+  }
 }
 
 ::backdrop {
-    background-color: var(--empty-bg-color);
-    opacity: 0.3;
+  background-color: var(--empty-bg-color);
+  opacity: 0.3;
 }
 
 .main {
-    grid: min-content min-content 1fr / 1fr 1fr 1fr;
-    gap: 1rem;
-    place-items: center;
-    background-color: var(--main-bg-color);
-    height: 100%;
-    padding-top: 1rem;
+  grid: min-content min-content 1fr / 1fr 1fr 1fr;
+  gap: 1rem;
+  place-items: center;
+  background-color: var(--main-bg-color);
+  height: 100%;
+  padding-top: 1rem;
 
-    .turn-indicator {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 3rem;
-    }
+  .turn-indicator {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+  }
 }
 
 .board {
-    grid-column: span 3;
-    grid: 1fr 1fr 1fr / 1fr 1fr 1fr;
-    place-self: stretch;
+  grid-column: span 3;
+  grid: 1fr 1fr 1fr / 1fr 1fr 1fr;
+  place-self: stretch;
 }
 
 .cell {
-    border: 3px solid var(--grid-border-color);
+  border: 3px solid var(--grid-border-color);
 
+  &#cell-0,
+  &#cell-3,
+  &#cell-6 {
+    border-left: none;
+  }
 
-    &#cell-0, &#cell-3, &#cell-6 {
-        border-left: none;
-    }
+  &#cell-2,
+  &#cell-5,
+  &#cell-8 {
+    border-right: none;
+  }
 
-    &#cell-2, &#cell-5, &#cell-8 {
-        border-right: none;
-    }
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cross {
-    &::before {
-        content: "";
-        display: inline-block;
-        height: 100%;
-        border-left: 10px solid black;
-        transform: rotate(45deg);
-    }
+  &::before {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    border-left: 10px solid black;
+    transform: rotate(45deg);
+  }
 
-    &::after {
-        content: "";
-        display: inline-block;
-        height: 100%;
-        border-left: 10px solid black;
-        transform: rotate(-45deg);
-    }
+  &::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    border-left: 10px solid black;
+    transform: rotate(-45deg);
+  }
 }
 
 .circle::after {
-    content: "";
-    display: block;
-    height: 80%;
-    width: 80%;
-    border-radius: 100%;
-    border: 10px solid black;
+  content: "";
+  display: block;
+  height: 80%;
+  width: 80%;
+  border-radius: 100%;
+  border: 10px solid black;
 }

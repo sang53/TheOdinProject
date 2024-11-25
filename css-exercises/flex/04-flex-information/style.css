@@ -1,5 +1,5 @@
 body {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
 }
 
 img {
@@ -28,7 +28,7 @@ img {
 
 div.flex-container {
   display: flex;
-  justify-content: space-evenly; 
+  justify-content: space-evenly;
 }
 
 div {

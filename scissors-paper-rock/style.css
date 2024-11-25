@@ -1,73 +1,73 @@
 * {
-    box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .center {
-    text-align: center;
+  text-align: center;
 }
 
 #title {
-    margin-top: 3rem;
-    font-size: 3rem;
-    font-weight: 500;
+  margin-top: 3rem;
+  font-size: 3rem;
+  font-weight: 500;
 }
 
 #top {
-    font-size: 2rem;
-    font-weight: 400;
-    padding-top: 4rem;
-    display: flex;
-    align-self: stretch;
-    justify-content: space-evenly;
+  font-size: 2rem;
+  font-weight: 400;
+  padding-top: 4rem;
+  display: flex;
+  align-self: stretch;
+  justify-content: space-evenly;
 }
 
 #VS {
-    font-size: 3rem;
-    color: red;
-    font-weight: 600;
-    align-self: center;
+  font-size: 3rem;
+  color: red;
+  font-weight: 600;
+  align-self: center;
 }
 
 div.score {
-    text-align: center;
+  text-align: center;
 }
 
 button {
-    font-size: 1.5rem;
-    width: 20ch;
-    height: 5ch;
-    border-radius: 10px;
-    font-weight: 500;
+  font-size: 1.5rem;
+  width: 20ch;
+  height: 5ch;
+  border-radius: 10px;
+  font-weight: 500;
 }
 
 button:hover {
-    box-shadow: 5px 5px rgba(128, 128, 128, 0.541);
+  box-shadow: 5px 5px rgba(128, 128, 128, 0.541);
 }
 
 #play {
-    margin: 5rem;
+  margin: 5rem;
 }
 
 #buttons {
-    display: flex;
-    justify-content: space-evenly;
-    padding: 5rem;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 5rem;
 }
 
 #round {
-    padding: 5rem;
-    font-size: 2rem;
-    font-weight: 600;
+  padding: 5rem;
+  font-size: 2rem;
+  font-weight: 600;
 }

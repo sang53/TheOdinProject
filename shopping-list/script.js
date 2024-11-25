@@ -3,25 +3,25 @@ const inputBtn = document.querySelector(".inputBtn");
 const shopList = document.querySelector(".shopList");
 
 function addItem() {
-    let newList = document.createElement("li");
-    newList.textContent = inputBox.value + " ";
-    shopList.appendChild(newList);
+  let newList = document.createElement("li");
+  newList.textContent = inputBox.value + " ";
+  shopList.appendChild(newList);
 
-    let newBtn = document.createElement("button");
-    newBtn.setAttribute("class", "deleteBtn");
-    newBtn.textContent = "Remove item";
-    newList.appendChild(newBtn);
+  let newBtn = document.createElement("button");
+  newBtn.setAttribute("class", "deleteBtn");
+  newBtn.textContent = "Remove item";
+  newList.appendChild(newBtn);
 
-    newBtn.addEventListener("click", deleteList);
-    inputBox.value = "";
-    inputBox.focus();
+  newBtn.addEventListener("click", deleteList);
+  inputBox.value = "";
+  inputBox.focus();
 }
 
 function deleteList(e) {
-    e.target.parentNode.remove();
+  e.target.parentNode.remove();
 }
 
 inputBtn.addEventListener("click", addItem);
 inputBox.addEventListener("keydown", (e) => {
-    if (e.key == "Enter") addItem();
+  if (e.key == "Enter") addItem();
 });

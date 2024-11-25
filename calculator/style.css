@@ -1,91 +1,94 @@
 * {
-    box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 2em;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2em;
 }
 
 #main {
-    height: 100vh;
-    width: 50vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: auto;
+  height: 100vh;
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
 }
 
-#output, #prev{
-    align-self: stretch;
-    text-align: end;
-    min-height: 3rem;
-    border: 1px solid black;
-    font-size: 1em;
-    vertical-align: middle;
-    padding: 0 3px;
+#output,
+#prev {
+  align-self: stretch;
+  text-align: end;
+  min-height: 3rem;
+  border: 1px solid black;
+  font-size: 1em;
+  vertical-align: middle;
+  padding: 0 3px;
 }
 
 #buttons {
-    flex: 1;
-    display: flex;
-    align-self: stretch;
+  flex: 1;
+  display: flex;
+  align-self: stretch;
 }
 
 #buttons-left {
-    flex: 3;
-    display: flex;
-    flex-direction: column;
+  flex: 3;
+  display: flex;
+  flex-direction: column;
 }
 
 #buttons-left-top {
-    display: flex;
-    flex: 1;
+  display: flex;
+  flex: 1;
 }
 
 #buttons-left-bot {
-    display: flex;
-    flex: 4;
-    flex-wrap: wrap;
+  display: flex;
+  flex: 4;
+  flex-wrap: wrap;
 }
 
 #buttons-right {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 button {
-    background-color: lightblue;
-    font-size: 2rem;
-    border: 1px solid white;
+  background-color: lightblue;
+  font-size: 2rem;
+  border: 1px solid white;
 }
 
 button:hover {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
 button.operator {
-    flex: 1 0 0;
-    background-color: orange;
+  flex: 1 0 0;
+  background-color: orange;
 }
 
 button.number {
-    min-width: 33%;
-    flex: 1 0 0;
+  min-width: 33%;
+  flex: 1 0 0;
 }
 
 #equals {
-    flex: 2 0 0;
-    min-height: 40%;
+  flex: 2 0 0;
+  min-height: 40%;
 }
 
-#backspace, #clear {
-    background-color: red;
+#backspace,
+#clear {
+  background-color: red;
 }
 
-#plus-minus, #period {
-    background-color: aqua;
+#plus-minus,
+#period {
+  background-color: aqua;
 }
