@@ -59,3 +59,38 @@ h5,
 h6 {
   text-wrap: balance;
 }
+
+.centre {
+  width: fit-content;
+  margin-inline: auto;
+}
+
+.grid {
+  display: grid;
+}
+
+.flex {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  gap: 10px;
+}
+
+.display {
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.radio-container {
+  justify-content: space-between;
+}
