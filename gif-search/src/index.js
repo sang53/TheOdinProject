@@ -23,12 +23,12 @@ const GIFHANDLER = (function () {
   }
 
   function validateResponse(response) {
-    if (!response.ok) return Promise.reject("Status Code: " + response.status);
+    if (!response.ok) throw new Error(response.status);
     else return response.json();
   }
 
   function updateSRC(responseJSON) {
-    if (!responseJSON.data) return Promise.reject("No GIFs found");
+    if (!responseJSON.data.length) throw new Error("No GIFs Found");
     else IMG.src = responseJSON.data.images.original.url;
   }
 
