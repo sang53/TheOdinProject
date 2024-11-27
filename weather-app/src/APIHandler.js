@@ -1,9 +1,16 @@
+import { addDays, format } from "date-fns";
+
 const FREEKEY = "AB3WEYEUB5K3PCYCREEW3X4XU";
+const INTERVAL_DAYS = 5;
+const DATE_FORMAT = "yyyy-MM-dd";
+
+const fromDate = new Date();
+const toDate = addDays(fromDate, INTERVAL_DAYS);
 
 export async function getData(cityName, units) {
   try {
     const response = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${cityName}?key=${FREEKEY}&unitGroup=${units}`,
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${cityName}/${format(fromDate, DATE_FORMAT)}/${format(toDate, DATE_FORMAT)}?key=${FREEKEY}&unitGroup=${units}`,
       { mode: "cors" },
     );
 
