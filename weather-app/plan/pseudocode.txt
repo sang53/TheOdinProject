@@ -1,0 +1,43 @@
+Modules:
+
+APIHandler: 
+  public:
+    async getData (cityname) => validated data
+  
+  private:
+    async validateData(response) => response.json() || throw error
+
+DOMHandler:
+  public:
+    getCityName => searchbar.value
+    updateData() => removeData() then addData(data)
+    getUnits => units
+    toggleUnits():
+      toggleUnitsVariable()
+      convertCurrentTemp()
+      toggleUnitsDisplay()
+
+  private:
+    let displayGrid
+    const searchbar
+    let units = "celcius" || "farenheit"
+    let currentTemp = currently displayed temperature
+
+    removeData() => removes currently displayed data
+    addData(data) => (create empty grid then for...of data => createDataCell then appendDataCell) then appendChild empty grid to div.main
+    createDataCell(key, data) => div with class & textContent
+    appendDataCell(element) => append data cell to display grid
+    toggleUnitsVariable() => units switches to/from celcius/farenheight
+    convertCurrentTemp() => convert currentTemp between C/F
+    toggleUnitsDisplay() => toggles displayed units to/from celcius/farenheight
+  
+main:
+
+  clickHandler:
+    radiobuttons => if (DOMHandler.getUnits() != clicked radio button) DOMHandler.toggleUnits()
+    button:
+      DOMHandler.getCityName()
+      APIHandler.getData(cityname)
+      updateData(data)
+  
+  defaultsearch(sydney)
