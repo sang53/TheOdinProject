@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Linked List Project</title>
+    <script src="./main.js" defer="defer"></script>
+    <link href="./style.css" rel="stylesheet" />
+    <body>
+      <div class="main">
+        <h1>Linked List Project</h1>
+        <div class="content">
+          <div class="inputs">
+            <div class="box">
+              <label for="append-v">Append: </label
+              ><input type="text" name="append" id="append-v" />
+              <button id="append-b">Append</button>
+            </div>
+            <div class="box">
+              <label for="prepend-v">Prepend: </label
+              ><input type="text" name="prepend" id="prepend-v" />
+              <button id="prepend-b">Prepend</button>
+            </div>
+            <div class="box">
+              <label for="at-v">Get Value At Index: </label
+              ><input type="number" name="at" id="at-v" min="0" />
+              <button id="at-b">Get</button>
+            </div>
+            <div class="box">
+              <label for="find-v">Find Index of Value: </label
+              ><input type="text" name="find" id="find-v" />
+              <button id="find-b">Find</button>
+            </div>
+            <div class="box">
+              <label for="insertAt-val">Insert Value: </label
+              ><input type="text" name="insertAt-val" id="insertAt-val" /><label
+                for="insertAt-index"
+                >At Index: </label
+              ><input
+                type="number"
+                name="insertAt-index"
+                id="insertAt-index"
+                min="0"
+              />
+              <button id="insertAt-b">Insert</button>
+            </div>
+            <div class="box">
+              <label for="removeAt-v">Remove Node At Index: </label
+              ><input type="number" name="removeAt" id="removeAt-v" min="0" />
+              <button id="removeAt-b">Remove</button>
+            </div>
+            <div class="box"><button id="size-b">Get Size</button></div>
+            <div class="box"><button id="head-b">Get Head Node</button></div>
+            <div class="box"><button id="tail-b">Get Tail Node</button></div>
+            <div class="box"><button id="pop-b">Pop Last Node</button></div>
+          </div>
+          <div class="list-display output"></div>
+          <div class="response output"></div>
+        </div>
+      </div>
+    </body>
+  </head>
+</html>
