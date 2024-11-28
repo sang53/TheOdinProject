@@ -1,14 +1,16 @@
-import { unitSymbols } from "./UnitConverter";
+import { unitSymbols, dayNames } from "./UnitConverter";
 import { addDays } from "date-fns";
 
+// main function to handle fetched data
 export function updateData(data) {
-  console.log(data);
   TodayHandler.updateCurrentConditions(data.currentConditions);
   ForecastHandler.updateForecast(data.days);
 }
 
+// displays current conditions in div#current-conditions
 const TodayHandler = (function () {
   const CURRENT_CONTAINER = document.querySelector("#current-conditions");
+
   const CONDITIONS_DIV = document.querySelector("#conditions");
   const TEMP_DIV = document.querySelector("#temp");
   const FEELS_DIV = document.querySelector("#feels");
@@ -20,30 +22,33 @@ const TodayHandler = (function () {
     FEELS_DIV.textContent =
       "Feels Like: " + currentConditions.feelslike + UnitHandler.tempSuffix;
     HUMID_DIV.textContent = "Humidity: " + currentConditions.humidity + "%";
-    PRECIP_DIV.textContent = `Precipitation: ${currentConditions.precip + unitSymbols[UnitHandler.getUnits()][1]} @ ${currentConditions.precipprob}%`;
+    PRECIP_DIV.textContent = `Precipitation: ${currentConditions.precip + UnitHandler.precipSuffix} @ ${currentConditions.precipprob}%`;
     CONDITIONS_DIV.textContent = currentConditions.conditions;
 
     CURRENT_CONTAINER.style.backgroundColor = ForecastHandler.getBGColour(
       currentConditions.conditions,
-    );
+    ); // change container bg colour according to reported conditions
   }
 
   return { updateCurrentConditions };
 })();
 
+// displays forecast as a grid in div#forecast-container
 const ForecastHandler = (function () {
   const FORECAST_CONTAINER = document.querySelector("#forecast-container");
+
+  // templates in HTML have "hidden" class
   const TEMPLATE_GRID = document.querySelector("#template-grid");
   const TEMPLATE_CELL = document.querySelector("#template-cell");
-  let forecastDiv; // currently displayed forecast div
 
-  const dayNames = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+  let forecastDiv; // reference to currently displayed forecast div
 
   function updateForecast(daysArray) {
     newForecastDiv();
 
     let forecastDate = new Date();
 
+    // create cells w/ data for each day of data & append to the displayed grid
     for (let i in daysArray) {
       forecastDate = addDays(forecastDate, 1);
       createCell(
@@ -59,7 +64,8 @@ const ForecastHandler = (function () {
   }
 
   function newForecastDiv() {
-    if (forecastDiv) forecastDiv.remove();
+    if (forecastDiv) forecastDiv.remove(); // remove currently displayed forecast if it exists
+
     forecastDiv = TEMPLATE_GRID.cloneNode();
     forecastDiv.classList.toggle("hidden");
     FORECAST_CONTAINER.appendChild(forecastDiv);
@@ -67,12 +73,13 @@ const ForecastHandler = (function () {
 
   function createCell(conditions, temp, feels, humid, precip, precipP, day) {
     const cell = TEMPLATE_CELL.cloneNode();
-    cell.textContent = `${day} - T: ${temp + UnitHandler.tempSuffix} F: ${feels + UnitHandler.tempSuffix} H: ${humid}% P: ${precip + unitSymbols[UnitHandler.getUnits()][1]}, ${precipP}%`;
+    cell.textContent = `${day} - T: ${temp + UnitHandler.tempSuffix} F: ${feels + UnitHandler.tempSuffix} H: ${humid}% P: ${precip + UnitHandler.precipSuffix}, ${precipP}%`;
     cell.classList.toggle("hidden");
-    cell.style.backgroundColor = getBGColour(conditions);
+    cell.style.backgroundColor = getBGColour(conditions); // change cell bg colour according to reported conditions
     forecastDiv.appendChild(cell);
   }
 
+  // colours for each condition saved in ./style.css
   function getBGColour(conditions) {
     if (conditions.includes("Rain")) return "var(--rain)";
     else if (conditions.includes("Overcast") || conditions.includes("cloud"))
@@ -83,25 +90,28 @@ const ForecastHandler = (function () {
   return { updateForecast, getBGColour };
 })();
 
+// handle changes in units & the degrees suffix according to units
 export const UnitHandler = (function () {
   let units = "metric";
   let tempSuffix;
+  let precipSuffix;
 
-  updateTempSuffix();
+  updateSuffixes();
 
   function changeUnits(newUnits) {
     if (units === newUnits) return;
     units = newUnits;
-    updateTempSuffix();
+    updateSuffixes();
   }
 
   function getUnits() {
     return units;
   }
 
-  function updateTempSuffix() {
-    tempSuffix = String.fromCharCode(176) + unitSymbols[units][0];
+  function updateSuffixes() {
+    tempSuffix = String.fromCharCode(176) + unitSymbols[units][0]; //charcode 176 = degrees symbol
+    precipSuffix = unitSymbols[units][1];
   }
 
-  return { changeUnits, getUnits, tempSuffix };
+  return { changeUnits, precipSuffix, tempSuffix, getUnits };
 })();

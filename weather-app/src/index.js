@@ -8,8 +8,9 @@ const BUTTON = document.querySelector("button");
 
 document.addEventListener("click", clickHandler);
 
+// receives response.json() from API --> then passes it on to be displayed
 async function search() {
-  BUTTON.disabled = true;
+  BUTTON.disabled = true; // disable button during fetch request
   await getData(SEARCHBAR.value, UnitHandler.getUnits())
     .then(updateData)
     .finally(() => (BUTTON.disabled = false));
@@ -27,10 +28,4 @@ function clickHandler(event) {
   }
 }
 
-search();
-
-// TODO:
-// Icons for current condition
-// General Styling
-// General background colour depending on condition
-// background colour of cells depending on condition
+search(); // run default search of syndey on load

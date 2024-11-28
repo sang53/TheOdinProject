@@ -4,3 +4,5 @@ export const unitSymbols = {
   us: ["F", "in"],
   base: ["K", "mm"],
 };
+
+export const dayNames = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
