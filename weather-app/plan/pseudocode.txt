@@ -8,36 +8,45 @@ APIHandler:
     async validateData(response) => response.json() || throw error
 
 DOMHandler:
+
+  // Separated today conditions & forecast into 2 IIFEs for better readability & organisation
+  // added separate functions for handling current conditions, as they were displayed separate from forecast grid
+  // moved unit storage functions into another IIFE for organisation --> could maybe move into new UnitHandler module 
+
   public:
-    getCityName => searchbar.value
-    updateData() => removeData() then addData(data)
+    getCityName => searchbar.value                  // moved to main as cityName not required in any DOM changes
+    updateData() => removeData() & addData(data)
     getUnits => units
-    toggleUnits():
+    toggleUnits():              // removed non-fetch unit changes, as it requires alot of code for not much functionality
       toggleUnitsVariable()
       convertCurrentTemp()
       toggleUnitsDisplay()
 
   private:
     let displayGrid
-    const searchbar
-    let units = "celcius" || "farenheit"
+    const searchbar  // moved to main
+    let units = "celcius" || "farenheit"    // units were handled differently in API endpoint
     let currentTemp = currently displayed temperature
 
     removeData() => removes currently displayed data
     addData(data) => (create empty grid then for...of data => createDataCell then appendDataCell) then appendChild empty grid to div.main
     createDataCell(key, data) => div with class & textContent
-    appendDataCell(element) => append data cell to display grid
-    toggleUnitsVariable() => units switches to/from celcius/farenheight
-    convertCurrentTemp() => convert currentTemp between C/F
-    toggleUnitsDisplay() => toggles displayed units to/from celcius/farenheight
-  
+    appendDataCell(element) => append data cell to display grid         // combined into addDataCell to avoid creating 1 line function with no use
+    toggleUnitsVariable() => units switches to/from celcius/farenheight   // changed to changeUnits from toggle to accomodate 4-units API endpoint
+    convertCurrentTemp() => convert currentTemp between C/F               // removed as per: line 19
+    toggleUnitsDisplay() => toggles displayed units to/from celcius/farenheight   // removed as per: line 19
+
 main:
+
+  // added disabling button during fetch request
 
   clickHandler:
     radiobuttons => if (DOMHandler.getUnits() != clicked radio button) DOMHandler.toggleUnits()
     button:
-      DOMHandler.getCityName()
+      DOMHandler.getCityName()        // cityName & searchbar element reference stored in main as per: line 17
       APIHandler.getData(cityname)
       updateData(data)
   
   defaultsearch(sydney)
+
+// added UnitConverter module to handle mm/in & C/F/K suffixes of different units 
