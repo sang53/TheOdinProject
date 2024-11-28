@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Weather App</title>
     <body>
-      <div class="centre">
+      <div class="centre" id="main">
         <div class="content flex-column">
           <h1 class="centre">Weather</h1>
-          <div>
+          <div id="search-container">
             <label for="city-name">City: </label>
             <input type="text" name="city-name" id="city-name" value="Sydney" />
             <button id="search-button">Search!</button>
           </div>
-          <div class="radio-container flex">
+          <div class="flex" id="radio-container">
             <div>
               <label for="metric">Metric: </label>
               <input type="radio" name="units" id="metric" checked />
@@ -31,13 +31,20 @@
               <input type="radio" id="base" name="units" />
             </div>
           </div>
-          <div id="conditions"></div>
-          <div id="temp"></div>
-          <div id="feels"></div>
-          <div id="humid"></div>
-          <div id="precip"></div>
-          <div class="display grid hidden">
-            <div class="cell hidden"></div>
+
+          <div id="current-conditions" class="box flex-column">
+            <h2>Current Conditions:</h2>
+            <div id="conditions"></div>
+            <div id="temp"></div>
+            <div id="feels"></div>
+            <div id="humid"></div>
+            <div id="precip"></div>
+          </div>
+          <div id="forecast-container" class="box">
+            <h2 class="centre">Forecast:</h2>
+            <div class="display grid hidden" id="template-grid">
+              <div class="box hidden" id="template-cell"></div>
+            </div>
           </div>
         </div>
       </div>

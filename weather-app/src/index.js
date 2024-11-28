@@ -10,8 +10,9 @@ document.addEventListener("click", clickHandler);
 
 async function search() {
   BUTTON.disabled = true;
-  await getData(SEARCHBAR.value, UnitHandler.getUnits()).then(updateData);
-  BUTTON.disabled = false;
+  await getData(SEARCHBAR.value, UnitHandler.getUnits())
+    .then(updateData)
+    .finally(() => (BUTTON.disabled = false));
 }
 
 function clickHandler(event) {
@@ -27,3 +28,9 @@ function clickHandler(event) {
 }
 
 search();
+
+// TODO:
+// Icons for current condition
+// General Styling
+// General background colour depending on condition
+// background colour of cells depending on condition

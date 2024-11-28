@@ -61,8 +61,8 @@ h6 {
 }
 
 .centre {
-  width: fit-content;
   margin-inline: auto;
+  width: fit-content;
 }
 
 .grid {
@@ -82,15 +82,86 @@ h6 {
   flex-direction: column;
 }
 
+.box {
+  border: 3px solid black;
+  border-radius: 5px;
+  padding: 1rem;
+  box-shadow: 2px 2px 5px grey;
+
+  &:hover {
+    transform: scale(1.05);
+    font-size: 1.5rem;
+  }
+}
+
+:root {
+  --side-bg: #64748b;
+  --clear: #fef08a;
+  --rain: #93c5fd;
+  --cloudy: #d4d4d4;
+}
+
+@media (max-width: 500px) {
+  :root {
+    font-size: 14px;
+  }
+}
+
+body {
+  background-color: var(--side-bg);
+}
+
+#main {
+  width: clamp(400px, 75%, 80vw);
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: white;
+  box-shadow: 1px 1px 3px grey;
+}
+
 .content {
-  gap: 10px;
+  gap: 1rem;
+  align-items: center;
+}
+
+#search-container {
+  font-size: 1.25rem;
+}
+
+#radio-container {
+  min-width: 50%;
+  justify-content: space-between;
+
+  input[type="radio"] {
+    transform: scale(1.25);
+    margin-left: 0.25rem;
+    vertical-align: middle;
+  }
+}
+
+#current-conditions {
+  gap: 1rem;
+  min-width: fit-content;
+  width: 60%;
+  align-items: center;
+
+  > div {
+    font-size: 1.5rem;
+  }
+
+  > #temp {
+    font-size: 2rem;
+    font-weight: 600;
+  }
 }
 
 .display {
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.radio-container {
-  justify-content: space-between;
+#forecast-container {
+  min-width: fit-content;
+  width: 60%;
+  background-color: white;
 }
