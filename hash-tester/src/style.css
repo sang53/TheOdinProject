@@ -1,0 +1,93 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  line-height: 1.15;
+  -webkit-font-smoothing: antialiased;
+  font-family: system-ui, "Segoe UI", Roboto, Arial;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+svg {
+  vertical-align: baseline;
+}
+
+input,
+button,
+textarea,
+select,
+optgroup {
+  font: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border: 3px solid black;
+  box-shadow: 3px 2px 5px #1e293b;
+  border-radius: 6px;
+  background-color: #e2e8f0;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+  background-color: #94a3b8;
+  min-height: 100vh;
+}
+
+#content {
+  background-color: #cbd5e1;
+}
+
+textarea:focus {
+  min-width: 350px;
+  min-height: 300px;
+}
