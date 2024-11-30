@@ -20,7 +20,7 @@ import {
 import defaultProjects from "./defaultProjects.js";
 import Project from "./projectObj.js";
 import Task from "./taskObj.js";
-import { sortAscDate } from "./DateConverter.js";
+import { sortAscDate, getDateObj } from "./DateConverter.js";
 
 let projects;
 const DIALOG = document.querySelector("dialog");
@@ -73,6 +73,7 @@ function clickHandler(event) {
     case "dialog-add":
       newProject();
       FORM.reset();
+      setInputMinDate();
       DIALOG.close();
       break;
     case "dialog-cancel":
@@ -127,7 +128,10 @@ function newProject() {
   const project = new Project(
     FORM.querySelector("#input-name").value,
     FORM.querySelector("#input-description").value,
-    FORM.querySelector("#input-date").value,
+    getDateObj(
+      FORM.querySelector("#input-date").value,
+      FORM.querySelector("#input-time").value,
+    ),
   );
   FORM.querySelectorAll(".input-task").forEach(function (element) {
     if (element.value)

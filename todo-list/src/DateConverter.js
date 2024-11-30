@@ -19,3 +19,10 @@ export function sortAscDate(projects) {
     compareAsc(project1.deadline, project2.deadline),
   );
 }
+
+export function getDateObj(dateString, timeString) {
+  const dateObj = new Date(dateString);
+  const [hour, min] = timeString.split(":").map((element) => parseInt(element));
+  dateObj.setHours(hour, min);
+  return dateObj;
+}

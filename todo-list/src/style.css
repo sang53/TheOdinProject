@@ -61,7 +61,7 @@ h6 {
 }
 
 :root {
-  --sidebar-bg-color: grey;
+  --sidebar-bg-color: #cffafe;
 
   --main-bg-color: white;
 }
@@ -91,6 +91,11 @@ h6 {
 #profile {
   margin: 3rem auto;
   width: fit-content;
+
+  > #profile-name {
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
 }
 
 #sidebar-projects {
@@ -119,6 +124,8 @@ h6 {
     position: absolute;
     top: 2rem;
     right: 2rem;
+    text-decoration-line: underline;
+    text-underline-offset: 5px;
   }
 }
 
@@ -127,6 +134,11 @@ h6 {
 
   .main-deadline {
     margin-bottom: 3rem;
+  }
+
+  > input {
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
   }
 }
 
@@ -154,4 +166,9 @@ dialog {
 
 input:last-child {
   content: "Add Task";
+}
+
+button {
+  background-color: #e0e7ff;
+  border-radius: 10px;
 }
