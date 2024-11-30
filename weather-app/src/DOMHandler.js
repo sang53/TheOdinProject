@@ -18,11 +18,13 @@ const TodayHandler = (function () {
   const PRECIP_DIV = document.querySelector("#precip");
 
   function updateCurrentConditions(currentConditions) {
-    TEMP_DIV.textContent = currentConditions.temp + UnitHandler.tempSuffix;
+    TEMP_DIV.textContent = currentConditions.temp + UnitHandler.getTempSuffix();
     FEELS_DIV.textContent =
-      "Feels Like: " + currentConditions.feelslike + UnitHandler.tempSuffix;
+      "Feels Like: " +
+      currentConditions.feelslike +
+      UnitHandler.getTempSuffix();
     HUMID_DIV.textContent = "Humidity: " + currentConditions.humidity + "%";
-    PRECIP_DIV.textContent = `Precipitation: ${currentConditions.precip + UnitHandler.precipSuffix} @ ${currentConditions.precipprob}%`;
+    PRECIP_DIV.textContent = `Precipitation: ${currentConditions.precip + UnitHandler.getPrecipSuffix()} @ ${currentConditions.precipprob}%`;
     CONDITIONS_DIV.textContent = currentConditions.conditions;
 
     CURRENT_CONTAINER.style.backgroundColor = ForecastHandler.getBGColour(
@@ -73,7 +75,7 @@ const ForecastHandler = (function () {
 
   function createCell(conditions, temp, feels, humid, precip, precipP, day) {
     const cell = TEMPLATE_CELL.cloneNode();
-    cell.textContent = `${day} - T: ${temp + UnitHandler.tempSuffix} F: ${feels + UnitHandler.tempSuffix} H: ${humid}% P: ${precip + UnitHandler.precipSuffix}, ${precipP}%`;
+    cell.textContent = `${day} - T: ${temp + UnitHandler.getTempSuffix()} F: ${feels + UnitHandler.getTempSuffix()} H: ${humid}% P: ${precip + UnitHandler.getPrecipSuffix()}, ${precipP}%`;
     cell.classList.toggle("hidden");
     cell.style.backgroundColor = getBGColour(conditions); // change cell bg colour according to reported conditions
     forecastDiv.appendChild(cell);
@@ -113,5 +115,13 @@ export const UnitHandler = (function () {
     precipSuffix = unitSymbols[units][1];
   }
 
-  return { changeUnits, precipSuffix, tempSuffix, getUnits };
+  function getTempSuffix() {
+    return tempSuffix;
+  }
+
+  function getPrecipSuffix() {
+    return precipSuffix;
+  }
+
+  return { changeUnits, getTempSuffix, getPrecipSuffix, getUnits };
 })();
