@@ -59,3 +59,60 @@ h5,
 h6 {
   text-wrap: balance;
 }
+
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  border: 2px solid black;
+  box-shadow: 2px 2px 4px black;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.box-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  align-items: center;
+}
+
+textarea:focus {
+  min-width: 300px;
+  min-height: 200px;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 2px 2px 2px black;
+  border-radius: 3px;
+
+  > legend {
+    font-weight: 600;
+  }
+
+  > div {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: center;
+  }
+}
+
+#response {
+  white-space: pre;
+}
+
+#trees {
+  > div {
+    white-space: pre;
+    line-height: 1.35;
+  }
+
+  b {
+    font-weight: 600;
+  }
+}
