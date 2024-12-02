@@ -60,35 +60,72 @@ h6 {
   text-wrap: balance;
 }
 
+:root {
+  --bgc-0: #171717;
+  --bgc-1: #525252;
+  --bgc-2: #d4d4d4;
+  --bgc-3: #fafafa;
+
+  --shadow-c: #262626;
+
+  --button-bg: #e0f2fe;
+  --button-border: #0ea5e9;
+  --button-c: #082f49;
+
+  background-color: var(--bgc-0);
+  font-size: 1.25rem;
+}
+
 .box {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   padding: 1rem;
   border: 2px solid black;
-  box-shadow: 2px 2px 4px black;
+  box-shadow: 3px 3px 5px var(--shadow-c);
   align-items: center;
   border-radius: 5px;
+  background-color: var(--bgc-2);
+
+  > .box {
+    background-color: var(--bgc-3);
+    border-radius: 10px;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .box-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
   padding: 1rem;
   align-items: center;
+  min-height: 100vh;
+  max-width: 80%;
+  margin-inline: auto;
+  background-color: var(--bgc-1);
+  border-radius: 3px;
+}
+
+button {
+  background-color: var(--button-bg);
+  border: 2px solid var(--button-border);
+  color: var(--button-c);
 }
 
 textarea:focus {
-  min-width: 300px;
-  min-height: 200px;
+  min-width: 200px;
+  min-height: 150px;
 }
 
 fieldset {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  box-shadow: 2px 2px 2px black;
+  box-shadow: 2px 2px 3px var(--shadow-c);
   border-radius: 3px;
 
   > legend {
@@ -104,6 +141,9 @@ fieldset {
 
 #response {
   white-space: pre;
+  background-color: var(--bgc-3);
+  font-size: 1.35rem;
+  padding: 2rem;
 }
 
 #trees {
