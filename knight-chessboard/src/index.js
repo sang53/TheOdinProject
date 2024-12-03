@@ -1,0 +1,1 @@
+const SIDE = 8;
