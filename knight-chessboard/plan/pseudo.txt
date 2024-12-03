@@ -1,0 +1,79 @@
+Calculate Minimum Distance from start position to end position.
+
+Approach 1: BFS
+  queue = [starting position]
+  dp[i][j] = [previous position]
+
+  while (queue not empty):
+    position = .dequeue()
+    for each possible move from position:
+      if new position not in dp => dp.push(old position)
+      else => continue
+      if new position = end position => store number of moves && break
+      enqueue new position 
+
+  retrace dp from end position
+
+n := total number of board spaces
+Time Complexity: O(n) - each square visited at most once
+Space Complexity: O(n) - dp, queue both O(n)
+
+ADV:
+- simple code & algorithm
+- clear exit condition (min moves always found first)
+
+DISADV:
+- algorithm scales exponentially with number of jumps:
+    each position has average 8 moves
+    => 1 -> 8 -> 64 -> ... 8^n
+    will be significantly slower as start && end positions get further always
+
+Approach 2: A* / Djikstra / Heap
+
+  // given end position [i, j]
+  estimation function(x, y):
+    return (Math.abs(i - x) + Math.abs(j - y))/2
+
+  // can update esimation function to use % 3 so that all spaces within knight move distance will be equal
+  // wouldnt this just be the same as bfs?? 
+  // no because it will not consider moves in the opposite direction
+
+  min-heap = stores [e(starting position), [starting position], number of jumps]
+  dp[x][y] = current min jumps to position x, y
+  prev[x][y] = previous move to get to position x, y in min jumps
+
+  while (heap not empty):
+    position, jumps = pop heap
+    for each possible move:
+      if jumps + 1 < dp[new position]:
+        replace dp[new position] && prex[x, y]
+        if new position === end position:
+          exit loop
+        else:
+          push new position into heap
+  
+  // second loop when end position has been found
+  while (heap not empty):
+    // knight can move at most 3 squares per move
+    if jumps >= dp[x][y] || distance(start, end) / 3 > dp[end position] - jumps:
+      continue
+    else:
+      same as above (minus break condition)
+
+  retrace moves from end position
+
+n := total number of board spaces
+Time Complexity: O(n) -> each position will be visited at least once, max is not of order n
+Space Complexity: O(n) -> heap, dp, prev all O(n)
+
+ADV:
+- will ignore "bad" moves -> more efficient at longer distances
+
+DISADV:
+- estimation function does not perfectly represent jump distance
+  => algorithm will be less efficient as calculated positions approach end position;
+  - can probably come up with a better estimation function
+- slightly higher overhead time & space costs
+- more complex algorithm & code
+      
+
