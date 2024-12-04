@@ -6,7 +6,29 @@
     <title>Knight Chessboard</title>
     <body>
       <div class="main">
-        <h1 class="box">Calculate Minimum Knight Moves</h1>
+        <dialog>
+          <div class="grid">
+            <div class="box">
+              <label for="distance">Distance Formula:</label>
+              <input type="radio" name="functions" id="distance" checked />
+            </div>
+            <div class="box">
+              <label for="diff">Squares Difference</label>
+              <input type="radio" name="functions" id="diff" />
+            </div>
+            <div class="box">
+              <label for="diff-mod">Difference Modulus</label>
+              <input type="radio" name="functions" id="diff-mod" />
+            </div>
+            <textarea id="function-value"></textarea>
+            <button id="function">Confirm</button>
+            <button id="close-dialog">Close</button>
+          </div>
+        </dialog>
+        <h1>Calculate Minimum Knight Moves</h1>
+        <div class="box" id="functions-container">
+          <button id="open-dialog">Change Function</button>
+        </div>
         <div class="box">
           <label for="size-value">Set Board Size: </label>
           <input type="number" id="size-value" min="8" max="20" />

@@ -88,7 +88,7 @@ button {
 .main {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   align-items: center;
   min-height: 100vh;
   background-color: var(--bgc-1);
@@ -108,6 +108,14 @@ button {
   border-radius: 10px;
   background-color: var(--bgc-2);
   border: 2px solid black;
+
+  .box {
+    background-color: var(--bgc-3);
+  }
+}
+
+h1 {
+  color: var(--bgc-3);
 }
 
 #output {
@@ -140,6 +148,41 @@ input[type="text"] {
   width: 10ch;
 }
 
-#multiples-container {
+#multiples-container,
+#functions-container {
   transform: scale(0.9);
+}
+
+dialog {
+  margin: auto;
+  background-color: var(--bgc-1);
+}
+
+::backdrop {
+  background-color: var(--bgc-0);
+  opacity: 0.4;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem 0.5rem;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  > textarea {
+    min-width: 300px;
+    min-height: 150px;
+
+    grid-column: 1 / span 3;
+  }
+  > #function {
+    grid-column-start: 1;
+  }
+
+  > #close-dialog {
+    grid-column-end: -1;
+  }
+
+  button {
+    min-height: 2rem;
+  }
 }

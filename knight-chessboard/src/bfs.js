@@ -22,7 +22,7 @@ export class BFS {
         const movesToCheck = BFS.#iterateMoves(moves.pop(), prevMoves);
         if (!movesToCheck) {
           found = true;
-          break;
+          break; // will always find minimum first
         }
         nextMoves = nextMoves.concat(movesToCheck);
       }
@@ -68,6 +68,7 @@ export class BFS {
     return moves;
   }
 
+  // string key for use in maps
   static #getKeyFromPos(x, y) {
     return `${x},${y}`;
   }

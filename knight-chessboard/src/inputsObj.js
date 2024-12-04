@@ -1,3 +1,6 @@
+import { MinHeap } from "./heap";
+
+// Object to store all input values
 export class Inputs {
   static sides = 8;
   static piece = "knight";
@@ -18,8 +21,10 @@ export class Inputs {
   static #setEnd(inputString) {
     const endArray = Inputs.#validateToArray(inputString);
     Inputs.endPos = endArray;
+    MinHeap.endPos = endArray; // add to MinHeap for changing est function
   }
 
+  // validates input string and returns position array
   static #validateToArray(inputString) {
     const inputArray = inputString
       .split(",")

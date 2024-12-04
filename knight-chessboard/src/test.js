@@ -2,6 +2,7 @@ import { Inputs } from "./inputsObj";
 import { BFS } from "./bfs";
 import { MinHeap } from "./heap";
 
+// test all combinations of current board size
 export function test(num) {
   Inputs.sides = num;
   console.log("Testing:");
@@ -13,6 +14,7 @@ export function test(num) {
   console.log("Done");
 }
 
+// make sure both algorithms return the same solution
 function testEveryCombo(num) {
   for (let y = 0; y < Inputs.sides; y++) {
     for (let x = 0; x < Inputs.sides; x++) {

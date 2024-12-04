@@ -2,11 +2,11 @@ const BOARD = document.querySelector("#board");
 const RESPONSE = document.querySelector("#response");
 const TIME = document.querySelector("#time");
 
+// keep track of coloured squares to reset
 const coloured = [];
 
 export function makeBoard(sides = 8) {
   clearBoard();
-  updateOutput("");
   addSquares(sides);
   BOARD.style.grid = `repeat(${sides}, 1fr) / repeat(${sides}, 1fr)`;
 }
@@ -39,6 +39,7 @@ export function displayResults(movesArray) {
   updateOutput(movesToString(movesArray));
 }
 
+// colour start & end squares differnt colours
 function colourEnds(startPos, endPos) {
   const startSquare = BOARD.querySelector(
     `#square-${startPos[0]}-${startPos[1]}`,
@@ -51,6 +52,7 @@ function colourEnds(startPos, endPos) {
   endSquare.textContent = "End";
 }
 
+// colour & number jumped squares
 function colourSquares(squaresArray) {
   coloured.forEach(
     (element) => (element.style.backgroundColor = "var(--bgc-3)"),
@@ -68,6 +70,7 @@ export function updateOutput(string) {
   RESPONSE.innerText = string;
 }
 
+// converts array of jumps to string for output
 function movesToString(movesArray) {
   return `Jumps: ${movesArray.length - 1}\n` + movesArray.join("\n");
 }

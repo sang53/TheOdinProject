@@ -7,6 +7,7 @@ export function getMoves(x, y) {
   ]);
 }
 
+// for possible expansion of different movements
 const movesByPiece = {
   knight: [
     [2, 1],
