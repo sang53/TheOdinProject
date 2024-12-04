@@ -63,17 +63,16 @@ Approach 2: A* / Djikstra / Heap
   retrace moves from end position
 
 n := total number of board spaces
-Time Complexity: O(n) -> each position will be visited at least once, max is not of order n
+Time Complexity: O(nlogn) -> each position will be visited at least once, max is not of order n
+                             each push/pop costs logn in heap
 Space Complexity: O(n) -> heap, dp, prev all O(n)
 
 ADV:
-- will ignore "bad" moves -> more efficient at longer distances
+- will ignore "bad" moves -> more efficient at longer distances & better average case?
 
 DISADV:
 - estimation function does not perfectly represent jump distance
   => algorithm will be less efficient as calculated positions approach end position;
   - can probably come up with a better estimation function
-- slightly higher overhead time & space costs
+- higher worst case time complexity
 - more complex algorithm & code
-      
-
