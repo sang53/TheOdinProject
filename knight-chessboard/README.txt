@@ -20,12 +20,17 @@ Customisables:
     How many squares are on each side of the board
     The board must be a square
     Must be an integer between 8 & 20
+
   Multiples (default 1):
     How many times each algorithm is ran to benchmark
     Must be an integer between 1 & 999
+
   Start & End Position:
     Start and End positions of the chess piece used in calculations
     Must be of the pattern "x, y" - where 0 < x && y < board size - 1 and integers
+
+  Estimation Function:
+    
 
   Can be added:
     Piece (currently only knight) - most other chess pieces can be moved to another square in 1-2 moves. However, other moving patterns can be added easily
