@@ -7,7 +7,7 @@
     "build": "webpack --config webpack.prod.js",
     "start": "webpack serve --open --config webpack.dev.js",
     "test": "jest",
-    "watch": "jest --watch *.js"
+    "watch": "jest --watch tests/*.test.js"
   },
   "author": "",
   "license": "ISC",
