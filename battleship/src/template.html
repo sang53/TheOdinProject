@@ -5,10 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>BattleShip</title>
     <body>
-      <div class="main">
-        <h1>Play BattleShip</h1>
-        <div class="content"></div>
+      <div id="main" class="flex-column">
+        <div id="control-container" class="box flex-column">
+          <div id="instructions">Welcome To BattleShip!</div>
+          <button id="control-button">Start</button>
+        </div>
       </div>
+      <dialog id="rules-dialog">
+        <div class="flex-column">
+          <h2>How to Play</h2>
+          <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit
+            nobis iusto, ratione libero repudiandae deleniti voluptatem. Est,
+            tempore eveniet. Accusamus, impedit. Quidem, nulla? Esse eveniet
+            velit aliquid in, vitae rerum.
+          </div>
+          <div>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic ea
+            veniam obcaecati ad maxime facere et odit atque optio pariatur
+            expedita a, impedit, saepe voluptatibus quibusdam corporis delectus
+            debitis ratione?
+          </div>
+          <button id="close-rules">Close</button>
+        </div>
+      </dialog>
+      <dialog id="customise-dialog">
+        <form id="customise-form" class="flex-column">
+          <fieldset class="flex-column">
+            <legend>Choose Opponent:</legend>
+            <div>
+              <label for="player">Player: </label
+              ><input name="opponent" type="radio" id="player" checked />
+            </div>
+            <div>
+              <label for="computer">Computer: </label
+              ><input name="opponent" type="radio" id="computer" />
+            </div>
+          </fieldset>
+          <fieldset class="flex-column">
+            <legend>Shots Per Turn:</legend>
+            <div>
+              <label for="single">Single: </label
+              ><input name="shots" type="radio" id="single" checked />
+            </div>
+            <div>
+              <label for="cluster">Cluster (1 / Ship): </label
+              ><input name="shots" type="radio" id="cluster" />
+            </div>
+          </fieldset>
+          <div>
+            <label for="sides">Tiles per side: </label
+            ><input type="number" id="sides" min="10" max="15" value="10" />
+          </div>
+          <div>
+            <label for="ships">Ships: </label>
+            <input type="number" id="ships" min="5" max="7" value="5" />
+          </div>
+          <button id="customise-confirm">Confirm</button>
+        </form>
+      </dialog>
     </body>
   </head>
 </html>
