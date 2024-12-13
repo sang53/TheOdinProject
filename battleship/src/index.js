@@ -7,9 +7,8 @@ import {
   toggleClass,
   switchScreen,
 } from "./DOMOutput";
-import { getCustomRules } from "./DOMInput";
 import { makeBoard, makeControllers } from "./init";
-import { setupShipSelect } from "./shipSelect";
+import { resetShipSelect, setupShipSelect } from "./shipSelect";
 import { Player } from "./Player";
 
 const SIDES = 10;
@@ -17,7 +16,16 @@ const SHIPS = 5;
 let shots;
 
 let gameStage = 0;
-const steps = [["rules", "customise", "ship select", "switch", "cpu ships"]];
+const steps = [
+  [
+    "rules",
+    "customise",
+    "ship select",
+    "reset ship select",
+    "switch",
+    "cpu ships",
+  ],
+];
 let stepIdx = 0;
 let currentTurn = 0;
 
@@ -47,6 +55,7 @@ function initialise() {
 }
 
 export function gameController() {
+  console.log(gameStage, stepIdx);
   if (gameStage === 0) {
     switch (steps[gameStage][stepIdx]) {
       case "rules":
@@ -57,31 +66,44 @@ export function gameController() {
         break;
       case "ship select":
         shipSelect();
-        toggleTurn();
+        currentTurn = toggleTurn();
+        break;
+      case "reset ship select":
+        resetShipSelect();
+        toggleClass(players[toggleTurn()].board.boardRef, "hidden");
         break;
       case "switch":
         switchScreen(currentTurn);
         break;
       case "cpu ships":
         // randomly set cpu ships
-        toggleTurn();
+        currentTurn = toggleTurn();
         break;
     }
 
     switch (stepIdx) {
-      case 2:
-        if (currentTurn === 1) nextStage();
-        else if (players[1].control) stepIdx = 4;
-        else stepIdx++;
-        break;
       case 3:
-        stepIdx = 2;
+        if (currentTurn === 0) nextStage();
+        else if (!players[1].control) {
+          stepIdx = 5;
+          gameController();
+          return;
+        } else {
+          stepIdx++;
+          gameController();
+          return;
+        }
         break;
       case 4:
-        nextStage();
+        stepIdx = 2;
         break;
+      case 5:
+        nextStage();
+        gameController();
+        return;
       default:
         stepIdx++;
+        break;
     }
   }
 }
@@ -111,8 +133,7 @@ export function toggleControlButton(bool = controllers.button.disabled) {
 }
 
 function toggleTurn() {
-  currentTurn = currentTurn ? 0 : 1;
-  return currentTurn;
+  return currentTurn ? 0 : 1;
 }
 
 function nextStage() {

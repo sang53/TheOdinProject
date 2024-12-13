@@ -1,4 +1,5 @@
 import { toggleControlButton } from ".";
+import { Board } from "./Board";
 import { makeElement, addToMain, toggleClass } from "./DOMOutput";
 import { Ship } from "./Ship";
 
@@ -88,7 +89,7 @@ function deselectShip(shipRef) {
 
   const shipObj = shipObjFromId.get(shipRef.id);
   // replace ship on same squares if previously selected from board
-  if (shipObj.squareId) currBoardObj.addShip(shipObj.squareId, shipObj);
+  if (shipObj.startKey) currBoardObj.addShip(shipObj.startKey, shipObj);
 
   toggleControlButton(hangarShipIds.size === 0);
 }
@@ -113,7 +114,10 @@ function selectSquare(event) {
 
   // case: ship cannot be placed at click location
   if (
-    !currBoardObj.checkShip(event.target.id, shipObjFromId.get(currShipRef.id))
+    !currBoardObj.checkShip(
+      Board.getKeyfromId(event.target.id),
+      shipObjFromId.get(currShipRef.id),
+    )
   ) {
     deselectShip(currShipRef);
     currShipRef = null;
@@ -123,7 +127,7 @@ function selectSquare(event) {
 function placeShip(square) {
   // add ship to board DOM & board.shipSquares
   const shipObj = shipObjFromId.get(currShipRef.id);
-  currBoardObj.addShip(square.id, shipObj);
+  currBoardObj.addShip(Board.getKeyfromId(square.id), shipObj);
   square.appendChild(currShipRef);
 
   // case: ship is from hangar
@@ -131,9 +135,6 @@ function placeShip(square) {
     toggleClass(currShipRef, "placed");
     hangarShipIds.delete(currShipRef.id);
   }
-
-  // update placement
-  shipObj.squareId = square.id;
 
   // deselect ship
   toggleClass(currShipRef, "selected");
@@ -159,7 +160,7 @@ function returnShip() {
 
   // update internal ship placement data
   currBoardObj.removeShip(currBoardObj);
-  shipObj.squareId = null;
+  shipObj.startKey = null;
 
   deselectShip(currShipRef);
   currShipRef = null;
@@ -170,4 +171,24 @@ function needRotate(shipObj) {
   if (!hangarShipIds.size) return false;
   const hangarShip = shipObjFromId.get(hangarShipIds.values().next().value);
   return shipObj.orient !== hangarShip.orient;
+}
+
+export function resetShipSelect() {
+  // remove all event listeners
+  hangarRef.removeEventListener("click", returnShip);
+  hangarRef.querySelector("button").removeEventListener("click", rotateShips);
+  hangarRef.remove();
+
+  currBoardObj.boardRef.removeEventListener("click", selectSquare);
+
+  shipObjFromId.forEach((shipObj) => {
+    shipObj.shipRef.removeEventListener("click", selectShip);
+  });
+
+  // nullify global variables for garbage collection
+  currBoardObj = null;
+  hangarRef = null;
+  currShipRef = null;
+  hangarShipIds = null;
+  shipObjFromId = null;
 }
