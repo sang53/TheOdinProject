@@ -66,7 +66,7 @@ export function toggleClass(element, className) {
 export function switchScreen(currentTurn) {
   SWITCH_DIALOG.showModal();
   const outputStr = `Player ${currentTurn + 1}'s Turn`;
-  SWITCH_DIALOG.querySelector("div").textContent = outputStr;
+  SWITCH_DIALOG.querySelector("#player-turn").textContent = outputStr;
   SWITCH_DIALOG.querySelector("button").addEventListener("click", closeSwitch);
 }
 
