@@ -6,8 +6,8 @@ export class Board {
     this.squares = squaresMap;
   }
 
-  checkShip(squareId, ship) {
-    const keysArray = this.#getShipKeys(squareId, ship);
+  checkShip(startKey, ship) {
+    const keysArray = this.#getShipKeys(startKey, ship);
     if (!keysArray) return false;
     for (const key of keysArray) {
       if (this.shipSquares.has(key)) return false;
@@ -15,15 +15,14 @@ export class Board {
     return true;
   }
 
-  addShip(squareId, ship) {
-    const keysArray = this.#getShipKeys(squareId, ship);
+  addShip(startKey, ship) {
+    const keysArray = this.#getShipKeys(startKey, ship);
     keysArray.forEach((key) => this.shipSquares.set(key, ship));
 
-    ship.squareId = squareId;
+    ship.startKey = startKey;
   }
 
-  #getShipKeys(squareId, ship) {
-    const key = Board.getKeyfromId(squareId);
+  #getShipKeys(key, ship) {
     let [x, y] = Board.getCoords(key);
     const keysArray = [];
     if (ship.orient === "horizontal") {
