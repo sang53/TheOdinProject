@@ -6,11 +6,13 @@ export function cpuShips(board, numShips, sides) {
 
   // add ships to random coordinate
   shipObjArray.forEach((shipObj) => {
-    let key = getRandKey(sides);
-    // generate random keys until ship fits on board
-    while (!board.checkShip(key, shipObj)) {
+    // generate random keys & rotations until ship fits on board
+    let key;
+    do {
       key = getRandKey(sides);
-    }
+      if (Math.random() < 0.5) shipObj.switchOrient();
+    } while (!board.checkShip(key, shipObj));
+
     board.addShip(key, shipObj);
   });
 }
