@@ -12,7 +12,12 @@ let board;
 const ship1 = { length: 5, orient: "horizontal" };
 const ship2 = { length: 4, orient: "vertical" };
 beforeAll(() => {
-  board = new Board({}, {});
+  board = new Board({}, new Map());
+  for (let y = 0; y < 10; y++) {
+    for (let x = 0; x < 10; x++) {
+      board.squares.set(Board.getKeyfromCoords([x, y]), "test");
+    }
+  }
   board.addShip("2-3", ship1);
   board.addShip("5-4", ship2);
 });
@@ -34,7 +39,7 @@ describe("adds ships correctly", () => {
 describe("checks ships correctly", () => {
   test("checks empty spot", () => {
     expect(
-      board.checkShip("9-2", {
+      board.checkShip("1-2", {
         length: 2,
         orient: "horizontal",
       }),
@@ -43,6 +48,14 @@ describe("checks ships correctly", () => {
   test("checks taken spot", () => {
     expect(
       board.checkShip("1-3", {
+        length: 2,
+        orient: "horizontal",
+      }),
+    ).toBeFalsy();
+  });
+  test("checks out of bounds", () => {
+    expect(
+      board.checkShip("15-12", {
         length: 2,
         orient: "horizontal",
       }),
