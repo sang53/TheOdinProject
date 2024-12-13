@@ -6,6 +6,7 @@ export class Board {
     this.squares = squaresMap;
   }
 
+  // returns true if ship can be placed at key
   checkShip(startKey, ship) {
     const keysArray = this.#getShipKeys(startKey, ship);
     if (!keysArray) return false;

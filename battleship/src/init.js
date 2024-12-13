@@ -2,27 +2,30 @@ import { makeElement } from "./DOMOutput";
 import { Board } from "./Board";
 
 export function makeControllers() {
-  const controllers = {};
   const controlContainer = makeElement("div", [
     ["id", "control-container"],
     ["class", "box flex-column"],
   ]);
+
   const instructions = makeElement(
     "div",
     [["id", "instructions"]],
     "Welcome To BattleShip!",
   );
   controlContainer.appendChild(instructions);
+
   const controlButton = makeElement(
     "button",
     [["id", "control-button"]],
     "Start",
   );
   controlContainer.appendChild(controlButton);
-  controllers.container = controlContainer;
-  controllers.instructions = instructions;
-  controllers.button = controlButton;
-  return controllers;
+
+  return {
+    container: controlContainer,
+    instructions: instructions,
+    button: controlButton,
+  };
 }
 
 export function makeBoard(playerIdx, sides) {

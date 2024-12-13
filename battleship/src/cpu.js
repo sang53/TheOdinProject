@@ -4,8 +4,10 @@ import { Ship } from "./Ship";
 export function cpuShips(board, numShips, sides) {
   const shipObjArray = getCpuShips(numShips);
 
+  // add ships to random coordinate
   shipObjArray.forEach((shipObj) => {
     let key = getRandKey(sides);
+    // generate random keys until ship fits on board
     while (!board.checkShip(key, shipObj)) {
       key = getRandKey(sides);
     }

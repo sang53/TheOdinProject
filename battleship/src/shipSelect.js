@@ -166,7 +166,7 @@ function returnShip() {
   currShipRef = null;
 }
 
-// rotate to fit in hangar if needed
+// determine need to rotate ship to fit in hangar
 function needRotate(shipObj) {
   if (!hangarShipIds.size) return false;
   const hangarShip = shipObjFromId.get(hangarShipIds.values().next().value);
@@ -174,7 +174,7 @@ function needRotate(shipObj) {
 }
 
 export function resetShipSelect() {
-  // remove all event listeners
+  // remove all event listeners & uneeded DOM elements
   hangarRef.removeEventListener("click", returnShip);
   hangarRef.querySelector("button").removeEventListener("click", rotateShips);
   hangarRef.remove();

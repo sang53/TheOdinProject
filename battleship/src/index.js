@@ -10,6 +10,7 @@ import {
 import { makeBoard, makeControllers } from "./init";
 import { resetShipSelect, setupShipSelect } from "./shipSelect";
 import { Player } from "./Player";
+import { cpuShips } from "./cpu";
 
 const SIDES = 10;
 const SHIPS = 5;
@@ -37,7 +38,7 @@ initialise();
 function initialise() {
   // create players and their boards
   for (let i = 0; i < 2; i++) {
-    const player = new Player(0);
+    const player = new Player(i);
     player.setBoard(makeBoard(i, SIDES));
     players.push(player);
   }
@@ -55,7 +56,6 @@ function initialise() {
 }
 
 export function gameController() {
-  console.log(gameStage, stepIdx);
   if (gameStage === 0) {
     switch (steps[gameStage][stepIdx]) {
       case "rules":
@@ -76,23 +76,21 @@ export function gameController() {
         switchScreen(currentTurn);
         break;
       case "cpu ships":
-        // randomly set cpu ships
+        cpuShips(players[1].board, SHIPS, SIDES);
         currentTurn = toggleTurn();
         break;
     }
 
     switch (stepIdx) {
       case 3:
-        if (currentTurn === 0) nextStage();
-        else if (!players[1].control) {
-          stepIdx = 5;
-          gameController();
-          return;
-        } else {
-          stepIdx++;
-          gameController();
-          return;
-        }
+        // case: cpu => set cpu ships => next stage
+        if (!players[1].control) stepIdx = 5;
+        // case: second ship selection => next stage
+        else if (currentTurn === 0) nextStage();
+        // case: player0 ship selection => switch screen
+        else stepIdx++;
+
+        gameController();
         break;
       case 4:
         stepIdx = 2;
@@ -100,11 +98,12 @@ export function gameController() {
       case 5:
         nextStage();
         gameController();
-        return;
+        break;
       default:
         stepIdx++;
         break;
     }
+  } else if (gameStage === 1) {
   }
 }
 
