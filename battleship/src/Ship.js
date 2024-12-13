@@ -1,8 +1,10 @@
 export class Ship {
-  constructor(length) {
+  constructor(length, shipRef) {
     this.length = length;
     this.hits = 0;
     this.orient = "horizontal";
+    this.shipRef = shipRef;
+    this.squareId = null;
   }
 
   receiveHit() {

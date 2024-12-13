@@ -1,77 +1,173 @@
-import { sides, ships } from "./gameLogic";
-import {
-  updateController,
-  makeElement,
-  addToMain,
-  toggleControlButton,
-} from "./DOMOutput";
-import { buildBoard } from "./init";
+import { toggleControlButton } from ".";
+import { makeElement, addToMain, toggleClass } from "./DOMOutput";
+import { Ship } from "./Ship";
 
-let currentShip;
-let currentBoard;
-let hangarShips;
-let placedShips;
-let hangar;
+let currBoardObj;
+let hangarRef;
 
-export function setupShipSelect(player) {
-  updateController("Place Your Ships!", "Done");
-  toggleControlButton();
+let currShipRef;
+let hangarShipIds;
+let shipObjFromId;
 
-  assignBoard(player);
-  hangar = getHangar();
-  hangarShips = getShips();
+export function setupShipSelect(board, numShips) {
+  // initialise helper data structures
+  hangarShipIds = new Set();
 
-  currentBoard.addEventListener("click", selectSquare);
+  // set up hangar & attach to DOM
+  hangarRef = makeHangar();
+  addToMain(hangarRef);
+  hangarRef.addEventListener("click", returnShip);
+
+  // set up ships & attach to DOM
+  shipObjFromId = makeShips(numShips);
+  shipObjFromId.forEach((shipObj, shipId) => {
+    hangarShipIds.add(shipId);
+    hangarRef.appendChild(shipObj.shipRef);
+    shipObj.shipRef.addEventListener("click", selectShip);
+  });
+
+  currBoardObj = board;
+  currBoardObj.boardRef.addEventListener("click", selectSquare);
 }
 
-function assignBoard(player) {
-  currentBoard = buildBoard(player.number, sides);
-  player.setBoard(currentBoard);
+function makeHangar() {
+  const hangar = makeElement("div", [["class", "ship-container"]]);
+  const rotateButton = makeElement("button", [[]], "Rotate Ship");
+  hangar.appendChild(rotateButton);
+  rotateButton.addEventListener("click", rotateShips);
+  return hangar;
 }
 
-function getHangar() {
-  const container = makeElement("div", [["class", "ship-container"]]);
-  container.addEventListener("click", selectShip);
-  addToMain(container);
-  return container;
-}
-
-function getShips() {
-  const shipsArray = [];
-  for (let i = 1; i <= ships; i++) {
+// make each ship => return map
+function makeShips(numShips) {
+  const shipMap = new Map();
+  for (let i = 1; i <= numShips; i++) {
     const ship = buildShip(i);
-    ship.addEventListener("click", selectShip);
-    shipsArray.push(ship);
+    shipMap.set(ship.shipRef.id, ship);
   }
-  return shipsArray;
+  return shipMap;
 }
 
-function selectShip(event) {
-  event.currentTarget.classList.toggle("selected");
-  if (event.currentTarget === currentShip) {
-    currentShip = null;
-    return;
-  }
-  if (currentShip) currentShip.classList.toggle("selected");
-  currentShip = event.currentTarget;
-}
-
-function selectSquare(event) {
-  if (!currentShip) return;
-
-  if (!currentBoard.checkShip(event.target.id, currentShip)) {
-    currentShip = null;
-    return;
-  }
-}
-
+// make & attach ship to DOM => return ship Obj
 function buildShip(length) {
-  const ship = makeElement("div", [
+  const shipRef = makeElement("div", [
     ["class", "ship"],
     ["id", `ship-${length}`],
   ]);
   for (let i = 0; i < length; i++) {
-    ship.appendChild(makeElement("div", [["class", "square"]]));
+    shipRef.appendChild(makeElement("div", [["class", "square"]]));
   }
-  return ship;
+  return new Ship(length, shipRef);
+}
+
+function selectShip(event) {
+  event.stopPropagation();
+  const currTarget = event.currentTarget;
+
+  if (currShipRef) deselectShip(currShipRef);
+
+  // case: click on selected ship => no selected ship
+  if (currTarget === currShipRef) {
+    currShipRef = null;
+  }
+  // case: new ship selected => select new ship
+  else {
+    toggleClass(currTarget, "selected");
+    currShipRef = currTarget;
+
+    // remove selected ship from board if already placed
+    if (!hangarShipIds.has(currTarget.id)) {
+      currBoardObj.removeShip(shipObjFromId.get(currTarget.id));
+      toggleControlButton(false);
+    }
+  }
+}
+
+function deselectShip(shipRef) {
+  toggleClass(shipRef, "selected");
+
+  const shipObj = shipObjFromId.get(shipRef.id);
+  // replace ship on same squares if previously selected from board
+  if (shipObj.squareId) currBoardObj.addShip(shipObj.squareId, shipObj);
+
+  toggleControlButton(hangarShipIds.size === 0);
+}
+
+// rotates all ships in hangar
+function rotateShips(event) {
+  event.stopPropagation();
+
+  hangarShipIds.forEach((shipId) => {
+    rotate(shipObjFromId.get(shipId));
+  });
+}
+
+function rotate(shipObj) {
+  shipObj.switchOrient();
+  toggleClass(shipObj.shipRef, "rotated");
+}
+
+function selectSquare(event) {
+  if (!currShipRef) return;
+  if (event.target === currBoardObj.boardRef) return;
+
+  // case: ship cannot be placed at click location
+  if (
+    !currBoardObj.checkShip(event.target.id, shipObjFromId.get(currShipRef.id))
+  ) {
+    deselectShip(currShipRef);
+    currShipRef = null;
+  } else placeShip(event.target);
+}
+
+function placeShip(square) {
+  // add ship to board DOM & board.shipSquares
+  const shipObj = shipObjFromId.get(currShipRef.id);
+  currBoardObj.addShip(square.id, shipObj);
+  square.appendChild(currShipRef);
+
+  // case: ship is from hangar
+  if (hangarShipIds.has(currShipRef.id)) {
+    toggleClass(currShipRef, "placed");
+    hangarShipIds.delete(currShipRef.id);
+  }
+
+  // update placement
+  shipObj.squareId = square.id;
+
+  // deselect ship
+  toggleClass(currShipRef, "selected");
+  currShipRef = null;
+
+  // can progress game if all ships placed
+  toggleControlButton(hangarShipIds.size === 0);
+}
+
+function returnShip() {
+  if (!currShipRef) return;
+  if (hangarShipIds.has(currShipRef.id)) return;
+
+  const shipObj = shipObjFromId.get(currShipRef.id);
+
+  // rotate ship to fit in hangar if needed
+  if (needRotate(shipObj)) rotate(shipObj);
+
+  // move ship back to hangar
+  toggleClass(currShipRef, "placed");
+  hangarRef.appendChild(currShipRef);
+  hangarShipIds.add(currShipRef.id);
+
+  // update internal ship placement data
+  currBoardObj.removeShip(currBoardObj);
+  shipObj.squareId = null;
+
+  deselectShip(currShipRef);
+  currShipRef = null;
+}
+
+// rotate to fit in hangar if needed
+function needRotate(shipObj) {
+  if (!hangarShipIds.size) return false;
+  const hangarShip = shipObjFromId.get(hangarShipIds.values().next().value);
+  return shipObj.orient !== hangarShip.orient;
 }
