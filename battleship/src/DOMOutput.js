@@ -1,3 +1,4 @@
+import { getCustomRules } from "./DOMInput";
 import { gameController } from "./index";
 
 const CUSTOM_DIALOG = document.querySelector("#customise-dialog");
@@ -24,7 +25,10 @@ function closeRules() {
 
 function closeRulesProgress() {
   RULES_DIALOG.close();
-  RULES_DIALOG.querySelector("button").removeEventListener("click", closeRules);
+  RULES_DIALOG.querySelector("button").removeEventListener(
+    "click",
+    closeRulesProgress,
+  );
   gameController();
 }
 
@@ -37,12 +41,15 @@ export function openCustomise() {
 }
 
 function closeCustomise(event) {
+  // prevent form submission
   event.preventDefault();
+
   CUSTOM_DIALOG.querySelector("button").removeEventListener(
     "click",
     closeCustomise,
   );
   CUSTOM_DIALOG.close();
+  getCustomRules();
   gameController();
 }
 
