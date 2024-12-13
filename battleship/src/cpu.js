@@ -17,14 +17,14 @@ export function cpuShips(board, numShips, sides) {
 
 function getCpuShips(numShips) {
   const shipArray = [];
-  for (let i = 0; i < numShips; i++) {
+  for (let i = 1; i <= numShips; i++) {
     shipArray.push(new Ship(i));
   }
   return shipArray;
 }
 
 function getRandKey(sides) {
-  return Board.getKeyfromCoords(getRandCoord(sides), getRandCoord(sides));
+  return Board.getKeyfromCoords([getRandCoord(sides), getRandCoord(sides)]);
 }
 
 function getRandCoord(sides) {
