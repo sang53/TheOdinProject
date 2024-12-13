@@ -9,7 +9,9 @@ export class Board {
   // returns true if ship can be placed at key
   checkShip(startKey, ship) {
     const keysArray = this.#getShipKeys(startKey, ship);
-    if (!keysArray) return false;
+    // case: out of bounds
+    if (keysArray.length !== ship.length) return false;
+
     for (const key of keysArray) {
       if (this.shipSquares.has(key)) return false;
     }
@@ -28,13 +30,11 @@ export class Board {
     const keysArray = [];
     if (ship.orient === "horizontal") {
       const x_max = x + ship.length;
-      if (x_max > 10) return false;
       for (; x < x_max; x++) {
         keysArray.push(Board.getKeyfromCoords([x, y]));
       }
     } else {
       const y_max = y + ship.length;
-      if (y_max > 10) return false;
       for (; y < y_max; y++) {
         keysArray.push(Board.getKeyfromCoords([x, y]));
       }
