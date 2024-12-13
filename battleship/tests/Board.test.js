@@ -2,9 +2,9 @@ import { Board } from "../src/Board";
 import { describe, test, expect, beforeAll } from "@jest/globals";
 
 describe("Coord and Key transformers", () => {
-  test("get key from square id", () => {
-    expect(Board.getKeyfromId("player1-2-3")).toBe("2-3");
-    expect(Board.getKeyfromId("player2-5-6")).toBe("5-6");
+  test("get key from key", () => {
+    expect(Board.getKeyfromId("player0-2-3")).toBe("2-3");
+    expect(Board.getKeyfromId("player1-5-6")).toBe("5-6");
   });
 });
 
@@ -13,8 +13,8 @@ const ship1 = { length: 5, orient: "horizontal" };
 const ship2 = { length: 4, orient: "vertical" };
 beforeAll(() => {
   board = new Board({}, {});
-  board.addShip("player1-2-3", ship1);
-  board.addShip("player2-5-4", ship2);
+  board.addShip("2-3", ship1);
+  board.addShip("5-4", ship2);
 });
 
 describe("adds ships correctly", () => {
@@ -34,7 +34,7 @@ describe("adds ships correctly", () => {
 describe("checks ships correctly", () => {
   test("checks empty spot", () => {
     expect(
-      board.checkShip("player1-9-2", {
+      board.checkShip("9-2", {
         length: 2,
         orient: "horizontal",
       }),
@@ -42,7 +42,7 @@ describe("checks ships correctly", () => {
   });
   test("checks taken spot", () => {
     expect(
-      board.checkShip("player1-1-3", {
+      board.checkShip("1-3", {
         length: 2,
         orient: "horizontal",
       }),
