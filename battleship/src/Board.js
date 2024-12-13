@@ -4,6 +4,7 @@ export class Board {
     this.shipSquares = new Map();
     this.boardRef = board;
     this.squares = squaresMap;
+    this.ships = [];
   }
 
   // returns true if ship can be placed at key
@@ -60,9 +61,10 @@ export class Board {
 
   receiveShot(key) {
     this.shotSquares.add(key);
-    if (!this.shipSquares.has(key)) return false;
-    this.shipSquares.get(key).receiveShot();
-    return true;
+    if (!this.shipSquares.has(key)) return null;
+    const shipObj = this.shipSquares.get(key);
+    shipObj.receiveHit();
+    return shipObj;
   }
 
   static getKeyfromCoords([x, y]) {

@@ -19,12 +19,13 @@ export function setupShipSelect(board, numShips) {
   addToMain(hangarRef);
   hangarRef.addEventListener("click", returnShip);
 
-  // set up ships & attach to DOM
+  // set up ships & attach to DOM && add shipObj ref to board
   shipObjFromId = makeShips(numShips);
   shipObjFromId.forEach((shipObj, shipId) => {
     hangarShipIds.add(shipId);
     hangarRef.appendChild(shipObj.shipRef);
     shipObj.shipRef.addEventListener("click", selectShip);
+    currBoardObj.ships.push(shipObj);
   });
 
   currBoardObj = board;
