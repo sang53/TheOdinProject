@@ -2,6 +2,7 @@ import { gameController } from "./index";
 
 const CUSTOM_DIALOG = document.querySelector("#customise-dialog");
 const RULES_DIALOG = document.querySelector("#rules-dialog");
+const SWITCH_DIALOG = document.querySelector("#switch-screen");
 const MAIN = document.querySelector("#main");
 
 // open rules w/ || w/o progressing game on close rules
@@ -60,4 +61,17 @@ export function addToMain(element) {
 
 export function toggleClass(element, className) {
   element.classList.toggle(className);
+}
+
+export function switchScreen(currentTurn) {
+  SWITCH_DIALOG.showModal();
+  const outputStr = `Player ${currentTurn + 1}'s Turn`;
+  SWITCH_DIALOG.querySelector("div").textContent = outputStr;
+  SWITCH_DIALOG.querySelector("button").addEventListener("click", closeSwitch);
+}
+
+function closeSwitch(event) {
+  SWITCH_DIALOG.close();
+  event.target.removeEventListener("click", closeSwitch);
+  gameController();
 }
