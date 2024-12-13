@@ -118,7 +118,7 @@ fieldset {
 
 ::backdrop {
   background-color: var(--bgc-0);
-  opacity: 0.8;
+  opacity: 1;
 }
 
 #main {
@@ -126,6 +126,7 @@ fieldset {
   margin: 1rem 2rem;
   justify-content: center;
   min-height: 100vh;
+  gap: 2rem;
 }
 
 #control-container {
@@ -153,10 +154,12 @@ fieldset {
 
 .ship-container {
   display: flex;
+  flex-wrap: wrap;
   padding: 1rem;
   gap: 2rem;
   border: 1px solid var(--borderc-0);
   align-items: center;
+  max-width: 450px;
 }
 
 .ship {
