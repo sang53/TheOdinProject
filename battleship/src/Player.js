@@ -1,6 +1,6 @@
 export class Player {
-  constructor(num, control) {
-    this.control = control;
+  constructor(num) {
+    this.control = true;
     this.number = num;
   }
 

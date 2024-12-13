@@ -8,6 +8,7 @@ export class Board {
 
   checkShip(squareId, ship) {
     const keysArray = this.#getShipKeys(squareId, ship);
+    if (!keysArray) return false;
     for (const key of keysArray) {
       if (this.shipSquares.has(key)) return false;
     }
@@ -17,6 +18,8 @@ export class Board {
   addShip(squareId, ship) {
     const keysArray = this.#getShipKeys(squareId, ship);
     keysArray.forEach((key) => this.shipSquares.set(key, ship));
+
+    ship.squareId = squareId;
   }
 
   #getShipKeys(squareId, ship) {
@@ -25,11 +28,13 @@ export class Board {
     const keysArray = [];
     if (ship.orient === "horizontal") {
       const x_max = x + ship.length;
+      if (x_max > 10) return false;
       for (; x < x_max; x++) {
         keysArray.push(Board.getKeyfromCoords([x, y]));
       }
     } else {
       const y_max = y + ship.length;
+      if (y_max > 10) return false;
       for (; y < y_max; y++) {
         keysArray.push(Board.getKeyfromCoords([x, y]));
       }
@@ -39,7 +44,9 @@ export class Board {
 
   removeShip(ship) {
     this.shipSquares.forEach((value, key) => {
-      if (value === ship) this.shipSquares.delete(key);
+      if (value === ship) {
+        this.shipSquares.delete(key);
+      }
     });
   }
 
@@ -65,5 +72,9 @@ export class Board {
 
   static getKeyfromId(squareId) {
     return squareId.slice(8);
+  }
+
+  static getSquareId(playerIdx, x, y) {
+    return `player${playerIdx}-${x}-${y}`;
   }
 }

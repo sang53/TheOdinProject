@@ -1,16 +1,17 @@
 import "./style.css";
 
-import { openRules, updateController } from "./DOMOutput";
-import { getCustomRules, openCustomise } from "./DOMInput";
-import { getControllers } from "./init";
+import { addToMain, openRules, openCustomise, toggleClass } from "./DOMOutput";
+import { getCustomRules } from "./DOMInput";
+import { makeBoard, makeControllers } from "./init";
 import { setupShipSelect } from "./shipSelect";
 import { Player } from "./Player";
 
+const SIDES = 10;
+const SHIPS = 5;
+
 let gameStage = 0;
-let currentStep = "startScreen";
+let currentStep = "start screen";
 let players = [];
-let sides;
-let ships;
 let shots;
 let currentTurn = 0;
 
@@ -19,32 +20,42 @@ let controllers;
 initialise();
 
 function initialise() {
-  controllers = getControllers();
+  // create players and their boards
+  for (let i = 0; i < 2; i++) {
+    const player = new Player(0);
+    player.setBoard(makeBoard(i, SIDES));
+    players.push(player);
+  }
+
+  // make & reference controllers
+  controllers = makeControllers();
+
+  // add boards (hidden) & controllers to DOM
+  addToMain(players[0].board.boardRef);
+  addToMain(controllers.container);
+  addToMain(players[1].board.boardRef);
+
+  // controller button = main method to progresses game
   controllers.button.addEventListener("click", gameController);
-  document.addEventListener("gameProgress", gameController);
 }
 
-function gameController() {
+export function gameController() {
   if (gameStage === 0) {
     switch (currentStep) {
-      case "startScreen":
+      case "start screen":
+        openRules(true);
         currentStep = "rules";
-        openRules();
-        updateController("Customise Rules!", "Customise");
         break;
       case "rules":
-        currentStep = "customise";
         openCustomise();
+        currentStep = "customise game";
         break;
-      case "customise":
-        currentStep = "placeShips";
+      case "customise game":
         setCustomRules();
+        currentStep = "ships screen";
+        shipSelect();
         break;
-      case "placeShips":
-        setupShipSelect(players[currentTurn]);
-        currentStep = "saveShips";
-        break;
-      case "saveShips":
+      case "ships screen":
         break;
       case "switch":
         break;
@@ -54,13 +65,25 @@ function gameController() {
 
 function setCustomRules() {
   const inputObj = getCustomRules();
-  sides = parseInt(inputObj.sides);
-  ships = parseInt(inputObj.ships);
-  players.push(new Player(0, true));
-  players.push(new Player(1, inputObj.player));
+  players[1].control = inputObj.player;
 
   if (inputObj.single) shots = "single";
   else shots = "cluster";
-  document.dispatchEvent(new Event("gameProgress"));
-  return players;
+}
+
+function shipSelect() {
+  updateController("Place Your Ships!", "Done");
+  toggleControlButton();
+  const board = players[currentTurn].board;
+  toggleClass(board.boardRef, "hidden");
+  setupShipSelect(board, SHIPS);
+}
+
+export function updateController(instructionMsg, buttonMsg = "") {
+  controllers.instructions.innerText = instructionMsg;
+  if (buttonMsg) controllers.button.innerText = buttonMsg;
+}
+
+export function toggleControlButton(bool = controllers.button.disabled) {
+  controllers.button.disabled = !bool;
 }
