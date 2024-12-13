@@ -73,7 +73,7 @@ h6 {
   --square-hit: red;
 }
 
-.hidden {
+.hidden.board {
   display: none;
 }
 
@@ -143,6 +143,12 @@ fieldset {
   height: 50px;
   background-color: var(--square-normal);
   border: 1px solid var(--borderc-0);
+  position: relative;
+
+  &.hit {
+    z-index: 2;
+    background-color: var(--square-hit);
+  }
 }
 
 .ship-container {
@@ -150,17 +156,29 @@ fieldset {
   padding: 1rem;
   gap: 2rem;
   border: 1px solid var(--borderc-0);
+  align-items: center;
 }
 
 .ship {
   display: flex;
+  z-index: 1;
 
   > .square {
     width: 50px;
     background-color: var(--square-ship);
   }
-}
 
-.selected {
-  transform: scale(1.1);
+  &.placed {
+    position: absolute;
+    left: -1px;
+    top: -1px;
+  }
+
+  &.rotated {
+    flex-direction: column;
+  }
+
+  &.selected {
+    transform: scale(1.1);
+  }
 }
