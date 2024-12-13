@@ -31,11 +31,14 @@ export class Board {
     if (ship.orient === "horizontal") {
       const x_max = x + ship.length;
       for (; x < x_max; x++) {
-        keysArray.push(Board.getKeyfromCoords([x, y]));
+        const key = Board.getKeyfromCoords([x, y]);
+        if (!this.squares.has(key)) return keysArray;
+        keysArray.push(key);
       }
     } else {
       const y_max = y + ship.length;
       for (; y < y_max; y++) {
+        if (!this.squares.has(key)) return keysArray;
         keysArray.push(Board.getKeyfromCoords([x, y]));
       }
     }

@@ -104,6 +104,9 @@ export function gameController() {
         break;
     }
   } else if (gameStage === 1) {
+    console.log("gameStage 1");
+    console.log(players);
+    // 2 players - both boards hidden
   }
 }
 
