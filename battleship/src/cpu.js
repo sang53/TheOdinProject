@@ -3,7 +3,10 @@ import { Ship } from "./Ship";
 
 export function cpuShips(board, numShips, sides) {
   const shipObjArray = getCpuShips(numShips);
+  randomPlacement(shipObjArray, board, sides);
+}
 
+export function randomPlacement(shipObjArray, board, sides) {
   // add ships to random coordinate
   shipObjArray.forEach((shipObj) => {
     // generate random keys & rotations until ship fits on board
