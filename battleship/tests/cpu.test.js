@@ -3,6 +3,8 @@ import { cpuShips } from "../src/cpu";
 import { describe, test, expect, beforeAll } from "@jest/globals";
 
 let board;
+let hShip;
+let vShip;
 
 describe("adds ships to random squares", () => {
   beforeAll(() => {
@@ -16,5 +18,20 @@ describe("adds ships to random squares", () => {
   });
   test("correct number of ships", () => {
     expect(board.shipSquares.size).toBe(15);
+  });
+});
+
+describe("random orientation of ships", () => {
+  beforeAll(() => {
+    board.shipSquares.forEach((shipObj) => {
+      if (shipObj.orient === "horizontal") hShip = shipObj;
+      else vShip = shipObj;
+    });
+  });
+  test("has horizontal ship", () => {
+    expect(hShip).not.toBeUndefined();
+  });
+  test("has vertical ship", () => {
+    expect(vShip).not.toBeUndefined();
   });
 });
