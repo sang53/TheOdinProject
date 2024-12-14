@@ -1,16 +1,11 @@
 import "./style.css";
 
-import {
-  addToMain,
-  openRules,
-  openCustomise,
-  toggleClass,
-  switchScreen,
-} from "./DOMOutput";
+import { addToMain, openRules, openCustomise, switchScreen } from "./DOMOutput";
 import { makeBoard, makeControllers } from "./init";
 import { resetShipSelect, setupShipSelect } from "./shipSelect";
 import { Player } from "./Player";
 import { cpuShips } from "./cpu";
+import { battleScreen, processShots, setupShotSelect } from "./battle";
 
 const SIDES = 10;
 const SHIPS = 5;
@@ -26,6 +21,8 @@ const steps = [
     "switch",
     "cpu ships",
   ],
+  ["setup", "switch", "select shots", "process shots", "cpu shots"],
+  ["end screen", "stats", "play again"],
 ];
 let stepIdx = 0;
 let currentTurn = 0;
@@ -35,10 +32,11 @@ let controllers;
 
 initialise();
 
+// move to ./init???
 function initialise() {
   // create players and their boards
   for (let i = 0; i < 2; i++) {
-    const player = new Player(i);
+    const player = new Player(i, SHIPS);
     player.setBoard(makeBoard(i, SIDES));
     players.push(player);
   }
@@ -66,36 +64,34 @@ export function gameController() {
         break;
       case "ship select":
         shipSelect();
-        currentTurn = toggleTurn();
         break;
       case "reset ship select":
         resetShipSelect();
-        toggleClass(players[toggleTurn()].board.boardRef, "hidden");
         break;
       case "switch":
         switchScreen(currentTurn);
         break;
       case "cpu ships":
         cpuShips(players[1].board, SHIPS, SIDES);
-        currentTurn = toggleTurn();
         break;
     }
 
     switch (stepIdx) {
       case 3:
+        currentTurn = toggleTurn();
         // case: cpu => set cpu ships => next stage
         if (!players[1].control) stepIdx = 5;
         // case: second ship selection => next stage
         else if (currentTurn === 0) nextStage();
         // case: player0 ship selection => switch screen
         else stepIdx++;
-
         gameController();
         break;
       case 4:
         stepIdx = 2;
         break;
       case 5:
+        currentTurn = toggleTurn();
         nextStage();
         gameController();
         break;
@@ -104,9 +100,44 @@ export function gameController() {
         break;
     }
   } else if (gameStage === 1) {
-    console.log("gameStage 1");
-    console.log(players);
-    // 2 players - both boards hidden
+    switch (steps[gameStage][stepIdx]) {
+      case "setup":
+        battleScreen(players);
+        break;
+      case "switch":
+        switchScreen(currentTurn);
+        break;
+      case "select shots":
+        shotSelect();
+        break;
+      case "process shots":
+        processShots(players[toggleTurn()], players[currentTurn].board);
+        break;
+      case "cpu shots":
+        break;
+    }
+
+    switch (stepIdx) {
+      case 0:
+        stepIdx++;
+        gameController();
+        break;
+      case 3:
+        currentTurn = toggleTurn();
+        if (players[currentTurn].control) stepIdx = 1;
+        else stepIdx = 4;
+        gameController();
+        break;
+      default:
+        stepIdx++;
+        break;
+    }
+  } else if (gameStage === 2) {
+    switch (steps[gameStage][stepIdx]) {
+      case "end screen":
+        console.log("end");
+        break;
+    }
   }
 }
 
@@ -119,10 +150,19 @@ export function setCustomRules(inputObj) {
 
 function shipSelect() {
   updateController("Place Your Ships!", "Done");
-  toggleControlButton();
-  const board = players[currentTurn].board;
-  toggleClass(board.boardRef, "hidden");
-  setupShipSelect(board, SHIPS);
+  toggleControlButton(false);
+  setupShipSelect(players[currentTurn].board, SHIPS);
+}
+
+function shotSelect() {
+  const numShots = getNumShots(players[currentTurn]);
+  updateController(`Select ${numShots} Shots: `, "Fire!");
+  toggleControlButton(false);
+  setupShotSelect(
+    players[toggleTurn()].board,
+    numShots,
+    players[currentTurn].board,
+  );
 }
 
 export function updateController(instructionMsg, buttonMsg = "") {
@@ -130,7 +170,7 @@ export function updateController(instructionMsg, buttonMsg = "") {
   if (buttonMsg) controllers.button.innerText = buttonMsg;
 }
 
-export function toggleControlButton(bool = controllers.button.disabled) {
+export function toggleControlButton(bool) {
   controllers.button.disabled = !bool;
 }
 
@@ -141,4 +181,9 @@ function toggleTurn() {
 function nextStage() {
   gameStage++;
   stepIdx = 0;
+}
+
+function getNumShots(playerObj = null) {
+  if (shots === "single") return 1;
+  else return playerObj.aliveShips;
 }
