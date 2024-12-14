@@ -11,6 +11,10 @@ let hangarShipIds;
 let lastPlaced;
 let shipObjFromId;
 
+// move ship creation to init??
+// change to store ship placement in shipsquares map => board.shipSquares = shipsquares
+// would make it easier to add cpu ships for player to see at end of game
+
 export function setupShipSelect(board, numShips) {
   // initialise helper data structures
   hangarShipIds = new Set();
@@ -59,10 +63,13 @@ function buildShip(length) {
     ["class", "ship"],
     ["id", `ship-${length}`],
   ]);
+  const shipObj = new Ship(length, shipRef);
   for (let i = 0; i < length; i++) {
-    shipRef.appendChild(makeElement("div", [["class", "square"]]));
+    const shipSquare = makeElement("div", [["class", "square"]]);
+    shipRef.appendChild(shipSquare);
+    shipObj.squares.push(shipSquare);
   }
-  return new Ship(length, shipRef);
+  return shipObj;
 }
 
 function selectShip(event) {

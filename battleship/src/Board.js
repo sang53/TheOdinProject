@@ -21,7 +21,10 @@ export class Board {
 
   addShip(startKey, ship) {
     const keysArray = this.#getShipKeys(startKey, ship);
-    keysArray.forEach((key) => this.shipSquares.set(key, ship));
+    keysArray.forEach((key, i) => {
+      this.shipSquares.set(key, ship);
+      ship.boardSquares.set(key, ship.squares[i]);
+    });
   }
 
   #getShipKeys(key, ship) {
@@ -46,10 +49,9 @@ export class Board {
   }
 
   removeShip(ship) {
-    this.shipSquares.forEach((value, key) => {
-      if (value === ship) {
-        this.shipSquares.delete(key);
-      }
+    ship.boardSquares.forEach((_, key) => {
+      this.shipSquares.delete(key);
+      ship.boardSquares.delete(key);
     });
   }
 
