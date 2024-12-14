@@ -33,15 +33,16 @@ function selectShot(event) {
   const key = Board.getKeyfromId(event.target.id);
   // case: already shot square
   if (!boardObj.checkShot(key)) return;
-
+  // case: selected squre => deselect
   if (selectedKeys.has(key)) selectedKeys.delete(key);
   else if (selectedKeys.size < shots) selectedKeys.add(key);
+  // case: 1 shot & select another square => move shot to new square
   else if (shots === 1) {
     const prevKey = selectedKeys.keys().next().value;
     toggleClass(boardObj.squares.get(prevKey), "selected");
     selectedKeys.delete(prevKey);
     selectedKeys.add(key);
-  } else return;
+  } else return; // case: >1 shot & select another square
 
   toggleClass(event.target, "selected");
   toggleControlButton(selectedKeys.size === shots);
@@ -57,7 +58,11 @@ export function processShots(hitPlayer, currBoardObj) {
 
     if (hitShipObj) {
       hitShips.push(hitShipObj);
+
+      // display hit
       toggleClass(hitSquareRef, "hit");
+      if (hitShipObj.boardSquares.has(shotKey))
+        toggleClass(hitShipObj.boardSquares.get(shotKey), "hit");
     } else toggleClass(hitSquareRef, "shot");
   });
 

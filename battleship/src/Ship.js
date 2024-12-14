@@ -5,6 +5,7 @@ export class Ship {
     this.orient = "horizontal";
     this.shipRef = shipRef;
     this.squares = [];
+    this.boardSquares = new Map();
   }
 
   // return true if shot has sunk ship
