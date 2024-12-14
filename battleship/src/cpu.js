@@ -17,6 +17,7 @@ export function randomPlacement(shipObjArray, board, sides) {
     } while (!board.checkShip(key, shipObj));
 
     board.addShip(key, shipObj);
+    board.ships.push(shipObj);
   });
 }
 
