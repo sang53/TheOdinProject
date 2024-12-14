@@ -82,3 +82,9 @@ function closeSwitch(event) {
   event.target.removeEventListener("click", closeSwitch);
   gameController();
 }
+
+export function toggleShipsDisplay(boardObj) {
+  boardObj.ships.forEach((shipObj) => {
+    if (shipObj.shipRef) toggleClass(shipObj.shipRef, "hidden");
+  });
+}
