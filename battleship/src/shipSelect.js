@@ -8,11 +8,13 @@ let hangarRef;
 
 let currShipRef;
 let hangarShipIds;
+let lastPlaced;
 let shipObjFromId;
 
 export function setupShipSelect(board, numShips) {
   // initialise helper data structures
   hangarShipIds = new Set();
+  lastPlaced = new Map();
 
   // set up hangar & attach to DOM
   hangarRef = makeHangar();
@@ -91,7 +93,9 @@ function deselectShip(shipRef) {
 
   const shipObj = shipObjFromId.get(shipRef.id);
   // replace ship on same squares if previously selected from board
-  if (shipObj.startKey) currBoardObj.addShip(shipObj.startKey, shipObj);
+  if (lastPlaced.has(shipRef.id)) {
+    currBoardObj.addShip(lastPlaced.get(shipRef.id), shipObj);
+  }
 
   toggleControlButton(hangarShipIds.size === 0);
 }
@@ -129,7 +133,9 @@ function selectSquare(event) {
 function placeShip(square) {
   // add ship to board DOM & board.shipSquares
   const shipObj = shipObjFromId.get(currShipRef.id);
-  currBoardObj.addShip(Board.getKeyfromId(square.id), shipObj);
+  const key = Board.getKeyfromId(square.id);
+  currBoardObj.addShip(key, shipObj);
+  lastPlaced.set(currShipRef.id, key);
   square.appendChild(currShipRef);
 
   // case: ship is from hangar
@@ -162,7 +168,7 @@ function returnShip() {
 
   // update internal ship placement data
   currBoardObj.removeShip(currBoardObj);
-  shipObj.startKey = null;
+  lastPlaced.delete(currShipRef.id);
 
   deselectShip(currShipRef);
   currShipRef = null;
@@ -194,4 +200,5 @@ export function resetShipSelect() {
   currShipRef = null;
   hangarShipIds = null;
   shipObjFromId = null;
+  lastPlaced = null;
 }

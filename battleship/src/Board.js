@@ -22,8 +22,6 @@ export class Board {
   addShip(startKey, ship) {
     const keysArray = this.#getShipKeys(startKey, ship);
     keysArray.forEach((key) => this.shipSquares.set(key, ship));
-
-    ship.startKey = startKey;
   }
 
   #getShipKeys(key, ship) {
