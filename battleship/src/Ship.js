@@ -1,5 +1,5 @@
 export class Ship {
-  constructor(length, shipRef = null) {
+  constructor(length, shipRef) {
     this.length = length;
     this.hits = 0;
     this.orient = "horizontal";
@@ -8,12 +8,9 @@ export class Ship {
     this.startKey;
   }
 
+  // return true if shot has sunk ship
   receiveHit() {
-    this.hits++;
-  }
-
-  isSunk() {
-    return this.hits >= this.length;
+    return ++this.hits === this.length;
   }
 
   switchOrient() {
