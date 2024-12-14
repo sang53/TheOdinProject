@@ -66,12 +66,15 @@ h6 {
   --bgc-2: lightgrey;
 
   --borderc-0: black;
+  --borderc-ship: white;
 
   --square-normal: lightblue;
-  --square-miss: grey;
-  --square-ship: darkgrey;
+  --square-miss: darkgrey;
   --square-hit: red;
   --square-select: yellow;
+
+  --ship-square: grey;
+  --ship-hit: crimson;
 }
 
 .hidden.ship,
@@ -153,7 +156,6 @@ fieldset {
   }
 
   &.hit {
-    z-index: 2;
     background-color: var(--square-hit);
   }
 
@@ -178,7 +180,13 @@ fieldset {
 
   > .square {
     width: 50px;
-    background-color: var(--square-ship);
+    height: 50px;
+    background-color: var(--ship-square);
+    border: none;
+
+    &.hit {
+      background-color: var(--ship-hit);
+    }
   }
 
   &.placed {
