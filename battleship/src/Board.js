@@ -39,8 +39,9 @@ export class Board {
     } else {
       const y_max = y + ship.length;
       for (; y < y_max; y++) {
+        const key = Board.getKeyfromCoords([x, y]);
         if (!this.squares.has(key)) return keysArray;
-        keysArray.push(Board.getKeyfromCoords([x, y]));
+        keysArray.push(key);
       }
     }
     return keysArray;
@@ -55,16 +56,15 @@ export class Board {
   }
 
   checkShot(key) {
-    if (this.shotSquares.has(key)) return false;
-    return true;
+    return !this.shotSquares.has(key);
   }
 
+  // return shipObj if hit
   receiveShot(key) {
     this.shotSquares.add(key);
+
     if (!this.shipSquares.has(key)) return null;
-    const shipObj = this.shipSquares.get(key);
-    shipObj.receiveHit();
-    return shipObj;
+    return this.shipSquares.get(key);
   }
 
   static getKeyfromCoords([x, y]) {
