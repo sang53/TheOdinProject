@@ -19,6 +19,10 @@ export function setupShipSelect(board, numShips) {
   addToMain(hangarRef);
   hangarRef.addEventListener("click", returnShip);
 
+  currBoardObj = board;
+  toggleClass(currBoardObj.boardRef, "hidden");
+  currBoardObj.boardRef.addEventListener("click", selectSquare);
+
   // set up ships & attach to DOM && add shipObj ref to board
   shipObjFromId = makeShips(numShips);
   shipObjFromId.forEach((shipObj, shipId) => {
@@ -27,9 +31,6 @@ export function setupShipSelect(board, numShips) {
     shipObj.shipRef.addEventListener("click", selectShip);
     currBoardObj.ships.push(shipObj);
   });
-
-  currBoardObj = board;
-  currBoardObj.boardRef.addEventListener("click", selectSquare);
 }
 
 function makeHangar() {
@@ -181,6 +182,7 @@ export function resetShipSelect() {
   hangarRef.remove();
 
   currBoardObj.boardRef.removeEventListener("click", selectSquare);
+  toggleClass(currBoardObj.boardRef, "hidden");
 
   shipObjFromId.forEach((shipObj) => {
     shipObj.shipRef.removeEventListener("click", selectShip);
