@@ -30,12 +30,11 @@ export function setupShipSelect(board, numShips) {
   currBoardObj.boardRef.addEventListener("click", selectSquare);
 
   // set up ships & attach to DOM && add shipObj ref to board
-  shipObjFromId = makeShips(numShips);
+  shipObjFromId = makeShips(numShips, currBoardObj);
   shipObjFromId.forEach((shipObj, shipId) => {
     hangarShipIds.add(shipId);
     hangarRef.appendChild(shipObj.shipRef);
     shipObj.shipRef.addEventListener("click", selectShip);
-    currBoardObj.ships.push(shipObj);
   });
 }
 
@@ -48,11 +47,12 @@ function makeHangar() {
 }
 
 // make each ship => return map
-function makeShips(numShips) {
+export function makeShips(numShips, boardObj) {
   const shipMap = new Map();
   for (let i = 1; i <= numShips; i++) {
     const ship = buildShip(i);
     shipMap.set(ship.shipRef.id, ship);
+    boardObj.ships.push(ship);
   }
   return shipMap;
 }
@@ -174,7 +174,6 @@ function returnShip() {
   hangarShipIds.add(currShipRef.id);
 
   // update internal ship placement data
-  currBoardObj.removeShip(currBoardObj);
   lastPlaced.delete(currShipRef.id);
 
   deselectShip(currShipRef);
