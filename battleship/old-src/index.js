@@ -27,20 +27,13 @@ const steps = [
 let stepIdx = 0;
 let currentTurn = 0;
 
-let players = [];
+export let players;
 let controllers;
 
-initialise();
+initialise(players, SIDES, SHIPS);
 
 // move to ./init???
 function initialise() {
-  // create players and their boards
-  for (let i = 0; i < 2; i++) {
-    const player = new Player(i, SHIPS);
-    player.setBoard(makeBoard(i, SIDES));
-    players.push(player);
-  }
-
   // make & reference controllers
   controllers = makeControllers();
 
