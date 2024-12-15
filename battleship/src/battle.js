@@ -1,4 +1,4 @@
-import { toggleControlButton } from ".";
+import { toggleControlButton, updateController } from ".";
 import { Board } from "./Board";
 import { toggleClass, toggleShipsDisplay } from "./DOMOutput";
 
@@ -70,6 +70,11 @@ export function processShots(hitPlayer, currBoardObj) {
   hitShips.forEach((shipObj) => {
     if (shipObj.receiveHit()) hitPlayer.aliveShips--;
   });
+
+  updateController(
+    `Hits: ${hitShips.length}\nMisses: ${shots - hitShips.length}`,
+    "Continue",
+  );
 
   resetShotSelect(currBoardObj);
 }
