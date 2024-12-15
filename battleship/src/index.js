@@ -111,7 +111,7 @@ export function gameController() {
         shotSelect();
         break;
       case "process shots":
-        processShots(players[toggleTurn()], players[currentTurn].board);
+        processShots(players[toggleTurn()]);
         break;
       case "cpu shots":
         break;

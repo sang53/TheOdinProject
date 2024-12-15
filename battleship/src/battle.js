@@ -48,13 +48,13 @@ function selectShot(event) {
   toggleControlButton(selectedKeys.size === shots);
 }
 
-export function processShots(hitPlayer, currBoardObj) {
+export function processShots(hitPlayer, currBoardObj = boardObj) {
   const hitShips = [];
 
   // register each shot & get hit ships
   selectedKeys.forEach((shotKey) => {
-    const hitShipObj = boardObj.receiveShot(shotKey);
-    const hitSquareRef = boardObj.squares.get(shotKey);
+    const hitShipObj = currBoardObj.receiveShot(shotKey);
+    const hitSquareRef = currBoardObj.squares.get(shotKey);
 
     if (hitShipObj) {
       hitShips.push(hitShipObj);
