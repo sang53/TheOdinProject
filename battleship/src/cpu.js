@@ -1,8 +1,8 @@
 import { Board } from "./Board";
-import { Ship } from "./Ship";
+import { makeShips } from "./shipSelect";
 
 export function cpuShips(board, numShips, sides) {
-  const shipObjArray = getCpuShips(numShips);
+  const shipObjArray = makeShips(numShips, board);
   randomPlacement(shipObjArray, board, sides);
 }
 
@@ -17,16 +17,8 @@ export function randomPlacement(shipObjArray, board, sides) {
     } while (!board.checkShip(key, shipObj));
 
     board.addShip(key, shipObj);
-    board.ships.push(shipObj);
+    board.squares.get(key).appendChild(shipObj.shipRef);
   });
-}
-
-function getCpuShips(numShips) {
-  const shipArray = [];
-  for (let i = 1; i <= numShips; i++) {
-    shipArray.push(new Ship(i));
-  }
-  return shipArray;
 }
 
 function getRandKey(sides) {
