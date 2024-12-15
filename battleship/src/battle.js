@@ -77,7 +77,7 @@ export function processShots(hitPlayer, shotKeys = selectedKeys) {
     "Continue",
   );
 
-  resetShotSelect(currBoardObj);
+  if (shotKeys === selectedKeys) resetShotSelect(currBoardObj);
 }
 
 function resetShotSelect(currBoardObj) {

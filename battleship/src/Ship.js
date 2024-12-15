@@ -16,4 +16,8 @@ export class Ship {
   switchOrient() {
     this.orient = this.orient === "horizontal" ? "vertical" : "horizontal";
   }
+
+  isSunk() {
+    return this.hits === this.length;
+  }
 }

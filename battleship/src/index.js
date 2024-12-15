@@ -4,7 +4,7 @@ import { addToMain, openRules, openCustomise, switchScreen } from "./DOMOutput";
 import { makeBoard, makeControllers } from "./init";
 import { resetShipSelect, setupShipSelect } from "./shipSelect";
 import { Player } from "./Player";
-import { cpuShips } from "./cpu";
+import { cpuShips, getCpuShots } from "./cpu";
 import { battleScreen, processShots, setupShotSelect } from "./battle";
 
 const SIDES = 10;
@@ -114,6 +114,7 @@ export function gameController() {
         processShots(players[toggleTurn()]);
         break;
       case "cpu shots":
+        cpuShots();
         break;
     }
 
@@ -138,7 +139,7 @@ export function gameController() {
   } else if (gameStage === 2) {
     switch (steps[gameStage][stepIdx]) {
       case "end screen":
-        console.log("end");
+        console.log("end", currentTurn);
         break;
     }
   }
@@ -159,11 +160,6 @@ function shipSelect() {
 
 function shotSelect() {
   const numShots = getNumShots(players[currentTurn]);
-  if (numShots === 0) {
-    nextStage();
-    gameController();
-    return;
-  }
   updateController(`Select ${numShots} Shots: `, "Fire!");
   toggleControlButton(false);
   setupShotSelect(
@@ -171,6 +167,12 @@ function shotSelect() {
     numShots,
     players[currentTurn].board,
   );
+}
+
+function cpuShots() {
+  const numShots = getNumShots(players[currentTurn]);
+  const shots = getCpuShots(players[toggleTurn()], numShots);
+  processShots(shots);
 }
 
 export function updateController(instructionMsg, buttonMsg = "") {
@@ -191,7 +193,7 @@ function nextStage() {
   stepIdx = 0;
 }
 
-function getNumShots(playerObj = null) {
+function getNumShots(playerObj) {
   if (shots === "single") return 1;
   else return playerObj.aliveShips;
 }
