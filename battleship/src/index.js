@@ -126,6 +126,9 @@ export function gameController() {
         currentTurn = toggleTurn();
         if (players[currentTurn].control) stepIdx = 1;
         else stepIdx = 4;
+        break;
+      case 4:
+        stepIdx = 1;
         gameController();
         break;
       default:
@@ -156,6 +159,11 @@ function shipSelect() {
 
 function shotSelect() {
   const numShots = getNumShots(players[currentTurn]);
+  if (numShots === 0) {
+    nextStage();
+    gameController();
+    return;
+  }
   updateController(`Select ${numShots} Shots: `, "Fire!");
   toggleControlButton(false);
   setupShotSelect(
