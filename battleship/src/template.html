@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>BattleShip</title>
     <body>
-      <div id="main" class="flex-column">
-        <dialog id="rules-dialog">
+      <div id="main">
+        <dialog id="rules-modal">
           <div class="flex-column">
             <h2>How to Play</h2>
             <div>
@@ -24,31 +24,31 @@
             <button id="close-rules">Close</button>
           </div>
         </dialog>
-        <dialog id="customise-dialog">
-          <form id="customise-form" class="flex-column">
+        <dialog id="settings-modal">
+          <form id="settings-form" class="flex-column">
             <fieldset class="flex-column">
               <legend>Choose Opponent:</legend>
               <div>
-                <label for="player">Player: </label
-                ><input name="opponent" type="radio" id="player" checked />
+                <label for="computer">Computer: </label
+                ><input name="opponent" type="radio" id="computer" checked />
               </div>
               <div>
-                <label for="computer">Computer: </label
-                ><input name="opponent" type="radio" id="computer" />
+                <label for="player">Player: </label
+                ><input name="opponent" type="radio" id="player" />
               </div>
             </fieldset>
             <fieldset class="flex-column">
               <legend>Shots Per Turn:</legend>
               <div>
-                <label for="single">Single: </label
-                ><input name="shots" type="radio" id="single" checked />
+                <label for="cluster">Cluster (1 / Ship): </label
+                ><input name="shots" type="radio" id="cluster" checked />
               </div>
               <div>
-                <label for="cluster">Cluster (1 / Ship): </label
-                ><input name="shots" type="radio" id="cluster" />
+                <label for="single">Single: </label
+                ><input name="shots" type="radio" id="single" />
               </div>
             </fieldset>
-            <button id="customise-confirm">Confirm</button>
+            <button id="settings-close">Close</button>
           </form>
         </dialog>
         <dialog id="switch-screen">
