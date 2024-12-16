@@ -1,16 +1,17 @@
 import { Ship } from "../src/Ship";
+import { describe, test, expect, beforeAll } from "@jest/globals";
 
 describe("makes ships", () => {
-  let shipArray;
+  let shipSet;
   beforeAll(() => {
-    shipArray = Ship.makeShips(5);
+    shipSet = Ship.makeShips(5);
   });
 
   test("makes correct number of ships", () => {
-    expect(shipArray.length).toBe(5);
+    expect(shipSet.size).toBe(5);
   });
 
   test("each ship has a DOM element reference", () => {
-    expect(shipArray[0].shipRef).not.toBeUndefined();
+    expect(shipSet.keys().next().value.shipRef).toBeDefined();
   });
 });
