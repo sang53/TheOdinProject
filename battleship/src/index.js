@@ -12,6 +12,7 @@ import {
   removeListeners,
 } from "./index-helpers";
 import { Player } from "./Player";
+import { shipPlace } from "./ship-placement";
 
 const RULES = document.querySelector("#rules-modal");
 const SETTINGS = document.querySelector("#settings-modal");
