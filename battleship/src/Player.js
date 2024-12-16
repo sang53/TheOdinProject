@@ -1,11 +1,9 @@
-export class Player {
-  constructor(num, shipNum) {
-    this.control = true;
-    this.number = num;
-    this.aliveShips = shipNum;
-  }
+import { Board } from "../old-src/Board";
 
-  setBoard(board) {
-    this.board = board;
+export class Player {
+  constructor(num, human) {
+    this.num = num;
+    this.human = human;
+    this.boardRef = new Board();
   }
 }

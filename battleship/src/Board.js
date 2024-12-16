@@ -1,85 +1,50 @@
+import { makeElement } from "./DOM";
+import { settings } from "./gameSettings";
+import { Ship } from "./Ship";
+
 export class Board {
-  constructor(board, squaresMap) {
+  constructor(sides = settings.sides) {
+    this.boardRef = Board.#makeBoard();
+    this.squares = Board.#makeSquares(sides);
+    Board.#attachSquares(this.boardRef, this.squares);
+
+    this.aliveShips = Ship.makeShips();
+    this.deadShips = new Set();
+
     this.shotSquares = new Set();
-    this.shipSquares = new Map();
-    this.boardRef = board;
-    this.squares = squaresMap;
-    this.ships = [];
+    this.sides = sides;
   }
 
-  // returns true if ship can be placed at key
-  checkShip(startKey, ship) {
-    const keysArray = this.#getShipKeys(startKey, ship);
-    // case: out of bounds
-    if (keysArray.length !== ship.length) return false;
-
-    for (const key of keysArray) {
-      if (this.shipSquares.has(key)) return false;
-    }
-    return true;
+  static #makeBoard() {
+    return makeElement("div", [["class", "board"]]);
   }
 
-  addShip(startKey, ship) {
-    const keysArray = this.#getShipKeys(startKey, ship);
-    keysArray.forEach((key, i) => {
-      this.shipSquares.set(key, ship);
-      ship.boardSquares.set(key, ship.squares[i]);
-    });
-  }
-
-  #getShipKeys(key, ship) {
-    let [x, y] = Board.getCoords(key);
-    const keysArray = [];
-    if (ship.orient === "horizontal") {
-      const x_max = x + ship.length;
-      for (; x < x_max; x++) {
-        const key = Board.getKeyfromCoords([x, y]);
-        if (!this.squares.has(key)) return keysArray;
-        keysArray.push(key);
-      }
-    } else {
-      const y_max = y + ship.length;
-      for (; y < y_max; y++) {
-        const key = Board.getKeyfromCoords([x, y]);
-        if (!this.squares.has(key)) return keysArray;
-        keysArray.push(key);
+  static #makeSquares(sides) {
+    const squaresMap = new Map();
+    for (let y = 0; y < sides; y++) {
+      for (let x = 0; x < sides; x++) {
+        const key = Board.getKey([x, y]);
+        const square = makeElement("div", [
+          ["class", "square"],
+          ["id", key],
+        ]);
+        squaresMap.set(key, square);
       }
     }
-    return keysArray;
+    return squaresMap;
   }
 
-  removeShip(ship) {
-    ship.boardSquares.forEach((_, key) => {
-      this.shipSquares.delete(key);
-      ship.boardSquares.delete(key);
-    });
-  }
-
-  checkShot(key) {
-    return !this.shotSquares.has(key);
-  }
-
-  // return shipObj if hit
-  receiveShot(key) {
-    this.shotSquares.add(key);
-
-    if (!this.shipSquares.has(key)) return null;
-    return this.shipSquares.get(key);
-  }
-
-  static getKeyfromCoords([x, y]) {
+  static getKey([x, y]) {
     return `${x}-${y}`;
   }
 
   static getCoords(key) {
-    return key.split("-").map((element) => +element);
+    return key.split("-");
   }
 
-  static getKeyfromId(squareId) {
-    return squareId.slice(8);
-  }
-
-  static getSquareId(playerIdx, x, y) {
-    return `player${playerIdx}-${x}-${y}`;
+  static #attachSquares(boardRef, squaresMap) {
+    squaresMap.forEach((square) => {
+      boardRef.appendChild(square);
+    });
   }
 }

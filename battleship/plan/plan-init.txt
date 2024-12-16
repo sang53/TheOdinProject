@@ -42,7 +42,6 @@ Player:
     make board
 
 Board:
-
   properties:
     Squares map = [key:square element]
     shot squares set = [key]
@@ -57,19 +56,8 @@ Board:
     append square elements to board element
     
     Ship.make ships (number of ships)
-    add ships
+    store in alive ships
   
-  instance methods:
-    receive shot(key):
-      add key to shot squares
-      if ship exists on square:
-        register damage on ship
-        if ship is dead => move from alive ships set to dead ships set
-        add .hit class to square element
-      add .miss class to square element
-    
-    #add ships([ships]):
-      add to alive ships set
 
 Ship:
   properties:
