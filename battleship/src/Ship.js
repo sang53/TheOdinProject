@@ -1,4 +1,5 @@
 import { makeElement } from "./DOM";
+import { settings } from "./gameSettings";
 
 export class Ship {
   constructor(length, shipRef) {
@@ -8,7 +9,7 @@ export class Ship {
     this.shipRef = shipRef;
   }
 
-  static makeShips(num) {
+  static makeShips(num = settings.ships) {
     const shipSet = new Set();
     for (let length = 1; length <= num; length++) {
       shipSet.add(new Ship(length, Ship.#buildShip(length)));

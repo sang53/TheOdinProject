@@ -1,13 +1,14 @@
 import { makeElement } from "./DOM";
+import { settings } from "./gameSettings";
 import { Ship } from "./Ship";
 
 export class Board {
-  constructor(sides, ships) {
+  constructor(sides = settings.sides) {
     this.boardRef = Board.#makeBoard();
     this.squares = Board.#makeSquares(sides);
     Board.#attachSquares(this.boardRef, this.squares);
 
-    this.aliveShips = Ship.makeShips(ships);
+    this.aliveShips = Ship.makeShips();
     this.deadShips = new Set();
 
     this.shotSquares = new Set();
@@ -15,7 +16,7 @@ export class Board {
   }
 
   static #makeBoard() {
-    return makeElement("div", [["class", "board hidden"]]);
+    return makeElement("div", [["class", "board"]]);
   }
 
   static #makeSquares(sides) {
