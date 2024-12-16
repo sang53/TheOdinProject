@@ -15,6 +15,7 @@ Focus on modularity & testability:
   - make sure functions take used data as arguments
   - separate functions according to basic steps
   - try to keep functions pure -> instead of directly manipulating data structures, return & replace them
+  - adhere to TTD paradigm properly -> previously gave up because most of the functions ended up being non-testable
 
 
 
