@@ -9,6 +9,10 @@ export class Ship {
     this.shipRef = shipRef;
   }
 
+  switchOrient() {
+    this.orient = this.orient === "horizontal" ? "vertical" : "horizontal";
+  }
+
   static makeShips(num = settings.ships) {
     const shipSet = new Set();
     for (let length = 1; length <= num; length++) {

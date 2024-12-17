@@ -1,4 +1,4 @@
-import { addListener, appendRelative, makeElement } from "./DOM";
+import { addListener, appendRelative, makeElement, toggleClass } from "./DOM";
 
 export function getHangar(returnShip, rotateShip, confirmShips) {
   const hangar = makeElement("div", [["class", "ship-container"]]);
@@ -22,7 +22,10 @@ function getRotateBtn(rotateShip) {
 function getConfirmBtn(confirmShips) {
   const confirmButton = makeElement(
     "button",
-    [["id", "confirm-button"]],
+    [
+      ["id", "confirm-button"],
+      ["disabled", "true"],
+    ],
     "Confirm Placement",
   );
   addListener(confirmButton, "click", confirmShips, true);
@@ -36,7 +39,42 @@ export function addShipsHangar(ships, selectShip) {
   });
 }
 
-export function appendShipHangar(shipRef) {
+function appendShipHangar(shipRef) {
   const hangar = document.querySelector(".ship-container");
   appendRelative(shipRef, hangar.lastElementChild);
+}
+
+export function placeShip(shipObj, key, square, lastPlaced) {
+  const shipRef = shipObj.shipRef;
+  if (!lastPlaced.has(shipRef)) toggleClass(shipRef, "placed");
+  lastPlaced.set(shipRef, key);
+  square.appendChild(shipRef);
+}
+
+export function getShipMap(shipSet) {
+  const shipMap = new Map();
+  shipSet.forEach((shipObj) => shipMap.set(shipObj.shipRef, shipObj));
+  return shipMap;
+}
+
+export function getUnplacedShips(placedMap, board) {
+  const shipArray = [];
+  board.aliveShips.forEach((shipObj) => {
+    if (!placedMap.has(shipObj.shipRef)) shipArray.push(shipObj);
+  });
+  return shipArray;
+}
+
+export function rotate(shipObj) {
+  toggleClass(shipObj.shipRef, "rotated");
+  shipObj.switchOrient();
+}
+
+export function toggleConfirmBtn(bool) {
+  document.querySelector("#confirm-button").disabled = !bool;
+}
+
+export function resetShip(currShip) {
+  appendShipHangar(currShip);
+  toggleClass(currShip, "placed");
 }

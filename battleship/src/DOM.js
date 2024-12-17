@@ -63,3 +63,7 @@ export function appendRelative(element, refNode, relative = "before") {
     return parentNode.insertBefore(element, refNode.nextElementSibling);
   return parentNode.appendChild(element);
 }
+
+export function toggleTurn(currTurn) {
+  return currTurn === 0 ? 1 : 0;
+}
