@@ -205,7 +205,7 @@ fieldset {
   gap: 2rem;
   border: 1px solid var(--borderc-0);
   align-items: center;
-  max-width: 450px;
+  max-width: 500px;
 }
 
 .ship {
