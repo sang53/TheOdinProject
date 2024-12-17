@@ -1,9 +1,9 @@
 import { Board } from "./Board";
 
 export class Player {
-  constructor(num, human) {
+  constructor(num, cpu) {
     this.num = num;
-    this.human = human;
+    this.cpu = cpu;
     this.boardObj = new Board();
   }
 }
