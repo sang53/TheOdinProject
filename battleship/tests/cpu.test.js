@@ -15,7 +15,14 @@ describe("places ships randomly on board", () => {
   });
   test("every ship placed", () => {
     const shipSet = new Set();
-    board.shipSquares.forEach((ship) => shipSet.add(ship));
+    board.shipSquares.forEach(([ship]) => shipSet.add(ship));
     expect(shipSet.size).toBe(5);
+  });
+  test("ship randomly switches orientation", () => {
+    let vertical = false;
+    board.shipSquares.forEach(([ship]) => {
+      if (ship.orient === "vertical") vertical = true;
+    });
+    expect(vertical).toBeTruthy();
   });
 });
