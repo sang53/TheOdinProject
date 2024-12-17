@@ -37,6 +37,7 @@ export function shipPlace(playersArr) {
   if (players[currTurn].cpu) {
     randomShipPlace(board);
     afterSwitch(shotSelect, 0, players);
+    return;
   }
 
   toggleClass(document.querySelector("#main"), "ship-select");
@@ -132,5 +133,8 @@ function confirmShips(event) {
   currTurn = toggleTurn(currTurn);
   if (currTurn === 1 && players[1].cpu) shipPlace();
   else if (currTurn === 1) afterSwitch(shipPlace, 1);
-  else afterSwitch(shotSelect, 0, players);
+  else {
+    toggleClass(document.querySelector("#main"), "ship-select");
+    afterSwitch(shotSelect, 0, players);
+  }
 }
