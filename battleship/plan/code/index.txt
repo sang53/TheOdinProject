@@ -2,7 +2,7 @@ Modules:
 
 init:
   make start screen():
-    make & add DOM elements according to plan/battleship-start-screen.png
+    make & add DOM elements according to battleship-start-screen.png
     add event listeners to buttons
     make example boards & run animation --> future after learning animations
 

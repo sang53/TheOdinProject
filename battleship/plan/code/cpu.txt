@@ -1,0 +1,14 @@
+random ship placement (board):
+  get random valid keys (ships)
+  add each ship according to key
+
+get random valid keys (ships):
+  for each ship => {
+    do:
+      generate random key
+    while !checkship
+  }
+
+generate random key(default settings.sides) {
+  return getKey([floor(random * sides), floor(random * sides)])
+}

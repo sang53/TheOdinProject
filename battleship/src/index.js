@@ -1,5 +1,13 @@
 import "./style.css";
-import { makeElement, toggleClass } from "./DOM";
+import {
+  makeElement,
+  toggleClass,
+  addToMain,
+  resetDOM,
+  removeListeners,
+  addListener,
+  afterSwitch,
+} from "./DOM";
 import { Board } from "./Board";
 import { changeSettings, settings } from "./gameSettings";
 import {
@@ -7,11 +15,9 @@ import {
   getRulesButton,
   getSettingsButton,
   updateSettings,
-  resetDOM,
-  addToMain,
-  removeListeners,
 } from "./index-helpers";
 import { Player } from "./Player";
+import { shipPlace } from "./ship-placement";
 
 const RULES = document.querySelector("#rules-modal");
 const SETTINGS = document.querySelector("#settings-modal");
@@ -47,20 +53,17 @@ function getFooter() {
 }
 
 function nextStage() {
-  removeListeners(openRules, openSettings);
+  removeListeners();
   resetDOM();
-  const players = [
-    new Player(0, true),
-    new Player(0, settings.opp === "Player"),
-  ];
-  shipPlace(players);
+  toggleClass(document.querySelector("#main"), "start-screen");
+
+  const players = [new Player(0, false), new Player(1, settings.opp === "CPU")];
+  afterSwitch(shipPlace, 0, players);
 }
 
 function openRules() {
   RULES.showModal();
-  RULES.querySelector("button").addEventListener("click", closeRules, {
-    once: true,
-  });
+  addListener(RULES.querySelector("button"), "click", closeRules, true);
 }
 
 function closeRules() {
@@ -69,9 +72,7 @@ function closeRules() {
 
 function openSettings() {
   SETTINGS.showModal();
-  SETTINGS.querySelector("button").addEventListener("click", closeSettings, {
-    once: true,
-  });
+  addListener(SETTINGS.querySelector("button"), "click", closeSettings, true);
 }
 
 function closeSettings(event) {

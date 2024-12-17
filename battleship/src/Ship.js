@@ -9,6 +9,10 @@ export class Ship {
     this.shipRef = shipRef;
   }
 
+  switchOrient() {
+    this.orient = this.orient === "horizontal" ? "vertical" : "horizontal";
+  }
+
   static makeShips(num = settings.ships) {
     const shipSet = new Set();
     for (let length = 1; length <= num; length++) {
@@ -23,12 +27,12 @@ export class Ship {
       ["id", `ship-${length}`],
     ]);
     for (let i = 0; i < length; i++) {
-      shipRef.appendChild(Ship.#makeSquare());
+      shipRef.appendChild(Ship.#makeSquare(i));
     }
     return shipRef;
   }
 
-  static #makeSquare() {
-    return makeElement("div", [["class", "square"]]);
+  static #makeSquare(i) {
+    return makeElement("div", [["class", `square num-${i}`]]);
   }
 }
