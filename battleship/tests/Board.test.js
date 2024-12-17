@@ -86,9 +86,9 @@ describe("checks if ship can be placed", () => {
 
 describe("removes ship", () => {
   beforeAll(() => {
-    const hShip = board.shipSquares.get("0-0");
+    const hShip = board.shipSquares.get("0-0")[0];
     board.removeShip(hShip);
-    const vShip = board.shipSquares.get("9-6");
+    const vShip = board.shipSquares.get("9-6")[0];
     board.removeShip(vShip);
   });
   test("remove horizontal ship", () => {
