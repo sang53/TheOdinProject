@@ -55,3 +55,11 @@ export function afterSwitch(callback, currTurn, ...args) {
     true,
   );
 }
+
+export function appendRelative(element, refNode, relative = "before") {
+  const parentNode = refNode.parentNode;
+  if (relative === "before") return parentNode.insertBefore(element, refNode);
+  if (refNode.nextElementSibling !== parentNode.lastElementChild)
+    return parentNode.insertBefore(element, refNode.nextElementSibling);
+  return parentNode.appendChild(element);
+}

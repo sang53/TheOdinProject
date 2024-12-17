@@ -23,12 +23,12 @@ export class Ship {
       ["id", `ship-${length}`],
     ]);
     for (let i = 0; i < length; i++) {
-      shipRef.appendChild(Ship.#makeSquare());
+      shipRef.appendChild(Ship.#makeSquare(i));
     }
     return shipRef;
   }
 
-  static #makeSquare() {
-    return makeElement("div", [["class", "square"]]);
+  static #makeSquare(i) {
+    return makeElement("div", [["class", `square num-${i}`]]);
   }
 }

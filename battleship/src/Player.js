@@ -1,9 +1,9 @@
-import { Board } from "../old-src/Board";
+import { Board } from "./Board";
 
 export class Player {
   constructor(num, human) {
     this.num = num;
     this.human = human;
-    this.boardRef = new Board();
+    this.boardObj = new Board();
   }
 }
