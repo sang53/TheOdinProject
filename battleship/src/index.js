@@ -1,5 +1,12 @@
 import "./style.css";
-import { makeElement, toggleClass } from "./DOM";
+import {
+  makeElement,
+  toggleClass,
+  addToMain,
+  resetDOM,
+  removeListeners,
+  addListener,
+} from "./DOM";
 import { Board } from "./Board";
 import { changeSettings, settings } from "./gameSettings";
 import {
@@ -7,9 +14,6 @@ import {
   getRulesButton,
   getSettingsButton,
   updateSettings,
-  resetDOM,
-  addToMain,
-  removeListeners,
 } from "./index-helpers";
 import { Player } from "./Player";
 import { shipPlace } from "./ship-placement";
@@ -48,8 +52,10 @@ function getFooter() {
 }
 
 function nextStage() {
-  removeListeners(openRules, openSettings);
+  removeListeners();
   resetDOM();
+  toggleClass(document.querySelector("#main"), "start-screen");
+
   const players = [
     new Player(0, true),
     new Player(0, settings.opp === "Player"),
@@ -59,9 +65,7 @@ function nextStage() {
 
 function openRules() {
   RULES.showModal();
-  RULES.querySelector("button").addEventListener("click", closeRules, {
-    once: true,
-  });
+  addListener(RULES.querySelector("button"), "click", closeRules, true);
 }
 
 function closeRules() {
@@ -70,9 +74,7 @@ function closeRules() {
 
 function openSettings() {
   SETTINGS.showModal();
-  SETTINGS.querySelector("button").addEventListener("click", closeSettings, {
-    once: true,
-  });
+  addListener(SETTINGS.querySelector("button"), "click", closeSettings, true);
 }
 
 function closeSettings(event) {
