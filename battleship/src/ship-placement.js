@@ -102,8 +102,8 @@ function returnShip() {
   resetShip(currShipRef);
 
   // rotate ship to match hangar ships
-  if (currShipRef.className !== getUnplacedShips[0].shipRef.className)
-    rotate(shipByRef.get(currShipRef));
+  const className = getUnplacedShips(lastPlaced, board)[0].shipRef.className;
+  if (currShipRef.className !== className) rotate(shipByRef.get(currShipRef));
 
   deselect(currShipRef);
   currShipRef = null;
