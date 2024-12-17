@@ -6,6 +6,7 @@ import {
   resetDOM,
   removeListeners,
   addListener,
+  afterSwitch,
 } from "./DOM";
 import { Board } from "./Board";
 import { changeSettings, settings } from "./gameSettings";
@@ -60,7 +61,7 @@ function nextStage() {
     new Player(0, true),
     new Player(0, settings.opp === "Player"),
   ];
-  shipPlace(players);
+  afterSwitch(shipPlace, 0, players);
 }
 
 function openRules() {

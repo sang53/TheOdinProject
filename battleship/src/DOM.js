@@ -1,6 +1,8 @@
 let DOM_ELEMENTS = [];
 let listeners = [];
+
 const MAIN = document.querySelector("#main");
+const SWITCH = document.querySelector("#switch-screen");
 
 export function makeElement(tag, attributeArray, text = "") {
   const element = document.createElement(tag);
@@ -36,4 +38,20 @@ export function removeListeners() {
     element.removeEventListener(eventType, callback);
   });
   listeners = [];
+}
+
+export function afterSwitch(callback, currTurn, ...args) {
+  SWITCH.showModal();
+  SWITCH.querySelector("#player-turn").innerText =
+    `Player ${currTurn + 1}'s Turn`;
+
+  addListener(
+    SWITCH.querySelector("button"),
+    "click",
+    () => {
+      SWITCH.close();
+      callback(...args);
+    },
+    true,
+  );
 }
