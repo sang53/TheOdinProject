@@ -37,6 +37,7 @@ export function shipPlace(playersArr) {
   if (players[currTurn].cpu) {
     randomShipPlace(board);
     afterSwitch(shotSelect, 0, players);
+    return;
   }
 
   toggleClass(document.querySelector("#main"), "ship-select");
