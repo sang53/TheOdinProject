@@ -57,7 +57,7 @@ function nextStage() {
   resetDOM();
   toggleClass(document.querySelector("#main"), "start-screen");
 
-  const players = [new Player(0, false), new Player(0, settings.opp === "CPU")];
+  const players = [new Player(0, false), new Player(1, settings.opp === "CPU")];
   afterSwitch(shipPlace, 0, players);
 }
 
