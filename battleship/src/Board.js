@@ -62,6 +62,7 @@ export class Board {
       }
       toggleClass(this.squares.get(key), "hit");
     }
+    return this.shipSquares.has(key);
   }
 
   static getKey([x, y]) {

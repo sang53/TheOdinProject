@@ -15,6 +15,8 @@ import {
   toggleCtrlBtn,
   updateCtrlMsg,
   addShot,
+  updateStats,
+  getStatsDiv,
 } from "./shot-select-helpers";
 
 let currTurn = 0;
@@ -30,17 +32,12 @@ export function shotSelect(playerArr) {
   document.querySelector("#main").classList.toggle("shot-select");
   addToMain(makeElement("h1", [], "Battle Phase"));
   addToMain(getBoardsDiv(players));
-  addToMain(makeElement("div", [["id", "shot-select-info"]]));
+  addToMain(getStatsDiv());
 
   players.forEach((player) => {
     toggleShips(player.board);
   });
-  document
-    .querySelector("#control-button")
-    .addEventListener("click", confirmShots);
-
   if (settings.shotType === "Single") shotNum = 1;
-
   setupTurn();
 }
 
@@ -51,11 +48,12 @@ function setupTurn() {
 
   toggleShips(players[currTurn].board);
   addListener(oppBoard.boardRef, "click", selectShot);
+  addListener(document.querySelector("#control-button"), "click", confirmShots);
 
   if (settings.shotType === "Cluster")
     shotNum = players[currTurn].board.aliveShips.size;
 
-  updateCtrlMsg(shotNum);
+  updateCtrlMsg(`Select ${shotNum} Shots`);
   toggleCtrlBtn(false);
 }
 
@@ -67,7 +65,7 @@ function selectShot(event) {
   if (shots.has(square)) removeShot(square, shots);
   else if (shotNum > shots.size) addShot(square, shots);
   else if (shotNum === 1) {
-    removeShot(shots.keys.next().value, shots);
+    removeShot(shots.keys().next().value, shots);
     addShot(square, shots);
   }
 
@@ -75,14 +73,21 @@ function selectShot(event) {
 }
 
 function confirmShots() {
+  let hits = 0;
   shots.forEach((square) => {
-    oppBoard.receiveShot(square.id);
+    if (oppBoard.receiveShot(square.id)) hits++;
     toggleClass(square, "selected");
   });
 
+  updateCtrlMsg(`Hits: ${hits}\nMisses: ${shotNum - hits}`);
+  updateStats(oppBoard, currTurn);
+  removeListeners();
+  addListener(document.querySelector("#control-button"), "click", nextTurn);
+}
+
+function nextTurn() {
   removeListeners();
   toggleShips(players[currTurn].board);
-
   currTurn = toggleTurn(currTurn);
   if (!players[currTurn].cpu) afterSwitch(setupTurn, currTurn);
 }
