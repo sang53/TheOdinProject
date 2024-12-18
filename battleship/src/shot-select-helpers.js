@@ -1,4 +1,4 @@
-import { makeElement } from "./DOM";
+import { makeElement, toggleClass } from "./DOM";
 
 export function getBoardsDiv(players) {
   const containerDiv = makeElement("div", [["id", "boards"]]);
@@ -23,5 +23,15 @@ export function updateCtrlMsg(num) {
 }
 
 export function toggleCtrlBtn(bool) {
-  document.querySelector("#control-btn").disabled = !bool;
+  document.querySelector("#control-button").disabled = !bool;
+}
+
+export function removeShot(square, shots) {
+  shots.delete(square);
+  toggleClass(square, "selected");
+}
+
+export function addShot(square, shots) {
+  shots.add(square);
+  toggleClass(square, "selected");
 }

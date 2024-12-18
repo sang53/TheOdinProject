@@ -1,4 +1,4 @@
-import { makeElement } from "./DOM";
+import { makeElement, toggleClass } from "./DOM";
 import { settings } from "./gameSettings";
 
 export class Ship {
@@ -13,12 +13,9 @@ export class Ship {
     this.orient = this.orient === "horizontal" ? "vertical" : "horizontal";
   }
 
-  receiveHit() {
-    this.hits++;
-  }
-
-  isSunk() {
-    return this.hits === this.length;
+  receiveHit(num) {
+    toggleClass(this.shipRef.querySelector(`.num-${num}`), "hit");
+    return ++this.hits === this.length;
   }
 
   static makeShips(num = settings.ships) {
