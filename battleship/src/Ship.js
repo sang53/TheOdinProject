@@ -13,6 +13,14 @@ export class Ship {
     this.orient = this.orient === "horizontal" ? "vertical" : "horizontal";
   }
 
+  receiveHit() {
+    this.hits++;
+  }
+
+  isSunk() {
+    return this.hits === this.length;
+  }
+
   static makeShips(num = settings.ships) {
     const shipSet = new Set();
     for (let length = 1; length <= num; length++) {
