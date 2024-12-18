@@ -32,7 +32,7 @@ let shipByRef;
 
 export function shipPlace(playersArr) {
   players = playersArr || players;
-  board = players[currTurn].boardObj;
+  board = players[currTurn].board;
 
   if (players[currTurn].cpu) {
     randomShipPlace(board);
