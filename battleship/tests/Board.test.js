@@ -37,8 +37,11 @@ describe("test ships", () => {
 
 describe("add ships to board", () => {
   beforeAll(() => {
-    board.addShip({ length: 5, orient: "horizontal" }, "0-0");
-    board.addShip({ length: 4, orient: "vertical" }, "9-6");
+    board.addShip(
+      { length: 5, orient: "horizontal", hits: 0, receiveHit: () => null },
+      "0-0",
+    );
+    board.addShip({ length: 4, orient: "vertical", hits: 0 }, "9-6");
   });
 
   test("add horizontal ship", () => {
@@ -81,6 +84,22 @@ describe("checks if ship can be placed", () => {
     expect(
       board.checkSquare({ length: 5, orient: "vertical" }, "5-7"),
     ).toBeFalsy();
+  });
+});
+
+describe("receives shots & hits", () => {
+  test("missed shots", () => {
+    expect(board.receiveShot("5-5")).toBeNull();
+    expect(board.shotSquares.has("5-5")).toBeTruthy();
+  });
+  test("hit ship", () => {
+    expect(board.receiveShot("0-0")[0]).toMatchObject({
+      length: 5,
+      orient: "horizontal",
+      hits: 0,
+      receiveHit: () => null,
+    });
+    expect(board.receiveShot("0-0")[1]).toBe(0);
   });
 });
 
