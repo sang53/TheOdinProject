@@ -1,4 +1,4 @@
-import { makeElement } from "./DOM";
+import { makeElement, toggleClass } from "./DOM";
 import { settings } from "./gameSettings";
 
 export class Ship {
@@ -11,6 +11,11 @@ export class Ship {
 
   switchOrient() {
     this.orient = this.orient === "horizontal" ? "vertical" : "horizontal";
+  }
+
+  receiveHit(num) {
+    toggleClass(this.shipRef.querySelector(`.num-${num}`), "hit");
+    return ++this.hits === this.length;
   }
 
   static makeShips(num = settings.ships) {

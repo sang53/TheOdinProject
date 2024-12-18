@@ -1,4 +1,4 @@
-import { makeElement } from "./DOM";
+import { makeElement, toggleClass } from "./DOM";
 import { settings } from "./gameSettings";
 import { Ship } from "./Ship";
 
@@ -49,6 +49,20 @@ export class Board {
     this.shipSquares.forEach(([ship], key) => {
       if (ship === shipObj) this.shipSquares.delete(key);
     });
+  }
+
+  receiveShot(key) {
+    this.shotSquares.add(key);
+    if (!this.shipSquares.has(key)) toggleClass(this.squares.get(key), "shot");
+    else {
+      const [ship, i] = this.shipSquares.get(key);
+      if (ship.receiveHit(i)) {
+        this.aliveShips.delete(ship);
+        this.deadShips.add(ship);
+      }
+      toggleClass(this.squares.get(key), "hit");
+    }
+    return this.shipSquares.has(key);
   }
 
   static getKey([x, y]) {

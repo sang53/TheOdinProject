@@ -4,6 +4,6 @@ export class Player {
   constructor(num, cpu) {
     this.num = num;
     this.cpu = cpu;
-    this.boardObj = new Board();
+    this.board = new Board();
   }
 }

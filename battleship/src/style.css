@@ -121,13 +121,15 @@ fieldset {
   opacity: 1;
 }
 
-#main.start-screen {
+#main {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2rem;
   padding-top: 2rem;
+}
 
+#main.start-screen {
   > h1 {
     font-size: 3rem;
   }
@@ -163,14 +165,35 @@ fieldset {
 }
 
 #main.ship-select {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  padding-top: 2rem;
-
   button {
     padding: 1rem;
+  }
+}
+
+#main.shot-select {
+  #boards {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+
+    #control-container {
+      border: 1px solid black;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  .box {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid black;
+
+    > .box {
+      flex-direction: column;
+    }
   }
 }
 

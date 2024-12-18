@@ -67,3 +67,8 @@ export function appendRelative(element, refNode, relative = "before") {
 export function toggleTurn(currTurn) {
   return currTurn === 0 ? 1 : 0;
 }
+
+export function toggleShips(board) {
+  board.aliveShips.forEach((ship) => toggleClass(ship.shipRef, "hidden"));
+  board.deadShips.forEach((ship) => toggleClass(ship.shipRef, "hidden"));
+}
