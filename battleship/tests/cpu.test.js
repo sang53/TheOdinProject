@@ -1,4 +1,4 @@
-import { randomShipPlace } from "../src/cpu";
+import { getCPUShots, randomShipPlace } from "../src/cpu";
 import { Board } from "../src/Board";
 import { beforeAll, describe, expect, test } from "@jest/globals";
 
@@ -24,5 +24,11 @@ describe("places ships randomly on board", () => {
       if (ship.orient === "vertical") vertical = true;
     });
     expect(vertical).toBeTruthy();
+  });
+});
+
+describe("gets CPU shots", () => {
+  test("gets random shots", () => {
+    expect(getCPUShots(new Board()).size).toBe(5);
   });
 });
