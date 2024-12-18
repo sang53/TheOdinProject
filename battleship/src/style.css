@@ -184,6 +184,17 @@ fieldset {
       gap: 0.5rem;
     }
   }
+
+  .box {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid black;
+
+    > .box {
+      flex-direction: column;
+    }
+  }
 }
 
 .board {
