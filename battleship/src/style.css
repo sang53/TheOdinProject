@@ -121,13 +121,15 @@ fieldset {
   opacity: 1;
 }
 
-#main.start-screen {
+#main {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2rem;
   padding-top: 2rem;
+}
 
+#main.start-screen {
   > h1 {
     font-size: 3rem;
   }
@@ -163,15 +165,12 @@ fieldset {
 }
 
 #main.ship-select {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  padding-top: 2rem;
-
   button {
     padding: 1rem;
   }
+}
+
+#main.shot-select {
 }
 
 .board {
