@@ -1,3 +1,4 @@
+import { getCPUShots } from "./cpu";
 import {
   addListener,
   addToMain,
@@ -87,7 +88,16 @@ function confirmShots() {
 
 function nextTurn() {
   removeListeners();
+
+  if (players[toggleTurn(currTurn)].cpu) return cpuTurn();
+
   toggleShips(players[currTurn].board);
   currTurn = toggleTurn(currTurn);
-  if (!players[currTurn].cpu) afterSwitch(setupTurn, currTurn);
+  afterSwitch(setupTurn, currTurn);
+}
+
+function cpuTurn() {
+  prevShots = shots;
+  shots = getCPUShots(players[currTurn].board, shotNum);
+  confirmShots();
 }

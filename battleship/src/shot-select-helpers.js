@@ -2,7 +2,6 @@ import { makeElement, toggleClass } from "./DOM";
 
 export function getBoardsDiv(players) {
   const containerDiv = makeElement("div", [["id", "boards"]]);
-  console.log(players);
   containerDiv.appendChild(players[0].board.boardRef);
   containerDiv.appendChild(getController());
   containerDiv.appendChild(players[1].board.boardRef);
