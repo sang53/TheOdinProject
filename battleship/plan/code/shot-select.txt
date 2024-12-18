@@ -1,6 +1,6 @@
 shotSelect(players):
   set up screen
-  setup turn
+  setup turn()
 
 setup turn(board):
   display current players ships
