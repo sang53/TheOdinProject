@@ -10,12 +10,6 @@ import {
 } from "./DOM";
 import { Board } from "./Board";
 import { changeSettings, settings } from "./gameSettings";
-import {
-  getPlayButton,
-  getRulesButton,
-  getSettingsButton,
-  updateSettings,
-} from "./index-helpers";
 import { Player } from "./Player";
 import { shipPlace } from "./ship-placement";
 
@@ -42,6 +36,12 @@ function getBoardsDiv() {
   return contentDiv;
 }
 
+function getPlayButton(nextStage) {
+  const playButton = makeElement("button", [["id", "start-button"]], "Start!");
+  addListener(playButton, "click", nextStage, true);
+  return playButton;
+}
+
 function getFooter() {
   const footerDiv = makeElement("div", [["id", "footer"]]);
 
@@ -50,6 +50,26 @@ function getFooter() {
   footerDiv.appendChild(getSettingsButton(openSettings));
 
   return footerDiv;
+}
+
+function getRulesButton(openRules) {
+  const rulesButton = makeElement(
+    "button",
+    [["id", "rules-button"]],
+    "How To Play",
+  );
+  addListener(rulesButton, "click", openRules);
+  return rulesButton;
+}
+
+function getSettingsButton(openSettings) {
+  const settingsButton = makeElement(
+    "button",
+    [["id", "settings-button"]],
+    "Change Settings",
+  );
+  addListener(settingsButton, "click", openSettings);
+  return settingsButton;
 }
 
 function nextStage() {
@@ -86,4 +106,15 @@ function closeSettings(event) {
   updateSettings();
   event.preventDefault();
   SETTINGS.close();
+}
+
+function updateSettings(settingsObj = settings) {
+  const settingsDiv = document.querySelector("#settings");
+  const outputStr = [
+    "Sides: " + settingsObj.sides,
+    "Ships: " + settings.ships,
+    "Shots: " + settings.shotType,
+    "Opp: " + settings.opp,
+  ].join("\n");
+  settingsDiv.innerText = outputStr;
 }

@@ -10,22 +10,12 @@ import {
   toggleTurn,
 } from "./DOM";
 import { settings } from "./gameSettings";
-import {
-  removeShot,
-  getBoardsDiv,
-  toggleCtrlBtn,
-  updateCtrlMsg,
-  addShot,
-  updateStats,
-  getStatsDiv,
-} from "./shot-select-helpers";
 
 let currTurn = 0;
 let players;
 let oppBoard;
 
 let shots;
-let prevShots;
 let shotNum;
 
 export function shotSelect(playerArr) {
@@ -42,9 +32,50 @@ export function shotSelect(playerArr) {
   setupTurn();
 }
 
+function getBoardsDiv(players) {
+  const containerDiv = makeElement("div", [["id", "boards"]]);
+  containerDiv.appendChild(players[0].board.boardRef);
+  containerDiv.appendChild(getController());
+  containerDiv.appendChild(players[1].board.boardRef);
+  return containerDiv;
+}
+
+function getController() {
+  const container = makeElement("div", [["id", "control-container"]]);
+  container.appendChild(makeElement("div", [["id", "control-msg"]]));
+  container.appendChild(
+    makeElement("button", [["id", "control-button"]], "Confirm"),
+  );
+  return container;
+}
+
+function getStatsDiv() {
+  const container = makeElement("div", [
+    ["id", "stats"],
+    ["class", "box"],
+  ]);
+  container.appendChild(getPlayerStatDiv(0));
+  container.appendChild(getPlayerStatDiv(1));
+  return container;
+}
+
+function getPlayerStatDiv(num) {
+  const statDiv = makeElement("div", [["class", "box"]]);
+  statDiv.appendChild(makeElement("h4", [], `Player ${num + 1}:`));
+  statDiv.appendChild(
+    makeElement("div", [["id", `stats-player${num + 1}`]], getStatStr(0, 0)),
+  );
+
+  return statDiv;
+}
+
+function getStatStr(hits, shots) {
+  const acc = shots === 0 ? 0 : Math.round((hits / shots) * 100);
+  return `Hits: ${hits} / 15\nShots: ${shots}\nAcc: ${acc}%`;
+}
+
 function setupTurn() {
   oppBoard = players[toggleTurn(currTurn)].board;
-  prevShots = shots;
   shots = new Set();
 
   toggleShips(players[currTurn].board);
@@ -56,6 +87,14 @@ function setupTurn() {
 
   updateCtrlMsg(`Select ${shotNum} Shots`);
   toggleCtrlBtn(false);
+}
+
+function updateCtrlMsg(str) {
+  document.querySelector("#control-msg").innerText = str;
+}
+
+function toggleCtrlBtn(bool) {
+  document.querySelector("#control-button").disabled = !bool;
 }
 
 function selectShot(event) {
@@ -73,6 +112,16 @@ function selectShot(event) {
   toggleCtrlBtn(shotNum === shots.size);
 }
 
+function addShot(square, shots) {
+  shots.add(square);
+  toggleClass(square, "selected");
+}
+
+function removeShot(square, shots) {
+  shots.delete(square);
+  toggleClass(square, "selected");
+}
+
 function confirmShots() {
   let hits = 0;
   shots.forEach((square) => {
@@ -86,6 +135,18 @@ function confirmShots() {
   addListener(document.querySelector("#control-button"), "click", nextTurn);
 }
 
+function updateStats(oppBoard, currTurn) {
+  const statDiv = document.querySelector(`#stats-player${currTurn + 1}`);
+  let hits = 0;
+  let shots = oppBoard.shotSquares.size;
+
+  oppBoard.shipSquares.forEach((_, key) => {
+    if (oppBoard.shotSquares.has(key)) hits++;
+  });
+
+  statDiv.innerText = getStatStr(hits, shots);
+}
+
 function nextTurn() {
   removeListeners();
 
@@ -97,7 +158,6 @@ function nextTurn() {
 }
 
 function cpuTurn() {
-  prevShots = shots;
   shots = getCPUShots(players[currTurn].board, shotNum);
   confirmShots();
 }

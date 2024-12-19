@@ -8,18 +8,9 @@ import {
   resetDOM,
   toggleClass,
   toggleTurn,
+  appendRelative,
 } from "./DOM";
 import { settings } from "./gameSettings";
-import {
-  getHangar,
-  addShipsHangar,
-  getShipMap,
-  getUnplacedShips,
-  rotate,
-  placeShip,
-  toggleConfirmBtn,
-  resetShip,
-} from "./ship-placement-helpers";
 import { shotSelect } from "./shot-select";
 
 let currTurn = 0;
@@ -51,6 +42,56 @@ export function shipPlace(playersArr) {
 
   lastPlaced = new Map();
   shipByRef = getShipMap(board.aliveShips);
+}
+
+function getHangar(returnShip, rotateShip, confirmShips) {
+  const hangar = makeElement("div", [["class", "ship-container"]]);
+  addListener(hangar, "click", returnShip);
+
+  hangar.appendChild(getRotateBtn(rotateShip));
+  hangar.appendChild(getConfirmBtn(confirmShips));
+  return hangar;
+}
+
+function getRotateBtn(rotateShip) {
+  const rotateButton = makeElement(
+    "button",
+    [["id", "rotate-button"]],
+    "Rotate Ship",
+  );
+  addListener(rotateButton, "click", rotateShip);
+  return rotateButton;
+}
+
+function getConfirmBtn(confirmShips) {
+  const confirmButton = makeElement(
+    "button",
+    [
+      ["id", "confirm-button"],
+      ["disabled", "true"],
+    ],
+    "Confirm Placement",
+  );
+  addListener(confirmButton, "click", confirmShips, true);
+  return confirmButton;
+}
+
+function addShipsHangar(ships, selectShip) {
+  ships.forEach((shipObj) => {
+    addListener(shipObj.shipRef, "click", selectShip);
+    appendShipHangar(shipObj.shipRef);
+  });
+}
+
+function appendShipHangar(shipRef) {
+  const hangar = document.querySelector(".ship-container");
+  appendRelative(shipRef, hangar.lastElementChild);
+}
+
+function getShipMap(shipSet) {
+  const shipMap = new Map();
+  shipSet.forEach((shipObj) => shipMap.set(shipObj.shipRef, shipObj));
+  return shipMap;
 }
 
 function selectShip(event) {
@@ -95,6 +136,13 @@ function selectSquare(event) {
   toggleConfirmBtn(lastPlaced.size === settings.ships);
 }
 
+function placeShip(shipObj, key, square, lastPlaced) {
+  const shipRef = shipObj.shipRef;
+  if (!lastPlaced.has(shipRef)) toggleClass(shipRef, "placed");
+  lastPlaced.set(shipRef, key);
+  square.appendChild(shipRef);
+}
+
 function returnShip() {
   if (!currShipRef) return;
   if (!lastPlaced.has(currShipRef)) return;
@@ -111,11 +159,33 @@ function returnShip() {
   toggleConfirmBtn(false);
 }
 
+function toggleConfirmBtn(bool) {
+  document.querySelector("#confirm-button").disabled = !bool;
+}
+
+function resetShip(currShip) {
+  appendShipHangar(currShip);
+  toggleClass(currShip, "placed");
+}
+
+function getUnplacedShips(placedMap, board) {
+  const shipArray = [];
+  board.aliveShips.forEach((shipObj) => {
+    if (!placedMap.has(shipObj.shipRef)) shipArray.push(shipObj);
+  });
+  return shipArray;
+}
+
 function rotateShips(event) {
   event.stopPropagation();
 
   const ships = getUnplacedShips(lastPlaced, board);
   ships.forEach((shipObj) => rotate(shipObj));
+}
+
+function rotate(shipObj) {
+  toggleClass(shipObj.shipRef, "rotated");
+  shipObj.switchOrient();
 }
 
 function confirmShips(event) {
