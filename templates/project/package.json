@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
-    "start": "webpack serve --open --config webpack.dev.js"
+    "start": "webpack serve --open --config webpack.dev.js",
+    "test": "jest",
+    "watch": "jest --watch tests/*.test.js"
   },
   "author": "",
   "license": "ISC",
