@@ -1,3 +1,4 @@
+import { Board } from "./Board";
 import { randomShipPlace } from "./cpu";
 import {
   addListener,
@@ -7,63 +8,142 @@ import {
   removeListeners,
   resetDOM,
   toggleClass,
-  toggleTurn,
   appendRelative,
+  placeShipElement,
 } from "./DOM";
-import { settings } from "./gameSettings";
+import { PLAYERS } from "./Player";
 import { shotSelect } from "./shot-select";
 
-let currTurn = 0;
-let players;
-let board;
+let currShipRef; // stores currently selected ship || null
+let lastPlaced; // stores last placed [keys] of selected ship || null; needed to allow ship movement to adj squares
 
-let currShipRef;
-let lastPlaced;
-let shipByRef;
+// setup ship placement DOM elements
+export function shipPlace() {
+  const board = PLAYERS.currPlayer.board;
 
-export function shipPlace(playersArr) {
-  players = playersArr || players;
-  board = players[currTurn].board;
-
-  if (players[currTurn].cpu) {
-    randomShipPlace(board);
-    afterSwitch(shotSelect, 0, players);
-    return;
-  }
-
-  toggleClass(document.querySelector("#main"), "ship-select");
+  document.querySelector("#main").classList.add("ship-select");
   addToMain(makeElement("h1", [], "Place Your Ships"));
 
   addToMain(board.boardRef);
   addListener(board.boardRef, "click", selectSquare);
 
-  addToMain(getHangar(returnShip, rotateShips, confirmShips));
-  addShipsHangar(board.aliveShips, selectShip);
-
-  lastPlaced = new Map();
-  shipByRef = getShipMap(board.aliveShips);
+  addToMain(getHangar());
+  addShipsHangar(board.shipArr);
 }
 
-function getHangar(returnShip, rotateShip, confirmShips) {
+function selectShip(event) {
+  event.stopPropagation();
+  if (!event.currentTarget.classList.contains("ship")) return;
+
+  // deselect currently selected ship
+  if (deselect(getShipObj(currShipRef))) lastPlaced = null;
+  // case: click selected ship => deselect only
+  if (event.currentTarget === currShipRef) currShipRef = null;
+  else {
+    // select newly selected ship
+    currShipRef = event.currentTarget;
+    const shipObj = getShipObj(currShipRef);
+    currShipRef.classList.add("selected");
+
+    // save last placed & remove ship from board
+    lastPlaced = getLastPlaced(shipObj);
+    shipObj.unplace();
+  }
+
+  toggleConfirmBtn(
+    PLAYERS.currPlayer.board.getShipsByPlaced(false).length === 0,
+  );
+}
+
+function selectSquare(event) {
+  const board = PLAYERS.currPlayer.board;
+  if (event.target === board.boardRef) return;
+  if (!currShipRef) return;
+
+  const shipObj = getShipObj(currShipRef);
+  const coords = Board.getCoordsFromId(event.target.id);
+  // if possible: place selected ship on clicked square
+  if (board.placeShip(shipObj, coords)) {
+    placeShipElement(shipObj, board);
+    lastPlaced = null;
+    // allow confirm if all ships placed
+    toggleConfirmBtn(!board.getShipsByPlaced(false).length);
+  }
+
+  // deselect ship
+  if (deselect(shipObj)) lastPlaced = null;
+  currShipRef = null;
+}
+
+function returnShip() {
+  if (!currShipRef) return;
+  const shipObj = getShipObj(currShipRef);
+  // case: selected ship was not placed => return
+  if (!shipObj.isPlaced()) return;
+
+  // rotate ship to match hangar ships
+  matchHangarOrient(shipObj);
+
+  // unplace ship
+  shipObj.unplace();
+  resetShipElement(currShipRef);
+
+  // deselect ship
+  lastPlaced = null;
+  deselect(shipObj);
+  currShipRef = null;
+
+  toggleConfirmBtn(false);
+}
+
+function rotateHangarShips(event) {
+  event.stopPropagation();
+  PLAYERS.currPlayer.board
+    .getShipsByPlaced(false)
+    .forEach((shipObj) => rotateShip(shipObj));
+}
+
+function confirmShips(event) {
+  event.stopPropagation();
+
+  resetShipPlace();
+  PLAYERS.switchTurn();
+
+  // case: second player is CPU => random place ships => next stage
+  if (PLAYERS.isCPU()) {
+    const board = PLAYERS.currPlayer.board;
+    randomShipPlace(board);
+    board.shipArr.forEach((ship) => placeShipElement(ship, board));
+    PLAYERS.switchTurn();
+  }
+  // case: second controlled player turn => back to shipPlace()
+  else if (PLAYERS.currTurn === 1) return afterSwitch(shipPlace, 1);
+
+  // next stage
+  document.querySelector("#main").classList.remove("ship-select");
+  afterSwitch(shotSelect, 0);
+}
+
+function getHangar() {
   const hangar = makeElement("div", [["class", "ship-container"]]);
   addListener(hangar, "click", returnShip);
 
-  hangar.appendChild(getRotateBtn(rotateShip));
-  hangar.appendChild(getConfirmBtn(confirmShips));
+  hangar.appendChild(getRotateBtn());
+  hangar.appendChild(getConfirmBtn());
   return hangar;
 }
 
-function getRotateBtn(rotateShip) {
+function getRotateBtn() {
   const rotateButton = makeElement(
     "button",
     [["id", "rotate-button"]],
     "Rotate Ship",
   );
-  addListener(rotateButton, "click", rotateShip);
+  addListener(rotateButton, "click", rotateHangarShips);
   return rotateButton;
 }
 
-function getConfirmBtn(confirmShips) {
+function getConfirmBtn() {
   const confirmButton = makeElement(
     "button",
     [
@@ -76,135 +156,73 @@ function getConfirmBtn(confirmShips) {
   return confirmButton;
 }
 
-function addShipsHangar(ships, selectShip) {
+function addShipsHangar(ships, selectShipFx = selectShip) {
+  const hangar = document.querySelector(".ship-container");
   ships.forEach((shipObj) => {
-    addListener(shipObj.shipRef, "click", selectShip);
-    appendShipHangar(shipObj.shipRef);
+    addListener(shipObj.shipRef, "click", selectShipFx);
+    appendRelative(shipObj.shipRef, hangar.lastElementChild);
   });
 }
 
-function appendShipHangar(shipRef) {
-  const hangar = document.querySelector(".ship-container");
-  appendRelative(shipRef, hangar.lastElementChild);
-}
-
-function getShipMap(shipSet) {
-  const shipMap = new Map();
-  shipSet.forEach((shipObj) => shipMap.set(shipObj.shipRef, shipObj));
-  return shipMap;
-}
-
-function selectShip(event) {
-  event.stopPropagation();
-
-  deselect(currShipRef);
-  // case: click selected ship => deselect only
-  if (event.currentTarget === currShipRef) return (currShipRef = null);
-
-  currShipRef = event.currentTarget;
-  toggleClass(currShipRef, "selected");
-
-  // case: select placed ship => remove ship from board to allow movement to adj squares
-  if (lastPlaced.has(currShipRef)) board.removeShip(shipByRef.get(currShipRef));
-
-  toggleConfirmBtn(false);
-}
-
-function deselect(shipRef) {
-  if (!shipRef) return;
-
-  toggleClass(shipRef, "selected");
+// returns true if lastPlaced was used on the ship
+function deselect(shipObj) {
+  if (!shipObj) return false;
+  shipObj.shipRef.classList.remove("selected");
 
   // case: ship was placed prior to selection => return ship to previous location
-  if (lastPlaced.has(shipRef))
-    board.addShip(shipByRef.get(shipRef), lastPlaced.get(shipRef));
+  if (lastPlaced) {
+    shipObj.squareKeys = lastPlaced;
+    return true;
+  }
+  return false;
 }
 
-function selectSquare(event) {
-  if (event.target === board.boardRef) return;
-  if (!currShipRef) return;
-
-  const shipObj = shipByRef.get(currShipRef);
-  const key = event.target.id;
-  if (board.checkSquare(shipObj, key))
-    placeShip(shipObj, key, event.target, lastPlaced);
-
-  deselect(currShipRef);
-  currShipRef = null;
-
-  // allow confirm if all ships placed
-  toggleConfirmBtn(lastPlaced.size === settings.ships);
-}
-
-function placeShip(shipObj, key, square, lastPlaced) {
-  const shipRef = shipObj.shipRef;
-  if (!lastPlaced.has(shipRef)) toggleClass(shipRef, "placed");
-  lastPlaced.set(shipRef, key);
-  square.appendChild(shipRef);
-}
-
-function returnShip() {
-  if (!currShipRef) return;
-  if (!lastPlaced.has(currShipRef)) return;
-
-  lastPlaced.delete(currShipRef);
-  resetShip(currShipRef);
-
-  // rotate ship to match hangar ships
-  const className = getUnplacedShips(lastPlaced, board)[0].shipRef.className;
-  if (currShipRef.className !== className) rotate(shipByRef.get(currShipRef));
-
-  deselect(currShipRef);
-  currShipRef = null;
-  toggleConfirmBtn(false);
-}
-
+// true/false => enable/disable confirm button
 function toggleConfirmBtn(bool) {
   document.querySelector("#confirm-button").disabled = !bool;
 }
 
-function resetShip(currShip) {
-  appendShipHangar(currShip);
-  toggleClass(currShip, "placed");
+// helper fx: ship DOM element ref => ship obj
+function getShipObj(shipRef) {
+  for (const shipObj of PLAYERS.currPlayer.board.shipArr) {
+    if (shipObj.shipRef === shipRef) return shipObj;
+  }
 }
 
-function getUnplacedShips(placedMap, board) {
-  const shipArray = [];
-  board.aliveShips.forEach((shipObj) => {
-    if (!placedMap.has(shipObj.shipRef)) shipArray.push(shipObj);
-  });
-  return shipArray;
+// returns last placed keys if ship was previously placed
+function getLastPlaced(shipObj) {
+  return shipObj.isPlaced() ? shipObj.squareKeys : null;
 }
 
-function rotateShips(event) {
-  event.stopPropagation();
-
-  const ships = getUnplacedShips(lastPlaced, board);
-  ships.forEach((shipObj) => rotate(shipObj));
+function resetShipElement(currShipRef) {
+  appendRelative(
+    currShipRef,
+    document.querySelector(".ship-container").lastElementChild,
+  );
+  currShipRef.classList.remove("placed");
 }
 
-function rotate(shipObj) {
+function matchHangarOrient(ship) {
+  const hangarShip = document.querySelector(".ship-container .ship");
+  if (!hangarShip) return;
+  if (
+    hangarShip.classList.contains("rotated") !==
+    ship.shipRef.classList.contains("rotated")
+  )
+    rotateShip(ship);
+}
+
+function rotateShip(shipObj) {
   toggleClass(shipObj.shipRef, "rotated");
   shipObj.switchOrient();
 }
 
-function confirmShips(event) {
-  event.stopPropagation();
-
+function resetShipPlace() {
   // remove all elements from #main
   removeListeners();
   resetDOM();
 
   // reset variables for gc
   currShipRef = null;
-  shipByRef = null;
   lastPlaced = null;
-
-  currTurn = toggleTurn(currTurn);
-  if (currTurn === 1 && players[1].cpu) shipPlace();
-  else if (currTurn === 1) afterSwitch(shipPlace, 1);
-  else {
-    toggleClass(document.querySelector("#main"), "ship-select");
-    afterSwitch(shotSelect, 0, players);
-  }
 }

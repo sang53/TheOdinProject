@@ -1,7 +1,6 @@
 import "./style.css";
 import {
   makeElement,
-  toggleClass,
   addToMain,
   resetDOM,
   removeListeners,
@@ -9,21 +8,17 @@ import {
   afterSwitch,
 } from "./DOM";
 import { Board } from "./Board";
-import { changeSettings, settings } from "./gameSettings";
-import { Player } from "./Player";
+import { SETTINGS } from "./gameSettings";
 import { shipPlace } from "./ship-placement";
-
-const RULES = document.querySelector("#rules-modal");
-const SETTINGS = document.querySelector("#settings-modal");
 
 startScreen();
 
 function startScreen() {
-  toggleClass(document.querySelector("#main"), "start-screen");
+  document.querySelector("#main").classList.add("start-screen");
   addToMain(makeElement("h1", [], "Play BattleShip!"));
   addToMain(getBoardsDiv());
   addToMain(getFooter());
-  updateSettings();
+  updateSettingsDiv();
 }
 
 function getBoardsDiv() {
@@ -75,46 +70,55 @@ function getSettingsButton(openSettings) {
 function nextStage() {
   removeListeners();
   resetDOM();
-  toggleClass(document.querySelector("#main"), "start-screen");
+  document.querySelector("#main").classList.remove("start-screen");
 
-  const players = [new Player(0, false), new Player(1, settings.opp === "CPU")];
-  afterSwitch(shipPlace, 0, players);
+  afterSwitch(shipPlace, 0);
 }
 
 function openRules() {
-  RULES.showModal();
-  addListener(RULES.querySelector("button"), "click", closeRules, true);
+  const rulesModal = document.querySelector("#rules-modal");
+  rulesModal.showModal();
+  addListener(rulesModal.querySelector("button"), "click", closeRules, true);
 }
 
 function closeRules() {
-  RULES.close();
+  document.querySelector("#rules-modal").close();
 }
 
 function openSettings() {
-  SETTINGS.showModal();
-  addListener(SETTINGS.querySelector("button"), "click", closeSettings, true);
+  const settingsModal = document.querySelector("#settings-modal");
+  settingsModal.showModal();
+  addListener(
+    settingsModal.querySelector("button"),
+    "click",
+    closeSettings,
+    true,
+  );
 }
 
 function closeSettings(event) {
-  const formElements = SETTINGS.querySelector("form").elements;
+  const settingsModal = document.querySelector("#settings-modal");
+  const formElements = settingsModal.querySelector(
+    "#settings-modal form",
+  ).elements;
 
-  changeSettings({
+  SETTINGS.changeSettings({
     shot: formElements["cluster"].checked ? "Cluster" : "Single",
     opp: formElements["computer"].checked ? "CPU" : "Player",
   });
 
-  updateSettings();
+  updateSettingsDiv();
   event.preventDefault();
-  SETTINGS.close();
+  settingsModal.close();
 }
 
-function updateSettings(settingsObj = settings) {
+function updateSettingsDiv() {
   const settingsDiv = document.querySelector("#settings");
   const outputStr = [
-    "Sides: " + settingsObj.sides,
-    "Ships: " + settings.ships,
-    "Shots: " + settings.shotType,
-    "Opp: " + settings.opp,
+    "Sides: " + SETTINGS.sides,
+    "Ships: " + SETTINGS.ships,
+    "Shots: " + SETTINGS.shotType,
+    "Opp: " + SETTINGS.opp,
   ].join("\n");
   settingsDiv.innerText = outputStr;
 }

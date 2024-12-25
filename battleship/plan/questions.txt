@@ -1,0 +1,22 @@
+in ship-placement:
+  is it better to add ships directly to board
+  or keep it as a in-module data structure and assign into board when confirming ships
+
+  use optional default arguments to allow testing & modularity? 
+  Eg, board = PLAYERS[currTurn].board, lastPlaced = lastPlaced
+
+  matchHangarOrient -> should it return true/false, then do the consequent action (rotate ship) in the calling/main function
+  or rotate ships directly inside matchHangarOrient function
+
+Shot-select:
+  pass in shots Set in registerShots() or just assign to global variable shots.
+  could do either
+
+DOM:
+  toggleShips => hides & unhides ships 
+  or is it better to have hideShips() + showShips()
+
+General:
+  where to put code that manipulates DOM.
+  eg - when a ship is deselected => remove class "selected"
+     - when a ship is placed => append ship to square & add class "placed"

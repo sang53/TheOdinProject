@@ -1,13 +1,29 @@
-export const settings = {
-  sides: 10,
-  ships: 5,
-  shotType: "Cluster",
-  opp: "CPU",
-};
+export const SETTINGS = (function () {
+  let sides = 10;
+  let ships = 5;
+  let shotType = "Cluster";
+  let opp = "CPU";
 
-export function changeSettings(inputObj) {
-  settings.sides = inputObj.sides || settings.sides;
-  settings.ships = inputObj.ships || settings.ships;
-  settings.shotType = inputObj.shot;
-  settings.opp = inputObj.opp;
-}
+  function changeSettings(inputObj) {
+    ships = inputObj.ships || ships;
+    sides = inputObj.sides || sides;
+    shotType = inputObj.shot;
+    opp = inputObj.opp;
+  }
+
+  return {
+    get sides() {
+      return sides;
+    },
+    get ships() {
+      return ships;
+    },
+    get shotType() {
+      return shotType;
+    },
+    get opp() {
+      return opp;
+    },
+    changeSettings,
+  };
+})();

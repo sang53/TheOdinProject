@@ -5,38 +5,130 @@ import {
   afterSwitch,
   makeElement,
   removeListeners,
-  toggleClass,
-  toggleShips,
-  toggleTurn,
+  hideShips,
+  showShips,
 } from "./DOM";
-import { settings } from "./gameSettings";
+import { SETTINGS } from "./gameSettings";
+import { PLAYERS } from "./Player";
+import { Board } from "./Board";
+import { victoryScreen } from "./victory";
 
-let currTurn = 0;
-let players;
-let oppBoard;
-
-let shots;
+let shots; // stores square keys
 let shotNum;
 
-export function shotSelect(playerArr) {
-  players = playerArr;
+export function shotSelect() {
   document.querySelector("#main").classList.toggle("shot-select");
   addToMain(makeElement("h1", [], "Battle Phase"));
-  addToMain(getBoardsDiv(players));
+  addToMain(getBoardsDiv());
   addToMain(getStatsDiv());
 
-  players.forEach((player) => {
-    toggleShips(player.board);
-  });
-  if (settings.shotType === "Single") shotNum = 1;
+  hideShips(PLAYERS.currPlayer.board);
+  hideShips(PLAYERS.oppPlayer.board);
+
   setupTurn();
 }
 
-function getBoardsDiv(players) {
+function setupTurn() {
+  shots = new Set();
+  shotNum = SETTINGS.shotType === "Single" ? 1 : PLAYERS.currPlayer.aliveShips;
+
+  showShips(PLAYERS.currPlayer.board);
+  addListener(PLAYERS.oppPlayer.board.boardRef, "click", selectShot);
+  addListener(document.querySelector("#control-button"), "click", confirmShots);
+
+  updateCtrlMsg(`Select ${shotNum} Shots`);
+  toggleCtrlBtn(false);
+}
+
+function selectShot(event) {
+  if (!event.target.classList.contains("square")) return;
+  const squareKey = Board.getKey(Board.getCoordsFromId(event.target.id));
+  const oppBoard = PLAYERS.oppPlayer.board;
+  if (oppBoard.shotSquares.has(squareKey)) return;
+
+  if (shots.has(squareKey)) removeShot(event.target);
+  else if (shotNum > shots.size) addShot(event.target);
+  else if (shotNum === 1) {
+    removeShot(shots.keys().next().value);
+    addShot(event.target);
+  }
+
+  toggleCtrlBtn(shotNum === shots.size);
+}
+
+function confirmShots() {
+  const hits = registerShots(PLAYERS.oppPlayer.board);
+
+  updateCtrlMsg(`Hits: ${hits}\nMisses: ${shots.size - hits}`);
+  updateStats(PLAYERS.oppPlayer.board);
+  removeListeners();
+
+  addListener(
+    document.querySelector("#control-button"),
+    "click",
+    nextTurn,
+    true,
+  );
+}
+
+function registerShots(board) {
+  let hits = 0;
+  shots.forEach((key) => {
+    const coords = Board.getCoordsFromKey(key);
+    const ship = board.receiveShot(coords);
+    const squareRef = board.getSquareRef(coords);
+
+    squareRef.classList.remove("selected");
+    if (ship) {
+      hits++;
+      squareRef.classList.add("hit");
+      if (ship.receiveHit(key)) PLAYERS.oppPlayer.aliveShips--;
+    } else squareRef.classList.add("shot");
+  });
+  return hits;
+}
+
+function updateStats(oppBoard) {
+  const statDiv = document.querySelector(`#stats-player${PLAYERS.currTurn}`);
+  let hitsTotal = 0;
+  let shotsTotal = oppBoard.shotSquares.size;
+
+  oppBoard.shipArr.forEach((ship) => {
+    ship.squareKeys.forEach((key) => {
+      if (oppBoard.shotSquares.has(key)) hitsTotal++;
+    });
+  });
+
+  statDiv.innerText = getStatStr(hitsTotal, shotsTotal);
+}
+
+function nextTurn() {
+  if (!PLAYERS.oppPlayer.aliveShips) {
+    updateCtrlMsg(`Player ${PLAYERS.currTurn} Wins!`);
+    victoryScreen();
+    return;
+  }
+  PLAYERS.switchTurn();
+
+  if (PLAYERS.isCPU()) afterSwitch(cpuTurn, PLAYERS.currTurn);
+  else {
+    hideShips(PLAYERS.currPlayer.board);
+    afterSwitch(setupTurn, PLAYERS.currTurn);
+  }
+}
+
+function cpuTurn() {
+  shotNum = SETTINGS.shotType === "Single" ? 1 : PLAYERS.currPlayer.aliveShips;
+
+  shots = getCPUShots(PLAYERS.oppPlayer.board, shotNum);
+  confirmShots();
+}
+
+function getBoardsDiv() {
   const containerDiv = makeElement("div", [["id", "boards"]]);
-  containerDiv.appendChild(players[0].board.boardRef);
+  containerDiv.appendChild(PLAYERS.currPlayer.board.boardRef);
   containerDiv.appendChild(getController());
-  containerDiv.appendChild(players[1].board.boardRef);
+  containerDiv.appendChild(PLAYERS.oppPlayer.board.boardRef);
   return containerDiv;
 }
 
@@ -61,9 +153,9 @@ function getStatsDiv() {
 
 function getPlayerStatDiv(num) {
   const statDiv = makeElement("div", [["class", "box"]]);
-  statDiv.appendChild(makeElement("h4", [], `Player ${num + 1}:`));
+  statDiv.appendChild(makeElement("h4", [], `Player ${num}:`));
   statDiv.appendChild(
-    makeElement("div", [["id", `stats-player${num + 1}`]], getStatStr(0, 0)),
+    makeElement("div", [["id", `stats-player${num}`]], getStatStr(0, 0)),
   );
 
   return statDiv;
@@ -71,22 +163,7 @@ function getPlayerStatDiv(num) {
 
 function getStatStr(hits, shots) {
   const acc = shots === 0 ? 0 : Math.round((hits / shots) * 100);
-  return `Hits: ${hits} / 15\nShots: ${shots}\nAcc: ${acc}%`;
-}
-
-function setupTurn() {
-  oppBoard = players[toggleTurn(currTurn)].board;
-  shots = new Set();
-
-  toggleShips(players[currTurn].board);
-  addListener(oppBoard.boardRef, "click", selectShot);
-  addListener(document.querySelector("#control-button"), "click", confirmShots);
-
-  if (settings.shotType === "Cluster")
-    shotNum = players[currTurn].board.aliveShips.size;
-
-  updateCtrlMsg(`Select ${shotNum} Shots`);
-  toggleCtrlBtn(false);
+  return `Hits: ${hits} / ${(SETTINGS.ships * (SETTINGS.ships + 1)) / 2}\nShots: ${shots}\nAcc: ${acc}%`;
 }
 
 function updateCtrlMsg(str) {
@@ -97,67 +174,14 @@ function toggleCtrlBtn(bool) {
   document.querySelector("#control-button").disabled = !bool;
 }
 
-function selectShot(event) {
-  const square = event.target;
-  if (square === oppBoard.boardRef) return;
-  if (oppBoard.shotSquares.has(square.id)) return;
-
-  if (shots.has(square)) removeShot(square, shots);
-  else if (shotNum > shots.size) addShot(square, shots);
-  else if (shotNum === 1) {
-    removeShot(shots.keys().next().value, shots);
-    addShot(square, shots);
-  }
-
-  toggleCtrlBtn(shotNum === shots.size);
+function addShot(square) {
+  const squareKey = Board.getKey(Board.getCoordsFromId(square.id));
+  shots.add(squareKey);
+  square.classList.add("selected");
 }
 
-function addShot(square, shots) {
-  shots.add(square);
-  toggleClass(square, "selected");
-}
-
-function removeShot(square, shots) {
-  shots.delete(square);
-  toggleClass(square, "selected");
-}
-
-function confirmShots() {
-  let hits = 0;
-  shots.forEach((square) => {
-    if (oppBoard.receiveShot(square.id)) hits++;
-    toggleClass(square, "selected");
-  });
-
-  updateCtrlMsg(`Hits: ${hits}\nMisses: ${shotNum - hits}`);
-  updateStats(oppBoard, currTurn);
-  removeListeners();
-  addListener(document.querySelector("#control-button"), "click", nextTurn);
-}
-
-function updateStats(oppBoard, currTurn) {
-  const statDiv = document.querySelector(`#stats-player${currTurn + 1}`);
-  let hits = 0;
-  let shots = oppBoard.shotSquares.size;
-
-  oppBoard.shipSquares.forEach((_, key) => {
-    if (oppBoard.shotSquares.has(key)) hits++;
-  });
-
-  statDiv.innerText = getStatStr(hits, shots);
-}
-
-function nextTurn() {
-  removeListeners();
-
-  if (players[toggleTurn(currTurn)].cpu) return cpuTurn();
-
-  toggleShips(players[currTurn].board);
-  currTurn = toggleTurn(currTurn);
-  afterSwitch(setupTurn, currTurn);
-}
-
-function cpuTurn() {
-  shots = getCPUShots(players[currTurn].board, shotNum);
-  confirmShots();
+function removeShot(square) {
+  const squareKey = Board.getKey(Board.getCoordsFromId(square.id));
+  shots.delete(squareKey);
+  square.classList.remove("selected");
 }

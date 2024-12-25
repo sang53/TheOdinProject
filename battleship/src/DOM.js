@@ -1,3 +1,5 @@
+import { Board } from "./Board";
+
 let DOM_ELEMENTS = [];
 let listeners = [];
 
@@ -64,11 +66,17 @@ export function appendRelative(element, refNode, relative = "before") {
   return parentNode.appendChild(element);
 }
 
-export function toggleTurn(currTurn) {
-  return currTurn === 0 ? 1 : 0;
+export function hideShips(board) {
+  board.shipArr.forEach((ship) => ship.shipRef.classList.add("hidden"));
 }
 
-export function toggleShips(board) {
-  board.aliveShips.forEach((ship) => toggleClass(ship.shipRef, "hidden"));
-  board.deadShips.forEach((ship) => toggleClass(ship.shipRef, "hidden"));
+export function showShips(board) {
+  board.shipArr.forEach((ship) => ship.shipRef.classList.remove("hidden"));
+}
+
+export function placeShipElement(shipObj, board) {
+  shipObj.shipRef.classList.add("placed");
+  if (shipObj.orient === "vertical") shipObj.shipRef.classList.add("rotated");
+  const coords = Board.getCoordsFromKey(shipObj.squareKeys[0]);
+  board.getSquareRef(coords).appendChild(shipObj.shipRef);
 }

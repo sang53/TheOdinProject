@@ -1,37 +1,39 @@
-import { makeElement, toggleClass } from "./DOM";
-import { settings } from "./gameSettings";
+import { makeElement } from "./DOM";
 
 export class Ship {
-  constructor(length, shipRef) {
+  squareKeys = [];
+  hits = 0;
+  orient = "horizontal";
+
+  constructor(length) {
     this.length = length;
-    this.hits = 0;
-    this.orient = "horizontal";
-    this.shipRef = shipRef;
+    this.shipRef = this.#buildShip();
   }
 
   switchOrient() {
     this.orient = this.orient === "horizontal" ? "vertical" : "horizontal";
   }
 
-  receiveHit(num) {
-    toggleClass(this.shipRef.querySelector(`.num-${num}`), "hit");
+  isPlaced() {
+    return this.shipRef.classList.contains("placed");
+  }
+
+  unplace() {
+    this.squareKeys = [];
+  }
+
+  receiveHit(key) {
+    const idx = this.squareKeys.indexOf(key);
+    this.shipRef.querySelector(`.num-${idx}`).classList.add("hit");
     return ++this.hits === this.length;
   }
 
-  static makeShips(num = settings.ships) {
-    const shipSet = new Set();
-    for (let length = 1; length <= num; length++) {
-      shipSet.add(new Ship(length, Ship.#buildShip(length)));
-    }
-    return shipSet;
-  }
-
-  static #buildShip(length) {
+  #buildShip() {
     const shipRef = makeElement("div", [
       ["class", "ship"],
-      ["id", `ship-${length}`],
+      ["id", `ship-${this.length}`],
     ]);
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < this.length; i++) {
       shipRef.appendChild(Ship.#makeSquare(i));
     }
     return shipRef;
