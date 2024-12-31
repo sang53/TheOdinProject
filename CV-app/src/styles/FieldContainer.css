@@ -1,0 +1,30 @@
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.heading {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  > button {
+    align-self: center;
+  }
+
+  &.hovered {
+    background-color: var(--hover-container-colour);
+  }
+
+  .heading {
+    margin-bottom: 0.25rem;
+  }
+
+  .list-item {
+    margin-bottom: 0.25rem;
+  }
+}

@@ -1,0 +1,23 @@
+inputs:
+  id = used for styling & determine default text
+  isHover = if this field is currently being hovered
+  isEdit = if this field is currently being edited
+  setHover - if isHover is false
+  setEdit - if isHover is true
+  line - true if line , false if textarea
+
+states:
+  storedText = default/user inputted text for display
+
+returns:
+  if isEdit:
+    return input/textarea with value = storedText
+    on change event: setStoredText
+
+  else:
+    return div with storedText as text
+    if !isHover:
+      on focus event: setHover
+    if isHover:
+     add class .hovered
+     on click event: setEdit

@@ -1,0 +1,19 @@
+inputs:
+  id - used to determine title & children
+  isHover
+
+states:
+  items - array of child list items
+
+returns:
+  div - title
+  ul
+  items.map => child li
+  if isHover:
+    button add item
+    on click event: add new item
+
+
+functions:
+  add new item:
+    setItems([...items, new random key])

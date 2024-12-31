@@ -59,3 +59,14 @@ h5,
 h6 {
   text-wrap: balance;
 }
+
+:root {
+  background-color: grey;
+}
+
+#root {
+  width: clamp(400px, 60vw, 1200px);
+  margin-inline: auto;
+  background-color: white;
+  min-height: 100vh;
+}

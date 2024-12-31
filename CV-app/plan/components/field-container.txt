@@ -1,0 +1,24 @@
+inputs:
+  id - used for styling, default title & children
+  isHover - if this container is currently being hovered
+  hoverId
+  editId
+  setHover
+  setEdit
+
+
+states:
+  items - array of child items
+
+returns:
+  if !isHover:
+    div of title
+    items.map => children editable fields components
+  
+  if hovered:
+    button - add item
+    on click event: add new item
+  
+  functions:
+    add new item:
+      setItem([...items, randomUuid key/id])

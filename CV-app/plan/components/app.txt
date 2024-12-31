@@ -1,0 +1,10 @@
+states:
+  hovField
+  hovContainer
+  editField
+  // all stored as ids
+
+if direct child are editable field/lines => pass in ishover/isedit directly
+if direct child are containers => pass in ishover (hovContainer) & the ids as props
+
+

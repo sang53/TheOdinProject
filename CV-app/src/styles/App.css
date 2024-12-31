@@ -1,0 +1,19 @@
+:root {
+  --hover-colour: lightblue;
+  --hover-container-colour: lightgreen;
+}
+
+#main {
+  padding: 1rem;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 3fr 2fr;
+}
+
+.hovered {
+  background-color: var(--hover-colour);
+}
+
+#contact {
+  grid-row: span 2;
+}
