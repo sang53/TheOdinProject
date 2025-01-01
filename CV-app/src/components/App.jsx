@@ -9,8 +9,8 @@ function App() {
   const [hoverId, setHoverId] = useState(null);
   const [hoverContId, setHoverContId] = useState(null);
 
-  const basicProps = { onHover, onEdit };
-  const containerProps = { editId, hoverId, onHoverCont };
+  const basicProps = { onHover, onEdit, hoverId, editId };
+  const containerProps = { onHoverCont, hoverContId };
 
   function onHover(event) {
     event.stopPropagation();
@@ -27,7 +27,9 @@ function App() {
     setHoverContId(event.currentTarget.id);
   }
 
-  function reset() {
+  function reset(event) {
+    if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA")
+      return;
     setEditId(null);
     setHoverContId(null);
     setHoverId(null);
@@ -35,54 +37,14 @@ function App() {
 
   return (
     <div id="main" onClick={reset}>
-      <EditField
-        id="name"
-        isHover={hoverId === "name"}
-        isEdit={editId === "name"}
-        {...basicProps}
-      />
-      <EditField
-        id="contact"
-        isHover={hoverId === "contact"}
-        isEdit={editId === "contact"}
-        {...basicProps}
-      />
-      <EditField
-        id="intro"
-        isHover={hoverId === "intro"}
-        isEdit={editId === "intro"}
-        {...basicProps}
-      />
-      <FieldContainer
-        {...basicProps}
-        {...containerProps}
-        isHover={hoverContId === "employment"}
-        id="employment"
-      />
-      <ListContainer
-        {...basicProps}
-        {...containerProps}
-        isHover={hoverContId === "skills"}
-        id="skills"
-      />
-      <FieldContainer
-        {...basicProps}
-        {...containerProps}
-        isHover={hoverContId === "education"}
-        id="education"
-      />
-      <ListContainer
-        {...basicProps}
-        {...containerProps}
-        isHover={hoverContId === "licenses"}
-        id="licenses"
-      />
-      <ListContainer
-        {...basicProps}
-        {...containerProps}
-        isHover={hoverContId === "extras"}
-        id="extras"
-      />
+      <EditField id="name" {...basicProps} />
+      <EditField id="contact" {...basicProps} />
+      <EditField id="intro" {...basicProps} />
+      <FieldContainer {...basicProps} {...containerProps} id="employment" />
+      <ListContainer {...basicProps} {...containerProps} id="skills" />
+      <FieldContainer {...basicProps} {...containerProps} id="education" />
+      <ListContainer {...basicProps} {...containerProps} id="licenses" />
+      <ListContainer {...basicProps} {...containerProps} id="extras" />
     </div>
   );
 }

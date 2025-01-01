@@ -6,3 +6,13 @@
 #intro {
   font-style: italic;
 }
+
+input {
+  width: 90%;
+}
+
+textarea {
+  width: 90%;
+  height: 5rem;
+  resize: none;
+}

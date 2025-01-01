@@ -3,17 +3,24 @@ import ListItem from "./ListItem";
 import defaultTexts from "../assets/defaultTexts";
 
 export default function ListContainer(props) {
+  return (
+    <ListContainerInternal
+      {...props}
+      isHover={props.hoverContId === props.id}
+    />
+  );
+}
+
+function ListContainerInternal(props) {
   const [items, setItems] = useState([crypto.randomUUID()]);
   const basicProps = { onHover: props.onHover, onEdit: props.onEdit };
   const listItems = items.map((key) => {
     return (
       <ListItem
-        {...basicProps}
+        {...props}
         key={key}
         id={key}
         defaultText={defaultTexts[props.id].text}
-        isHover={props.hoverId === key}
-        isEdit={props.editId === key}
       />
     );
   });

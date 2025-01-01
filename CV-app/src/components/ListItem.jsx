@@ -1,6 +1,16 @@
 import { useState } from "react";
 
 export default function ListItem(props) {
+  return (
+    <ListItemInternal
+      {...props}
+      isHover={props.hoverId === props.id}
+      isEdit={props.editId === props.id}
+    />
+  );
+}
+
+function ListItemInternal(props) {
   const [text, setText] = useState(props.defaultText);
 
   function updateText(event) {

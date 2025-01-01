@@ -3,12 +3,23 @@ import defaults from "../assets/defaultTexts";
 import { useState } from "react";
 
 export default function EditField(props) {
-  const defaultText = props.defaultText || defaults[props.id].default;
-  const isInput =
-    props.isInput ||
-    (props.isInput === undefined && defaults[props.id].isInput);
-  const className = props.className || "text";
-  const [text, setText] = useState(defaultText);
+  return (
+    <EditFieldInternal
+      {...props}
+      isHover={props.hoverId === props.id}
+      isEdit={props.editId === props.id}
+      defaultText={props.defaultText || defaults[props.id].default}
+      isInput={
+        props.isInput ||
+        (props.isInput === undefined && defaults[props.id].isInput)
+      }
+      className={props.className || "text"}
+    />
+  );
+}
+
+function EditFieldInternal(props) {
+  const [text, setText] = useState(props.defaultText);
 
   function handleChange(event) {
     setText(event.target.value);
@@ -17,10 +28,10 @@ export default function EditField(props) {
   if (props.isEdit) {
     return (
       <>
-        {isInput ? (
-          <input value={text} onChange={handleChange} />
+        {props.isInput ? (
+          <input value={text} id={props.id} onChange={handleChange} />
         ) : (
-          <textarea value={text} onChange={handleChange} />
+          <textarea value={text} id={props.id} onChange={handleChange} />
         )}
       </>
     );
@@ -31,7 +42,7 @@ export default function EditField(props) {
         ? { onClick: props.onEdit }
         : { onMouseOver: props.onHover })}
       id={props.id}
-      className={props.isHover ? `${className} hovered` : className}
+      className={props.isHover ? `${props.className} hovered` : props.className}
     >
       {text}
     </div>

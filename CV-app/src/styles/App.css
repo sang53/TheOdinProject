@@ -1,6 +1,6 @@
 :root {
-  --hover-colour: lightblue;
-  --hover-container-colour: lightgreen;
+  --hover-colour: #a5f3fc;
+  --hover-container-colour: #ffedd5;
 }
 
 #main {
@@ -16,4 +16,8 @@
 
 #contact {
   grid-row: span 2;
+}
+
+#extras {
+  grid-column-start: 2;
 }
