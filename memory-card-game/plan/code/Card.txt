@@ -1,0 +1,7 @@
+imports:
+  API Handler
+
+props:
+  id - pokemon id to display
+  clickable - clickable if game
+  setHistory - on click

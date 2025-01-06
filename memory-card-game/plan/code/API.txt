@@ -1,0 +1,32 @@
+API singleton object:
+
+  pokemon[pokedex] = set[id] => {name, types, info, imgsrc, image}
+  currDex = currently selected pokedex
+
+  initDex
+  loadDex(defaultDex)
+
+  methods:
+    private initDex():
+      load names of all pokedex
+
+    switchPokedex(num):
+      currGen = num
+      if pokedex not loaded:
+        load pokedex(num)
+    
+    private load pokedex(num):
+      fetch pokedex from API
+      load information into data
+
+    getPokemon(id):
+      if pokemon not loaded:
+        load pokemon
+      return pokemon
+    
+    private load pokemon(id):
+      fetch pokemon from API
+      load data
+
+    get random id():
+      return random pokemon id for current pokedex

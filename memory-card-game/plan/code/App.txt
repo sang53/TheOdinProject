@@ -1,0 +1,20 @@
+states: 
+  gameState - start screen, main screen, end screen
+  high score
+  cards - set of pokemon names/ids included in game
+  numcards - number of cards to display each turn
+  history - array of selected pokemon names/ids
+
+functions:
+  changeCards(num):
+    get set of random pokemon names/ids of size = num
+    set cards (random set)
+
+  changeHistory(id):
+    if id already selected:
+      end screen
+    else:
+      add id to history
+  
+  progress game:
+    set ++gamesState, go back to start screen if at end screen

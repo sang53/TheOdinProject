@@ -1,0 +1,4 @@
+props:
+  cards - set of card ids to display
+  isGame - determines if cards are clickable
+  setHistory

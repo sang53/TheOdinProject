@@ -1,0 +1,9 @@
+props:
+  cards
+  numCards
+  history - previously selected cards to check against
+  changeHistory - append selection to history when card is selected
+
+functions:
+  getRandomSet(numCards): 
+    return set of random ids from cards size = numCards

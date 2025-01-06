@@ -1,0 +1,10 @@
+inputs: 
+  cards - set of pokemon ids to include in game
+  setNumCards - change displayed cards num each turn
+  changeCards - when generation or number of cards are changed
+  progressGame - when start button is pressed
+
+events: 
+  pokedex onChange - change loaded generation -> changeCards
+  cards onChange - changeCards
+  numCards onChange - set numCards

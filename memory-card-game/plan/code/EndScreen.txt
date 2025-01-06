@@ -1,0 +1,7 @@
+inputs:
+  history
+  progress game -> back to start
+  high score
+
+display history of cards
+display high score & current score
