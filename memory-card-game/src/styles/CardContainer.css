@@ -1,0 +1,35 @@
+#pokemon-container {
+  flex-wrap: wrap;
+  border: 2px solid black;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.pokemon {
+  border: 1px solid black;
+  flex-direction: column;
+  align-items: center;
+  width: 160px;
+  gap: 0.25rem;
+  padding-block: 0.25rem;
+  border-radius: 5px;
+
+  > .image {
+    max-width: 100%;
+    border-block: 1px solid black;
+  }
+
+  > .name {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  > .types {
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}

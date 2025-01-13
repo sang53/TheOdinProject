@@ -1,0 +1,17 @@
+#start-buttons {
+  gap: 1rem;
+}
+
+#selectors {
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  > div {
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  input[type="number"] {
+    max-width: 8ch;
+  }
+}
