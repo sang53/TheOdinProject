@@ -1,0 +1,34 @@
+Major Learning points:
+  - deeper understanding of async javscript: chaining async processes, storing async data, access cache & load data if no stored data
+  - deeper understanding of react: useState & useEffect hooks, re-rendering process, how keys work in ilsts
+
+Difficulties:
+  - difficulty choosing between storing data inside the component as state or externally in a global IIFE. Eventually chose external IIFE as the data will have to be shared between many different components => state needed to be lifted up to App level which will re-render the entire VDOM every data fetch update. Still not 100& sure about other factors that may affect the decision, such as testability, readability, library/package usage & complexity of the required data
+  - difficulty planning out the required states & effects of components, as my understanding of re-renders & hooks needed improvement
+  - difficulty managing the different stages the component will have -> eg, loading, error, loaded
+
+
+Improvements in coding process:
+  - Planning stage:
+    - Have a more directed/focused approach to planning.
+    - Start with the functionality & layout of the app
+    - Plan out components & the states required for functionality - try bottom up to maximise modularity & minimise re-renders
+    - Think about how to handle the various loading & error states + what values the dependent variables will have
+  
+  - Implementation stage:
+    - work from bottom up
+    - introduce testing
+    - just get the functionality working first, even if not structured/optimised
+  
+  - Refactor stage:
+    - Test the overall app by using it
+    - Think about optimisations & Refactor
+
+Improvements in the code itself:
+  - Incorporate wrappers/children props + ?memoisation -> some shared states may not have to be lifted, prevent unecessary rerenders
+  - useContext - instead of prop drilling
+  - tests
+  - external library use -> for non-learning future apps
+  - css modules
+  - adhere to industry-standard for folder structure
+  - custom hooks - for better readability
