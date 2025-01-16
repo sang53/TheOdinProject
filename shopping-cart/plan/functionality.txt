@@ -1,0 +1,33 @@
+Landing page:
+  Nav Bar
+  Information/Welcome
+  View all products
+    Select certain product
+  View all categories
+    Select certain category
+
+Nav Bar:
+  Landing Page
+  Products
+  Categories
+  Cart
+
+Products:
+  Sort by Asc/Desc
+  Change displayed number per page
+
+Specific Product:
+  Display information
+  Add to cart: +/- buttons & number input
+
+Categories:
+  Sort Asc/Desc
+
+Specific Category: 
+  Sort by Asc/Desc
+  Change displayed number per page
+
+Cart:
+  Display product & number in cart
+  Remove & adjust quantity
+  Confirm button -> POSTing state (disable button) -> reset cart & show confirm msg
