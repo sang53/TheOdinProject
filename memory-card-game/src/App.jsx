@@ -4,7 +4,7 @@ import GameScreen from "./components/GameScreen";
 import EndScreen from "./components/EndScreen";
 import { APIHandler } from "./components/APIHandler";
 
-const DEFAULT_DEX = 4;
+const DEFAULT_DEX = 3;
 const DEFAULT_POKENUM = 30;
 const DEFAULT_DISPLAYNUM = 10;
 

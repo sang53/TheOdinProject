@@ -14,6 +14,7 @@ export const APIHandler = (() => {
   }
 
   async function loadDex(idx) {
+    if (pokedex[idx].pokemonIds.length) return;
     const jsonData = await handleFetch(pokedex[idx].getURL());
     if (pokedex[idx].pokemonIds.length) return;
     jsonData.pokemon_entries.forEach((jsonObj) => {

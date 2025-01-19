@@ -7,7 +7,7 @@ export default function EndScreen({ history, hScore, progressGame }) {
       <h1 id="end-score">Score: {history.length - 1}</h1>
       <h1 id="hscore">High Score: {hScore}</h1>
       <button onClick={progressGame}>Back to Start</button>
-      <h2 id="container-title">Picked Pokemon:</h2>
+      <h2 id="container-title">Picked Pokémon:</h2>
       <PokemonContainer pokemon={history} />
     </div>
   );

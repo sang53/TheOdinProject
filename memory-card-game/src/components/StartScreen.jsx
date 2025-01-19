@@ -5,7 +5,7 @@ import "../styles/StartScreen.css";
 export default function StartScreen(props) {
   return (
     <div id="main" className="flex">
-      <h1 className="title">Pokemon Memory Game</h1>
+      <h1 id="title">Pokémon Memory Game</h1>
       <div id="selectors" className="flex">
         <PokedexSelector changeDex={props.changeDex} currDex={props.currDex} />
         <NumDisplaySelector

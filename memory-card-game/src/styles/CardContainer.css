@@ -1,11 +1,24 @@
 #pokemon-container {
   flex-wrap: wrap;
   border: 2px solid black;
-  padding: 1rem;
+  padding: 1.5rem;
   gap: 1rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: inset 2px 2px 5px #71717a;
+  background: rgb(245, 245, 244);
+  background: linear-gradient(
+    194deg,
+    rgba(245, 245, 244, 1) 15%,
+    rgba(56, 189, 248, 1) 28%,
+    rgba(245, 245, 244, 1) 55%,
+    rgba(74, 71, 143, 1) 100%,
+    rgba(245, 245, 244, 1) 100%
+  );
 }
 
 .pokemon {
+  will-change: contents;
   border: 1px solid black;
   flex-direction: column;
   align-items: center;
@@ -13,10 +26,15 @@
   gap: 0.25rem;
   padding-block: 0.25rem;
   border-radius: 5px;
+  background-color: white;
+  box-shadow: 4px 3px 6px #27272a;
+  transition: transform 0.5s ease-in-out;
+  cursor: pointer;
 
   > .image {
     max-width: 100%;
     border-block: 1px solid black;
+    border-radius: 3px;
   }
 
   > .name {
@@ -32,4 +50,240 @@
   &:hover {
     transform: scale(1.1);
   }
+}
+
+.Electric {
+  background-color: #fcd34d;
+
+  > .image {
+    background: rgb(255, 254, 143);
+    background: linear-gradient(
+      212deg,
+      rgba(255, 254, 143, 1) 30%,
+      rgba(253, 230, 138, 1) 60%
+    );
+  }
+}
+
+.Psychic {
+  background-color: #f0abfc;
+
+  > .image {
+    background: rgb(252, 231, 243);
+    background: linear-gradient(
+      212deg,
+      rgba(252, 231, 243, 1) 30%,
+      rgba(245, 208, 254, 1) 60%
+    );
+  }
+}
+
+.Water {
+  background-color: #7dd3fc;
+
+  > .image {
+    background: rgb(207, 250, 254);
+    background: linear-gradient(
+      212deg,
+      rgba(207, 250, 254, 1) 30%,
+      rgba(186, 230, 253, 1) 60%
+    );
+  }
+}
+
+.Fighting {
+  background-color: #f59e0b;
+
+  > .image {
+    background: rgb(253, 230, 138);
+    background: linear-gradient(
+      212deg,
+      rgba(253, 230, 138, 1) 30%,
+      rgba(251, 191, 36, 1) 60%
+    );
+  }
+}
+
+.Dark {
+  background-color: #1e1b4b;
+  color: #e2e8f0;
+
+  > .image {
+    border-block: 1px solid #475569;
+    background: rgb(148, 163, 184);
+    background: linear-gradient(
+      212deg,
+      rgba(148, 163, 184, 1) 30%,
+      rgba(30, 27, 75, 1) 90%
+    );
+  }
+}
+
+.Steel {
+  background-color: #94a3b8;
+
+  > .image {
+    background: rgb(241, 245, 249);
+    background: linear-gradient(
+      212deg,
+      rgba(241, 245, 249, 1) 20%,
+      rgba(203, 213, 225, 1) 60%
+    );
+  }
+}
+
+.Normal {
+  background-color: #d4d4d4;
+
+  > .image {
+    background: rgb(244, 244, 245);
+    background: linear-gradient(
+      212deg,
+      rgba(244, 244, 245, 1) 30%,
+      rgba(229, 229, 229, 1) 60%
+    );
+  }
+}
+
+.Fairy {
+  background-color: #ec4899;
+
+  > .image {
+    background: rgb(254, 205, 211);
+    background: linear-gradient(
+      212deg,
+      rgba(254, 205, 211, 1) 30%,
+      rgba(244, 114, 182, 1) 70%
+    );
+  }
+}
+
+.Grass {
+  background-color: #bef264;
+
+  > .image {
+    background: rgb(254, 249, 195);
+    background: linear-gradient(
+      212deg,
+      rgba(254, 249, 195, 1) 10%,
+      rgba(217, 249, 157, 1) 60%
+    );
+  }
+}
+
+.Rock {
+  background-color: #ca8a04;
+
+  > .image {
+    background: rgb(255, 237, 213);
+    background: linear-gradient(
+      212deg,
+      rgba(255, 237, 213, 1) 10%,
+      rgba(234, 179, 8, 1) 70%
+    );
+  }
+}
+
+.Ghost {
+  background-color: #7c3aed;
+  color: #f5f5f4;
+
+  > .image {
+    border-block: 1px solid #a8a29e;
+    background: rgb(196, 181, 253);
+    background: linear-gradient(
+      212deg,
+      rgba(196, 181, 253, 1) 30%,
+      rgba(167, 139, 250, 1) 60%
+    );
+  }
+}
+
+.Poison {
+  background-color: #a855f7;
+
+  > .image {
+    background: rgb(240, 171, 252);
+    background: linear-gradient(
+      212deg,
+      rgba(240, 171, 252, 1) 10%,
+      rgba(192, 132, 252, 1) 70%
+    );
+  }
+}
+
+.Dragon {
+  background-color: #44403c;
+  color: #f5f5f4;
+
+  > .image {
+    border-block: 1px solid #78716c;
+    background: rgb(190, 242, 100);
+    background: linear-gradient(
+      212deg,
+      rgba(190, 242, 100, 1) 0%,
+      rgba(163, 200, 94, 1) 0%,
+      rgba(148, 177, 91, 1) 0%,
+      rgba(138, 162, 89, 1) 0%,
+      rgba(134, 155, 88, 1) 0%,
+      rgba(131, 151, 87, 1) 0%,
+      rgba(130, 149, 87, 1) 10%,
+      rgba(87, 83, 78, 1) 70%
+    );
+  }
+}
+
+.Fire {
+  background-color: #ea580c;
+
+  > .image {
+    background: rgb(253, 224, 71);
+    background: linear-gradient(
+      212deg,
+      rgba(253, 224, 71, 1) 2%,
+      rgba(249, 115, 22, 1) 90%
+    );
+  }
+}
+.Ice {
+  background-color: #60a5fa;
+
+  > .image {
+    background: rgb(191, 219, 254);
+    background: linear-gradient(
+      212deg,
+      rgba(191, 219, 254, 1) 30%,
+      rgba(147, 197, 253, 1) 60%
+    );
+  }
+}
+
+.Bug {
+  background-color: #84cc16;
+
+  > .image {
+    background: rgb(217, 249, 157);
+    background: linear-gradient(
+      212deg,
+      rgba(217, 249, 157, 1) 30%,
+      rgba(163, 230, 53, 1) 60%
+    );
+  }
+}
+
+.Ground {
+  background-color: #d97706;
+
+  > .image {
+    background: rgb(253, 230, 138);
+    background: linear-gradient(
+      212deg,
+      rgba(253, 230, 138, 1) 30%,
+      rgba(245, 158, 11, 1) 70%
+    );
+  }
+}
+
+.loading {
+  background-color: #e5e5e5;
 }

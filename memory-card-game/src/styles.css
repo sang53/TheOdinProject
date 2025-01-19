@@ -64,19 +64,53 @@ h6 {
   display: flex;
 }
 
+#root {
+  background: rgb(245, 245, 244);
+  background: radial-gradient(
+    circle,
+    rgba(245, 245, 244, 1) 42%,
+    rgba(212, 212, 216, 1) 67%,
+    rgba(161, 161, 170, 1) 100%
+  );
+}
+
 #main {
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  gap: 0.5rem;
+  gap: 1rem;
+  min-height: 100vh;
 
-  button {
-    padding: 0.5rem 1rem;
-    border: 1px solid black;
-    border-radius: 10px;
+  #title {
+    font-size: 38px;
+  }
+}
 
-    &:hover {
-      cursor: pointer;
-    }
+input,
+select {
+  min-height: 2rem;
+  vertical-align: middle;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding-left: 0.5ch;
+}
+
+button {
+  background-color: #38bdf8;
+  color: white;
+  border: 3px solid white;
+  outline: 3px solid #0284c7;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 500;
+  will-change: contents;
+  transition: background-color 0.3s;
+  letter-spacing: 0.2ch;
+  box-shadow: 3px 3px 5px #292524;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #0284c7;
   }
 }

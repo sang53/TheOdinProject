@@ -13,7 +13,7 @@ export default function GameScreen({
 
   return (
     <div id="main" className="flex">
-      <h1 id="title">Select a Pokemon:</h1>
+      <h1 id="title">Select a Pokémon:</h1>
       <p id="score">Score: {history.length}</p>
       <button onClick={() => addHistory()}>Re-shuffle</button>
       <PokemonContainer pokemon={getDisplay()} addHistory={addHistory} />
