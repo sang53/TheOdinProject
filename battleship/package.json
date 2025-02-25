@@ -1,7 +1,7 @@
 {
-  "name": "todo-list",
+  "name": "battleship",
   "version": "1.0.0",
-  "description": "To-do list project from The Odin Project",
+  "description": "battleship project from The Odin Project",
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
