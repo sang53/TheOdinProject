@@ -4,31 +4,38 @@ This project was made as part of The Odin Project online course to incorporate e
 
 In addition to the original specifications _(shown below)_, I have added more functionality to the game to properly recreate the board game experience to the browser.
 
+Planning, code review (by friend) & reflection files are located in plan/
+
 ## **Functionality**
 
-- Landing Page:
+### Landing Page:
 
-  - Read instructions on how to play the game & explanation of the settings
-  - Choose between single player against the CPU or switch-screen multiplayer
-  - Customise settings: how many shots are available each turn
+- Read instructions on how to play the game & explanation of the settings
+- Choose between single player against the CPU or switch-screen multiplayer
+- Customise settings: how many shots are available each turn
 
-- Ship Placement:
+### Ship Placement:
 
-  - Place ships onto your board at desired location
-  - Ships can be rotated or reset back into the Harbour
-  - Confirm placements once finished
+- Place ships onto your board at desired location
+- Ships can be rotated or reset back into the Harbour
+- Confirm placements once finished
 
-- Shot Selection:
+### Shot Selection:
 
-  - Alternate between players to select shots on opponents board
-  - Displays state of boards for both players
-  - After confirming shots, displays the result of the shots
-  - CPU has an algorithm to shoot adjacent squares of previous hits & follow orientation once a ship has been hit multiple times
-  - Displays overall statistics of the game, including hit% and remaining ships/squares
+- Alternate between players to select shots on opponents board
+- Displays state of boards for both players
+- After confirming shots, displays the result of the shots
+- CPU has an algorithm to shoot adjacent squares of previous hits & follow orientation once a ship has been hit multiple times
+- Displays overall statistics of the game, including hit% and remaining ships/squares
 
-- End Screen:
-  - Once all of a players ships have been sunk, displays both players ships & shots
-  - Declares the winning player
+### End Screen:
+
+- Once all of a players ships have been sunk, displays both players ships & shots
+- Declares the winning player
+
+## **Technologies Used**
+
+- JavaScript, CSS, HTML
 
 ## **Project Specifications** _(from The Odin Project)_
 
