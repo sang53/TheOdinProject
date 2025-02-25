@@ -13,7 +13,7 @@ import { PLAYERS } from "./Player";
 import { Board } from "./Board";
 import { victoryScreen } from "./victory";
 
-let shots; // stores square keys
+let shots; // stores square Refs
 let shotNum;
 
 export function shotSelect() {
@@ -48,8 +48,11 @@ function selectShot(event) {
 
   if (shots.has(squareKey)) removeShot(event.target);
   else if (shotNum > shots.size) addShot(event.target);
-  else if (shotNum === 1) {
-    removeShot(shots.keys().next().value);
+  else if (shots.size === 1) {
+    const prevShotSquare = oppBoard.getSquareRef(
+      Board.getCoordsFromKey(Array.from(shots)[0]),
+    );
+    removeShot(prevShotSquare);
     addShot(event.target);
   }
 
@@ -112,7 +115,7 @@ function nextTurn() {
 
   if (PLAYERS.isCPU()) afterSwitch(cpuTurn, PLAYERS.currTurn);
   else {
-    hideShips(PLAYERS.currPlayer.board);
+    hideShips(PLAYERS.oppPlayer.board);
     afterSwitch(setupTurn, PLAYERS.currTurn);
   }
 }
@@ -153,7 +156,7 @@ function getStatsDiv() {
 
 function getPlayerStatDiv(num) {
   const statDiv = makeElement("div", [["class", "box"]]);
-  statDiv.appendChild(makeElement("h4", [], `Player ${num}:`));
+  statDiv.appendChild(makeElement("h4", [], `Player ${num + 1}:`));
   statDiv.appendChild(
     makeElement("div", [["id", `stats-player${num}`]], getStatStr(0, 0)),
   );
