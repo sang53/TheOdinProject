@@ -98,9 +98,9 @@ function returnShip() {
 
 function rotateHangarShips(event) {
   event.stopPropagation();
-  PLAYERS.currPlayer.board
-    .getShipsByPlaced(false)
-    .forEach((shipObj) => rotateShip(shipObj));
+  PLAYERS.currPlayer.board.getShipsByPlaced(false).forEach((shipObj) => {
+    if (shipObj.shipRef !== currShipRef) rotateShip(shipObj);
+  });
 }
 
 function confirmShips(event) {
