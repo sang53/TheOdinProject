@@ -36,7 +36,7 @@ function setupTurn() {
   addListener(PLAYERS.oppPlayer.board.boardRef, "click", selectShot);
   addListener(document.querySelector("#control-button"), "click", confirmShots);
 
-  updateCtrlMsg(`Select ${shotNum} Shots`);
+  updateCtrlMsg(`Player ${PLAYERS.currTurn + 1}:\nSelect ${shotNum} Shots`);
   toggleCtrlBtn(false);
 }
 
@@ -62,7 +62,9 @@ function selectShot(event) {
 function confirmShots() {
   const hits = registerShots(PLAYERS.oppPlayer.board);
 
-  updateCtrlMsg(`Hits: ${hits}\nMisses: ${shots.size - hits}`);
+  updateCtrlMsg(
+    `Player ${PLAYERS.currTurn + 1}:\nHits: ${hits}\nMisses: ${shots.size - hits}`,
+  );
   updateStats(PLAYERS.oppPlayer.board);
   removeListeners();
 

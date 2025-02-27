@@ -23,7 +23,13 @@ export function shipPlace() {
 
   document.querySelector("#main").classList.add("ship-select");
   addToMain(makeElement("h1", [], "Place Your Ships"));
-
+  addToMain(
+    makeElement(
+      "p",
+      [["class", "instructions"]],
+      "Click ship to select\nClick square to place\nRotate ships in hangar",
+    ),
+  );
   addToMain(board.boardRef);
   addListener(board.boardRef, "click", selectSquare);
 
