@@ -109,7 +109,7 @@ function updateStats(oppBoard) {
 
 function nextTurn() {
   if (!PLAYERS.oppPlayer.aliveShips) {
-    updateCtrlMsg(`Player ${PLAYERS.currTurn} Wins!`);
+    updateCtrlMsg(`Player ${PLAYERS.currTurn + 1} Wins!`);
     victoryScreen();
     return;
   }
