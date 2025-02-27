@@ -69,8 +69,8 @@ h6 {
 
 :root {
   --bgc-0: black;
-  --bgc-1: grey;
-  --bgc-2: lightgrey;
+  --bgc-1: oklch(0.984 0.003 247.858);
+  --bgc-2: white;
 
   --borderc-0: black;
   --borderc-ship: white;
@@ -83,11 +83,17 @@ h6 {
   --ship-square: grey;
   --ship-hit: crimson;
 
-  --square-size: 50px;
+  --button-bgc: oklch(0.932 0.032 255.585);
+  --button-bgc-hover: oklch(0.707 0.165 254.624);
+  --button-border: 1px solid oklch(0.379 0.146 265.522);
+  --button-shadow: 3px 3px 1px 1px oklch(0.282 0.091 267.935);
+
+  --square-size: 75px;
 
   font-family: "Jura", system-ui, sans-serif;
-  font-size: 20px;
+  font-size: 32px;
   font-weight: 500;
+  background-color: var(--bgc-1);
 }
 
 .hidden.ship,
@@ -102,9 +108,9 @@ h6 {
 
 dialog {
   padding: 2rem;
-  max-width: 450px;
   margin: auto;
   border-radius: 10px;
+  text-align: center;
 
   > div,
   form {
@@ -133,10 +139,18 @@ fieldset {
 button {
   border-radius: 10px;
   padding: 1rem 2rem;
+  user-select: none;
+  transition: background-color 500ms;
 
   &:enabled {
-    box-shadow: 3px 3px 1px 1px black;
+    box-shadow: var(--button-shadow);
     cursor: pointer;
+    background-color: var(--button-bgc);
+    border: var(--button-border);
+
+    &:hover {
+      background-color: var(--button-bgc-hover);
+    }
   }
 }
 
@@ -152,7 +166,7 @@ button {
   justify-content: center;
   align-items: center;
   gap: 3vh;
-  margin-block: 1rem;
+  padding-block: 1rem;
 }
 
 #boards {
@@ -183,6 +197,7 @@ button {
       border: 1px solid black;
       box-shadow: 0 0 3px 2px black;
       padding: 1rem;
+      background-color: var(--bgc-2);
     }
 
     > button {
@@ -200,6 +215,19 @@ button {
     margin-top: -1.5vh;
     font-weight: 600;
     font-size: 26px;
+    text-align: center;
+  }
+
+  #board-hangar-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    width: fit-content;
+    align-items: center;
+
+    > * {
+      margin-inline: auto;
+    }
   }
 }
 
@@ -212,6 +240,7 @@ button {
     flex-direction: column;
     gap: 0.5rem;
     font-weight: 600;
+    background-color: var(--bgc-2);
   }
 
   .box {
@@ -223,6 +252,7 @@ button {
       flex-direction: column;
       box-shadow: 0 0 3px 2px black;
       padding: 1rem;
+      background-color: var(--bgc-2);
     }
   }
 
@@ -240,6 +270,7 @@ button {
 
 .square {
   height: var(--square-size);
+  width: var(--square-size);
   background-color: var(--square-normal);
   border: 1px solid var(--borderc-0);
   position: relative;
@@ -265,6 +296,7 @@ button {
   border: 1px solid var(--borderc-0);
   align-items: center;
   max-width: 500px;
+  background-color: var(--bgc-2);
 }
 
 .ship {
@@ -296,6 +328,20 @@ button {
 
   &.selected {
     transform: scale(1.1);
+  }
+}
+
+@media (max-width: 2600px) {
+  :root {
+    --square-size: 60px;
+    font-size: 26;
+  }
+}
+
+@media (max-width: 1800px) {
+  :root {
+    --square-size: 50px;
+    font-size: 20px;
   }
 }
 

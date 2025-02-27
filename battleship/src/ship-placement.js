@@ -30,11 +30,7 @@ export function shipPlace() {
       "Click ship to select\nClick square to place\nRotate ships in hangar",
     ),
   );
-  addToMain(board.boardRef);
-  addListener(board.boardRef, "click", selectSquare);
-
-  addToMain(getHangar());
-  addShipsHangar(board.shipArr);
+  addBoardHangar(board);
 }
 
 function selectShip(event) {
@@ -130,6 +126,17 @@ function confirmShips(event) {
   afterSwitch(shotSelect, 0);
 }
 
+function addBoardHangar(board) {
+  const container = makeElement("div", [["id", "board-hangar-container"]]);
+  addToMain(container);
+
+  container.appendChild(board.boardRef);
+  addListener(board.boardRef, "click", selectSquare);
+
+  container.appendChild(getHangar());
+  addShipsHangar(board.shipArr);
+}
+
 function getHangar() {
   const hangar = makeElement("div", [["class", "ship-container"]]);
   addListener(hangar, "click", returnShip);
@@ -143,7 +150,7 @@ function getRotateBtn() {
   const rotateButton = makeElement(
     "button",
     [["id", "rotate-button"]],
-    "Rotate Ship",
+    "Rotate Ships",
   );
   addListener(rotateButton, "click", rotateHangarShips);
   return rotateButton;
