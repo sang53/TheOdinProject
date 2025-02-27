@@ -87,6 +87,7 @@ h6 {
 
   font-family: "Jura", system-ui, sans-serif;
   font-size: 20px;
+  font-weight: 500;
 }
 
 .hidden.ship,
@@ -109,10 +110,6 @@ dialog {
   form {
     align-items: center;
     gap: 2rem;
-  }
-
-  button {
-    padding: 1rem 2rem;
   }
 }
 
