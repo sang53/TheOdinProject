@@ -6,10 +6,12 @@ import {
   removeListeners,
   addListener,
   afterSwitch,
+  placeShipElement,
 } from "./DOM";
 import { Board } from "./Board";
 import { SETTINGS } from "./gameSettings";
 import { shipPlace } from "./ship-placement";
+import { randomShipPlace } from "./cpu";
 
 startScreen();
 
@@ -24,9 +26,16 @@ function startScreen() {
 function getBoardsDiv() {
   const contentDiv = makeElement("div", [["id", "boards"]]);
 
-  contentDiv.appendChild(new Board(10, 5).boardRef);
+  const board1 = new Board(10, 5);
+  contentDiv.appendChild(board1.boardRef);
   contentDiv.appendChild(getPlayButton(nextStage));
-  contentDiv.appendChild(new Board(10, 5).boardRef);
+  const board2 = new Board(10, 5);
+  contentDiv.appendChild(board2.boardRef);
+
+  [board1, board2].forEach((board) => {
+    randomShipPlace(board);
+    board.shipArr.forEach((ship) => placeShipElement(ship, board));
+  });
 
   return contentDiv;
 }
