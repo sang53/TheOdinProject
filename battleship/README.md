@@ -1,5 +1,8 @@
 ## **Battleships Project**
 
+_Portfolio link: https://portfolio-sang-won-cho.netlify.app/_
+_Deployed link: https://sang53.github.io/TheOdinProject/battleship/dist/index.html_
+
 This project was made as part of The Odin Project online course to incorporate everything learned about THML, CSS & JavaScript.
 
 In addition to the original specifications _(shown below)_, I have added more functionality to the game to properly recreate the board game experience to the browser.
